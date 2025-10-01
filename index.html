@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Netac</title>
+  <style>
+    @font-face {
+      font-family: "Nunito";
+      src: url("./font/static/Nunito-Light.ttf");
+    }
+
+    * {
+      font-family: Nunito, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      color: #111;
+      line-height: 1.4;
+    }
+
+    header {
+      background: #0b1230;
+      color: #fff;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 20px;
+    }
+
+    .btn {
+      background: rgba(0, 60, 170, 1);
+      color: #fff;
+      padding: 10px 6vw;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 20px;
+      display: inline-block;
+      margin-top: 4.5vw;
+    }
+
+    .btn-nav {
+      background: rgba(0, 60, 170, 1);
+      color: #fff;
+      padding: 10px 2.9vw;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 20px;
+      display: inline-block;
+    }
+
+    .hero {
+      background: url('bc.png') center/cover no-repeat;
+      min-height: 600px;
+      position: relative;
+      color: #fff;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 40px;
+      gap: 30px;
+    }
+
+    /* Большая карточка слева */
+    .hero .overlay {
+      backdrop-filter: blur(4px);
+      background: rgba(37, 54, 112, 0.6);
+      padding: 2.5vw;
+      padding-right: 15vw;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      width: 55vw;
+      min-height: 25vw;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .hero h1 {
+      font-size: 44px;
+      margin-bottom: 15px;
+    }
+
+    .promo {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      flex: 1;
+      position: relative;
+    }
+
+    .promo p {
+      white-space: nowrap;
+      backdrop-filter: blur(5px);
+      background: rgba(37, 54, 112, 0.6);
+      padding: 32px 97px;
+      border-radius: 8px;
+      font-size: 20px;
+      margin-bottom: 6vw;
+
+    }
+
+    /* Расположение: первая слева, вторая центр, третья слева */
+    .promo p:nth-child(1) {
+      align-self: flex-end;
+    }
+
+    .promo p:nth-child(2) {
+      align-self: flex-start;
+    }
+
+    .promo p:nth-child(3) {
+      align-self: flex-end;
+    }
+
+    /* Остальное оставил */
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 40px;
+      gap: 20px;
+    }
+
+    .product-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      width: 300px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .product-card img {
+      max-width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .form-section {
+      background: #f8f8f8;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .form-box {
+      max-width: 400px;
+      width: 100%;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    .form-box input,
+    .form-box textarea {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    footer {
+      background: #0b1230;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+    }
+
+    @media(max-width: 900px) {
+      .hero {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .promo {
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      .promo p {
+        align-self: flex-start !important;
+      }
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+
+    }
+
+    .wrap-link {
+      margin-right: 60vw;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <img src="./icon/netac_logo.png" />
+    <nav class="nav">
+      <div class="wrap-link">
+        <a href="#">Продукты</a>
+        <a href="#">Контакты</a>
+      </div>
+      <a href="#" class="btn-nav">Подробнее</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="overlay">
+      <h1>Netac: технологии для ритейла и ПВЗ — быстрее, удобнее, выгоднее</h1>
+      <p style="font-size: 30px;">Самообслуживание, удобное управление и консультирование</p>
+      <a href="#" class="btn">Получить предложение</a>
+    </div>
+    <div class="promo">
+      <p>OEM и брендинг</p>
+      <p>Гарантия 12 – 36 месяцев</p>
+      <p>Сервис по РФ и ЕАЭС</p>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="product-card">
+      <img src="monitor.jpg" alt="Monitor">
+      <h3>NETAC TM-21</h3>
+      <p>Сенсорный монитор 21.5”</p>
+      <a href="#" class="btn">Подробнее</a>
+    </div>
+    <div class="product-card">
+      <img src="station.jpg" alt="NB-300">
+      <h3>NETAC NB-300</h3>
+      <p>Компактная и мощная портативная электростанция</p>
+    </div>
+    <div class="product-card">
+      <img src="pp303.jpg" alt="PP303">
+      <h3>PP 303</h3>
+      <p>Мини-терминал самообслуживания для ПВЗ</p>
+    </div>
+    <div class="product-card">
+      <img src="pp606.jpg" alt="PP606">
+      <h3>PP 606</h3>
+      <p>Терминал самообслуживания для ПВЗ</p>
+    </div>
+  </section>
+
+  <section class="form-section">
+    <div class="form-box">
+      <h3>Оставьте контакты — мы подберём решение</h3>
+      <form>
+        <input type="text" placeholder="Имя">
+        <input type="text" placeholder="Контактный телефон">
+        <input type="email" placeholder="E-mail">
+        <textarea placeholder="Сообщение (необязательно)"></textarea>
+        <button type="submit" class="btn">Подобрать</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Netac Technology Co.Ltd All rights reserved</p>
+    <p><a href="mailto:info@netac.eu" style="color:#fff;">info@netac.eu</a></p>
+  </footer>
+
+</body>
+
+</html>
