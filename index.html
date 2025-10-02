@@ -59,7 +59,6 @@
       font-size: 20px;
       display: inline-block;
       border: 0;
-      /* margin-top: 4.5vw; */
     }
 
     .btn-nav {
@@ -126,7 +125,6 @@
       border-width: 0px 0px 3px 3px;
       border-style: solid;
       border-color: #003CAA;
-
     }
 
     /* Расположение: первая слева, вторая центр, третья слева */
@@ -142,30 +140,42 @@
       align-self: flex-end;
     }
 
-    /* Остальное оставил */
+    /* ИСПРАВЛЕННАЯ СЕТКА С ИНДИВИДУАЛЬНЫМИ РАЗМЕРАМИ */
     .features {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 40px;
-      padding: 0 104px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 0 40px;
       margin-top: 40px;
       margin-bottom: 40px;
       box-sizing: border-box;
     }
 
+    #products-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      width: 100%;
+    }
+
     .product-card {
       border: 1px solid #000000;
-      /* width: 100%; */
-      /* min-width: 20vw; */
-      grid-column: span 3;
-      padding: 0;
+      padding: 20px;
       text-align: center;
       background: #fff;
       position: relative;
       overflow: hidden;
-      margin-bottom: 0;
-      padding: 1vw;
-      margin: 1vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* Размер определяется содержимым */
+      width: auto;
+      min-width: 250px;
+      max-width: 400px;
+      /* Высота определяется содержимым */
+      height: auto;
     }
 
     @media (hover: hover) and (pointer: fine) {
@@ -230,40 +240,21 @@
       cursor: pointer;
     }
 
-    @media (max-width: 1199px) {
-      .features {
-        gap: 32px;
-        padding: 0 24px;
-      }
-
-      .product-card {
-        grid-column: span 4;
-      }
-    }
-
-    @media (max-width: 767px) {
-      .features {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 14px;
-        padding: 0 18px;
-      }
-
-      .product-card {
-        grid-column: span 4;
-      }
-    }
-
     .product-card h3 {
       font-size: 22px;
-      margin: 0;
+      margin: 15px 0 10px 0;
       font-weight: 700;
-      color: #fff;
+      color: #111;
       text-align: center;
       transition: none;
-      /* скрываем, будет внутри card-desc */
-      display: none;
     }
 
+    .product-card p {
+      font-size: 18px;
+      margin: 10px 0;
+      color: #111;
+      text-align: center;
+    }
 
     .product-card:hover .card-desc {
       bottom: 0;
@@ -271,18 +262,45 @@
       pointer-events: auto;
     }
 
+    /* ИЗОБРАЖЕНИЯ СОХРАНЯЮТ СВОЙ ЕСТЕСТВЕННЫЙ РАЗМЕР */
+    .product-image-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: auto;
+      min-height: 200px;
+    }
 
-    .product-card img {
+    .product-card img:not(.share-icon) {
       display: block;
       width: auto;
       height: auto;
-      max-height: 320px;
-      margin-left: auto;
-      margin-right: auto;
-      border-radius: 16px 16px 0 0;
+      max-width: 100%;
+      max-height: 300px;
+      margin: 0 auto;
+      border-radius: 8px;
       background: #f6f6f6;
-      margin-bottom: 0;
       object-fit: contain;
+    }
+
+    @media (max-width: 1199px) {
+      .features {
+        gap: 25px;
+        padding: 0 24px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .features {
+        gap: 20px;
+        padding: 0 18px;
+      }
+
+      .product-card {
+        min-width: 200px;
+        max-width: 100%;
+      }
     }
 
     .form-section {
@@ -336,7 +354,6 @@
     .nav {
       display: flex;
       align-items: center;
-
     }
 
     .wrap-link {
@@ -344,60 +361,63 @@
     }
 
     .search_container {
-    position: absolute;
-    top: 86vh;
-    width: 100vw;
-    max-width: 100vw;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(255, 255, 255, 0.9);
-    display: flex;
-    align-items: center;
-    padding: 18px 32px;
-    box-sizing: border-box;
-    margin-bottom: 32px;
-  }
-  .search_icon {
-    width: 32px;
-    height: 32px;
-    object-fit: contain;
-    margin-right: 18px;
-    align-self: center;
-    display: block;
-  }
-  .search_input {
-    flex: 1;
-    font-size: 22px;
-    padding: 12px 18px;
-    border-radius: 8px;
-    border: 0px solid #ccc;
-    background-color: transparent;
-    color: #111;
-    outline: none;
-    box-shadow: none;
-    transition: background 0.2s;
-  }
-  .search_input::placeholder {
-    color: #888;
-    opacity: 1;
-  }
-  @media (max-width: 767px) {
-    .search_container {
-      padding: 10px 8px;
+      position: absolute;
+      top: 86vh;
+      width: 100vw;
+      max-width: 100vw;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      padding: 18px 32px;
+      box-sizing: border-box;
+      margin-bottom: 32px;
     }
-    .search_input {
-      font-size: 18px;
-      padding: 10px 8px;
-    }
+
     .search_icon {
-      width: 24px;
-      height: 24px;
-      margin-right: 8px;
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      margin-right: 18px;
+      align-self: center;
+      display: block;
     }
-  }
 
+    .search_input {
+      flex: 1;
+      font-size: 22px;
+      padding: 12px 18px;
+      border-radius: 8px;
+      border: 0px solid #ccc;
+      background-color: transparent;
+      color: #111;
+      outline: none;
+      box-shadow: none;
+      transition: background 0.2s;
+    }
 
+    .search_input::placeholder {
+      color: #888;
+      opacity: 1;
+    }
 
+    @media (max-width: 767px) {
+      .search_container {
+        padding: 10px 8px;
+      }
+
+      .search_input {
+        font-size: 18px;
+        padding: 10px 8px;
+      }
+
+      .search_icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+      }
+    }
 
     .modal-buttons {
       box-sizing: border-box;
@@ -406,7 +426,6 @@
       flex-wrap: wrap;
       justify-content: center;
       margin-top: 10vw;
-
     }
 
     .transparent {
@@ -414,7 +433,6 @@
       color: rgba(0, 60, 170, 1) !important;
       border: rgba(0, 60, 170, 1) solid 1px !important;
     }
-
 
     .modal-button {
       background: rgba(0, 60, 170, 1);
@@ -454,12 +472,11 @@
       <p>Сервис по РФ и ЕАЭС</p>
     </div>
   </section>
+
   <div class="search_container">
     <img class="search_icon" src="./icon/search.svg" />
     <input class="search_input" type="text" placeholder="">
   </div>
-
-
 
   <section class="features">
     <div id="products-list"></div>
@@ -477,15 +494,15 @@
         </div>
       </div>
     </div>
-    <!-- ...existing code... -->
+
     <script>
       const products = [
         {
           img: './product_photo/NETAC TM-21.png',
           title: 'NETAC TM-21',
           full_title: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-          desc: 'Сенсорный монитор 21.5 здесь может быть html”',
-          full_desc: 'описание для контекстного меню там может быть html Сенсорный монитор 21.5”',
+          desc: 'Сенсорный монитор 21.5 здесь может быть html',
+          full_desc: 'описание для контекстного меню там может быть html Сенсорный монитор 21.5',
         },
         {
           img: './product_photo/NETAC NB-300_улучшен.png',
@@ -495,7 +512,7 @@
           full_desc: 'Полное описание электростанции',
         },
         {
-          img: 'pp303.jpg',
+          img: '/product_photo/высокий 3.png',
           title: 'PP 303',
           full_title: 'PP 303',
           desc: 'Мини-терминал самообслуживания для ПВЗ',
@@ -509,25 +526,28 @@
           full_desc: 'Полное описание терминала',
         },
       ];
+
       document.getElementById('products-list').innerHTML = products.map((p, i) => `
-    <div class="product-card">
-      <img src="./icon/share.png" alt="Поделиться" class="share-icon" />
-      <img src="${p.img}" alt="${p.title}" />
-      <p>${p.full_title}</p>
-      <h3>${p.title}</h3>
-      <div class="share-icon" title="Поделиться"></div>
-      <div class="card-desc">
-        <h3>${p.full_title || p.title}</h3>
-        <div class="desc-text">${p.full_desc || p.desc}</div>
-        <button href="#" class="btn_more" data-index="${i}">Подробнее</button>
-      </div>
-    </div>
-  `).join('');
+        <div class="product-card">
+          <div class="share-icon" title="Поделиться"></div>
+     
+            <img src="${p.img}" alt="${p.title}" />
+          
+          <p>${p.full_title}</p>
+          <h3>${p.title}</h3>
+          <div class="card-desc">
+            <h3>${p.full_title || p.title}</h3>
+            <div class="desc-text">${p.full_desc || p.desc}</div>
+            <button href="#" class="btn_more" data-index="${i}">Подробнее</button>
+          </div>
+        </div>
+      `).join('');
 
       // Модальное окно
       const modal = document.getElementById('product-modal');
       const modalTitle = document.getElementById('modal-title');
       const modalDesc = document.getElementById('modal-desc');
+
       document.addEventListener('click', function (e) {
         if (e.target.classList.contains('btn_more')) {
           e.preventDefault();
