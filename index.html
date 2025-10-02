@@ -32,11 +32,25 @@
       align-items: center;
     }
 
+
+
     header nav a {
       color: #fff;
       text-decoration: none;
       margin-left: 20px;
       font-size: 20px;
+    }
+
+    .nav {
+      display: flex;
+      align-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    .wrap-link {
+      white-space: nowrap;
+      margin-right: 67vw;
     }
 
     .btn {
@@ -50,6 +64,8 @@
       margin-top: 4.5vw;
       border: 0;
     }
+
+
 
     .btn_more,
     .btn-nav {
@@ -108,7 +124,7 @@
     .promo {
       display: flex;
       flex-direction: column;
-      gap: 40px;
+      gap: 10мц;
       flex: 1;
     }
 
@@ -149,6 +165,7 @@
       padding: 13px 50px;
       box-sizing: border-box;
       width: 100%;
+      height:10%;
     }
 
     .search_icon {
@@ -173,27 +190,35 @@
 
     /* FEATURES (Masonry Layout) */
     #products-list {
-      column-count: 4;
+      column-count: 3;
       column-gap: 20px;
       max-width: 100vw;
-      width: 100%;
+      width: 80%;
       margin-top: 4vw;
-      margin-left: 13vw;
+      margin-left: 8.6vw;
 
     }
 
     .product-card {
+      position: relative;
       display: inline-block;
       margin-bottom: 20px;
       width: 100%;
       break-inside: avoid;
       border: 1px solid #000;
-      border-radius: 8px;
       padding: 10px;
       background: #fff;
       text-align: center;
       transition: transform 0.2s ease;
+
     }
+
+    .product-card:hover .card-desc,
+    .product-card .card-desc:hover {
+      bottom: 0;
+      opacity: 1;
+    }
+
 
     .product-card img {
       width: 100%;
@@ -201,9 +226,15 @@
       border-radius: 6px;
       background: #f6f6f6;
       object-fit: contain;
-      transform-origin: center;
       margin: 0 auto;
+      display: block;
+      transform: scale(1);
+      /* уменьшим картинку в 2 раза */
+      transform-origin: center center;
+      /* точка масштабирования */
+
     }
+
 
     .product-card h3 {
       margin: 10px 0;
@@ -212,8 +243,8 @@
     }
 
     .product-card p {
-      font-size: 14px;
-      color: #555;
+      font-size: 1.5vw;
+      color: #000000;
     }
 
     @media screen and (max-width: 992px) {
@@ -252,6 +283,7 @@
     }
 
     .form-logo img {
+      width: 3vw;
       max-width: 200px;
       height: auto;
     }
@@ -294,12 +326,208 @@
       font-size: 18px;
     }
 
+    .card-desc {
+      backdrop-filter: blur(4px);
+      position: absolute;
+      left: 0;
+      bottom: -50%;
+      width: 100%;
+      height: 60%;
+      background: rgba(207, 200, 200, 0.6);
+      color: #fff;
+      padding: 24px 18px 18px 18px;
+      opacity: 0;
+      pointer-events: none;
+      transition: bottom 0.18s cubic-bezier(.4, 0, .2, 1), opacity 0.18s cubic-bezier(.4, 0, .2, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+
+    .product-card:hover .card-desc {
+      bottom: 0;
+      opacity: 1;
+    }
+
     /* FOOTER */
     footer {
-      background: #0b1230;
-      color: #fff;
       text-align: center;
       padding: 15px;
+      border-top: 1px solid rgba(51, 51, 51, 1);
+    }
+
+
+
+    #product-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.45);
+      align-items: center;
+      justify-content: center;
+    }
+
+    #product-modal .modal-content {
+      background: #fff;
+      border-radius: 12px;
+      width: max-content;
+      padding: 5vw;
+      position: relative;
+    }
+
+    #modal-close {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .modal-buttons {
+      box-sizing: border-box;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 16vw;
+    }
+
+    .transparent {
+      background-color: transparent !important;
+      color: rgba(0, 60, 170, 1) !important;
+      border: rgba(0, 60, 170, 1) solid 1px !important;
+    }
+
+    .modal-button {
+      background: rgba(0, 60, 170, 1);
+      color: #fff;
+      padding: 10px 6vw;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 20px;
+      display: inline-block;
+      border: 0;
+    }
+
+    .info_footer {
+      color: rgba(207, 200, 200, 0.6);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-evenly;
+      margin-left: 5vw;
+      border-top: 1px solid rgba(51, 51, 51, 0.3);
+      padding: 40px 0px;
+    }
+
+
+
+    .info_footer a {
+      color: rgba(0, 60, 170, 1) !important;
+      text-decoration: underline;
+
+    }
+
+    .btn-nav:hover,
+    .btn_more:hover,
+    .btn:hover {
+      background-color: rgba(4, 52, 140, 1) !important;
+      cursor: pointer;
+    }
+
+    /* --- мобильная адаптивность --- */
+    @media screen and (max-width: 768px) {
+      header {
+        position: relative;
+      }
+
+      /* скрываем меню, показываем бургер */
+      .nav {
+        display: none;
+        flex-direction: column;
+        background: #0b1230;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 100%;
+      }
+
+      .nav.active {
+        display: flex;
+      }
+
+      .burger {
+        display: block;
+        cursor: pointer;
+        width: 32px;
+        height: 24px;
+        position: relative;
+      }
+
+      .burger span {
+        position: absolute;
+        height: 3px;
+        width: 100%;
+        background: #fff;
+        left: 0;
+        transition: 0.3s;
+      }
+
+      .burger span:nth-child(1) {
+        top: 0;
+      }
+
+      .burger span:nth-child(2) {
+        top: 10px;
+      }
+
+      .burger span:nth-child(3) {
+        top: 20px;
+      }
+
+      /* hero блоки друг под другом */
+      .hero {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero .overlay {
+        width: 100%;
+      }
+
+      .promo {
+        order: 2;
+        /* ниже overlay */
+        width: 100%;
+      }
+
+      /* товары в 2 колонки */
+      #products-list {
+        column-count: 2;
+        margin-left: auto;
+        margin-right: auto;
+        width: 95%;
+      }
+
+      .search_container {
+        height: 40px;
+      }
+    }
+
+    /* совсем маленькие (телефон в портрете) */
+    @media screen and (max-width: 480px) {
+      #products-list {
+        column-count: 1;
+      }
     }
   </style>
 </head>
@@ -308,6 +536,9 @@
 
   <header>
     <img src="./icon/netac_logo.png" />
+    <div class="burger" id="burger">
+      <span></span><span></span><span></span>
+    </div>
     <nav class="nav">
       <div class="wrap-link">
         <a href="#">Продукты</a>
@@ -338,79 +569,205 @@
     <div id="products-list"></div>
   </section>
 
-  <section class="form-section">
-    <div class="form-container">
-      <!-- левая часть с логотипом -->
-      <div class="form-logo">
-        <img src="./icon/netac_logo_blue.png" alt="Netac logo" />
-      </div>
-
-      <!-- правая часть с формой -->
-      <div class="form-box">
-        <p>Оставьте контакты — мы подберём решение</p>
-        <form>
-          <input type="text" placeholder="Имя">
-          <input type="text" placeholder="Контактный телефон">
-          <input type="email" placeholder="E-mail">
-          <textarea placeholder="Сообщение (необязательно)"></textarea>
-          <button type="submit" class="btn">Подобрать</button>
-        </form>
+  <div id="product-modal">
+    <div class="modal-content">
+      <button id="modal-close">×</button>
+      <h2 id="modal-title"></h2>
+      <div id="modal-desc" style="margin-top:15px; font-size:18px;"></div>
+      <div class="modal-buttons" style="margin-top:78px; display:flex; gap:12px;">
+        <button class="modal-button"> Сохранить в PDF</button>
+        <button class="modal-button transparent"> Поделиться</button>
+        <button class="modal-button">Подобрать</button>
       </div>
     </div>
-  </section>
+  </div>
+
+
 
   <footer>
-    <p>© 2025 Netac Technology Co.Ltd All rights reserved</p>
-    <p><a href="mailto:info@netac.eu" style="color:#fff;">info@netac.eu</a></p>
+    <section class="form-section">
+      <div class="form-container">
+        <!-- левая часть с логотипом -->
+        <div class="form-logo">
+          <img src="./icon/netac_logo_blue.png" alt="Netac logo" />
+        </div>
+
+        <!-- правая часть с формой -->
+        <div class="form-box">
+          <p>Оставьте контакты — мы подберём решение</p>
+          <form>
+            <input type="text" placeholder="Имя">
+            <input type="text" placeholder="Контактный телефон">
+            <input type="email" placeholder="E-mail">
+            <textarea placeholder="Сообщение (необязательно)"></textarea>
+            <button type="submit" class="btn">Подобрать</button>
+          </form>
+        </div>
+      </div>
+    </section>
+    <div class="info_footer">
+      <h1></h1>
+      <p>Copyright © 2025 Netac Technology Co.,Ltd All rights reserved <a
+          href="https://beian.miit.gov.cn/">粤ICP备11101098号-3</a></p>
+      <a href="mailto:info@netac.eu" style="color:#fff;">info@netac.eu</a>
+    </div>
+
   </footer>
 
   <script>
+
+    document.getElementById('burger').addEventListener('click', () => {
+      document.querySelector('.nav').classList.toggle('active');
+    });
     const products = [
       {
         img: './product_photo/NETAC TM-21.png',
         title: 'NETAC TM-21',
         full_title: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
+        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
         desc: 'Сенсорный монитор 21.5 здесь может быть html',
       },
       {
         img: './product_photo/NETAC NB-300_улучшен.png',
         title: 'NETAC NB-300',
         full_title: 'NETAC NB-300',
+        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
         desc: 'Компактная и мощная портативная электростанция',
       },
       {
         img: 'product_photo/высокий 3.png',
         title: 'PP 303',
         full_title: 'PP 303',
+        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
         desc: 'Мини-терминал самообслуживания для ПВЗ',
-      },
-      {
-        img: './product_photo/NETAC TM-21.png',
-        title: 'NETAC TM-21',
-        full_title: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Сенсорный монитор 21.5 здесь может быть html',
       },
       {
         img: './product_photo/NETAC NB-300_улучшен.png',
         title: 'NETAC NB-300',
         full_title: 'NETAC NB-300',
+        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
         desc: 'Компактная и мощная портативная электростанция',
       },
       {
         img: '/product_photo/высокий 3.png',
         title: 'PP 303',
         full_title: 'PP 303',
+        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
+        desc: 'Мини-терминал самообслуживания для ПВЗ',
+      },
+      {
+        img: './product_photo/NETAC TM-21.png',
+        title: 'NETAC TM-21',
+        full_title: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
+        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
+        desc: 'Сенсорный монитор 21.5 здесь может быть html',
+      },
+      {
+        img: './product_photo/NETAC NB-300_улучшен.png',
+        title: 'NETAC NB-300',
+        full_title: 'NETAC NB-300',
+        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
+        desc: 'Компактная и мощная портативная электростанция',
+      },
+      {
+        img: 'product_photo/высокий 3.png',
+        title: 'PP 303',
+        full_title: 'PP 303',
+        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
+        desc: 'Мини-терминал самообслуживания для ПВЗ',
+      },
+      {
+        img: './product_photo/NETAC NB-300_улучшен.png',
+        title: 'NETAC NB-300',
+        full_title: 'NETAC NB-300',
+        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
+        desc: 'Компактная и мощная портативная электростанция',
+      },
+      {
+        img: '/product_photo/высокий 3.png',
+        title: 'PP 303',
+        full_title: 'PP 303',
+        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
+        desc: 'Мини-терминал самообслуживания для ПВЗ',
+      },
+      {
+        img: '/product_photo/высокий 3.png',
+        title: 'PP 303',
+        full_title: 'PP 303',
+        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
         desc: 'Мини-терминал самообслуживания для ПВЗ',
       }
     ];
 
-    document.getElementById('products-list').innerHTML = products.map((p, i) => `
-      <div class="product-card">
-        <img src="${p.img}" alt="${p.title}" />
-        <h3>${p.title}</h3>
+    const list = document.getElementById('products-list');
+    const searchInput = document.querySelector('.search_input');
+    const modal = document.getElementById('product-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDesc = document.getElementById('modal-desc');
+
+    let currentProducts = products;
+
+    function renderProducts(items) {
+      currentProducts = items;
+      list.innerHTML = items.map((p, idx) => `
+    <div class="product-card">
+      <img src="${p.img}" alt="${p.title}" />
+      <h3>${p.title}</h3>
+      <div class="card-desc">
         <p>${p.desc}</p>
+        <button class="btn btn_more" data-index="${idx}">Подробнее</button>
       </div>
-    `).join('');
+    </div>
+  `).join('');
+    }
+
+    document.addEventListener('click', e => {
+      if (e.target.classList.contains('btn_more')) {
+        const idx = e.target.dataset.index;
+        const product = currentProducts[idx];
+        modalTitle.textContent = product.title;
+        modalDesc.innerHTML = product.full_desc;
+        modal.style.display = 'flex';
+      }
+    });
+
+
+
+    // Первичная отрисовка
+    renderProducts(products);
+
+    // Поиск
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim().toLowerCase();
+
+      if (!q) {
+        renderProducts(products);
+        return;
+      }
+
+      const filtered = products.filter(p => {
+        return Object.values(p).some(val =>
+          String(val).toLowerCase().includes(q)
+        );
+      });
+
+      renderProducts(filtered);
+    });
+
+    // Модалка
+    document.addEventListener('click', e => {
+      if (e.target.classList.contains('btn_more')) {
+        const idx = e.target.dataset.index;
+        const product = products[idx];
+        modalTitle.innerHTML = product.title;
+        modalDesc.innerHTML = product.full_desc;
+        modal.style.display = 'flex';
+      }
+      if (e.target.id === 'modal-close' || e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
   </script>
 
 </body>
