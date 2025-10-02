@@ -48,12 +48,13 @@
       font-size: 20px;
       display: inline-block;
       margin-top: 4.5vw;
+      border: 0;
     }
 
-    .btn_more {
+    .btn_more,
+    .btn-nav {
       background: rgba(0, 60, 170, 1);
       color: #fff;
-      padding: 10px 6vw;
       border-radius: 10px;
       text-decoration: none;
       font-size: 20px;
@@ -61,16 +62,15 @@
       border: 0;
     }
 
-    .btn-nav {
-      background: rgba(0, 60, 170, 1);
-      color: #fff;
-      padding: 10px 2.9vw;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 20px;
-      display: inline-block;
+    .btn_more {
+      padding: 10px 6vw;
     }
 
+    .btn-nav {
+      padding: 10px 2.9vw;
+    }
+
+    /* HERO */
     .hero {
       background: url('bc.png') center/cover no-repeat;
       min-height: 600px;
@@ -81,14 +81,13 @@
       justify-content: flex-start;
       padding: 40px;
       gap: 30px;
+      flex-wrap: wrap;
     }
 
-    /* Большая карточка слева */
     .hero .overlay {
       backdrop-filter: blur(4px);
       background: rgba(37, 54, 112, 0.6);
-      padding: 2.5vw;
-      padding-right: 15vw;
+      padding: 2.5vw 15vw 2.5vw 2.5vw;
       border-radius: 12px;
       display: flex;
       flex-direction: column;
@@ -96,7 +95,7 @@
       min-height: 25vw;
       align-items: flex-start;
       justify-content: space-between;
-      border-width: 0px 0px 3px 3px;
+      border-width: 0 0 3px 3px;
       border-style: solid;
       border-color: #003CAA;
     }
@@ -111,7 +110,6 @@
       flex-direction: column;
       gap: 40px;
       flex: 1;
-      position: relative;
     }
 
     .promo p {
@@ -122,12 +120,11 @@
       border-radius: 8px;
       font-size: 20px;
       margin-bottom: 6vw;
-      border-width: 0px 0px 3px 3px;
+      border-width: 0 0 3px 3px;
       border-style: solid;
       border-color: #003CAA;
     }
 
-    /* Расположение: первая слева, вторая центр, третья слева */
     .promo p:nth-child(1) {
       align-self: flex-end;
     }
@@ -140,309 +137,169 @@
       align-self: flex-end;
     }
 
-    /* ИСПРАВЛЕННАЯ СЕТКА С ИНДИВИДУАЛЬНЫМИ РАЗМЕРАМИ */
-    .features {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      padding: 0 40px;
-      margin-top: 40px;
-      margin-bottom: 40px;
-      box-sizing: border-box;
-    }
-
-    #products-list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      width: 100%;
-    }
-
-    .product-card {
-      border: 1px solid #000000;
-      padding: 20px;
-      text-align: center;
-      background: #fff;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      /* Размер определяется содержимым */
-      width: auto;
-      min-width: 250px;
-      max-width: 400px;
-      /* Высота определяется содержимым */
-      height: auto;
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-      .product-card:hover {
-        transform: scale(1.02);
-        z-index: 2;
-      }
-
-      .product-card:hover .card-desc {
-        bottom: 0;
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .product-card:hover .share-icon {
-        opacity: 1;
-      }
-    }
-
-    .product-card:active {
-      transform: scale(0.97);
-      box-shadow: 0 4px 24px 0 rgba(0, 60, 170, 0.18);
-    }
-
-    .card-desc {
-      backdrop-filter: blur(4px);
-      position: absolute;
-      left: 0;
-      bottom: -50%;
-      width: 100%;
-      height: 60%;
-      background: rgba(207, 200, 200, 0.6);
-      color: #fff;
-      padding: 24px 18px 18px 18px;
-      opacity: 0;
-      pointer-events: none;
-      transition: bottom 0.18s cubic-bezier(.4, 0, .2, 1), opacity 0.18s cubic-bezier(.4, 0, .2, 1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-
-    .desc-text {
-      font-size: 16px;
-      margin-bottom: 8px;
-      text-align: center;
-    }
-
-    .share-icon {
-      position: absolute;
-      top: 14px;
-      right: 18px;
-      width: 28px;
-      height: 28px;
-      background: url('./icon/share.svg') center/contain no-repeat;
-      opacity: 0;
-      transition: opacity 0.18s cubic-bezier(.4, 0, .2, 1);
-      z-index: 3;
-      cursor: pointer;
-    }
-
-    .product-card h3 {
-      font-size: 22px;
-      margin: 15px 0 10px 0;
-      font-weight: 700;
-      color: #111;
-      text-align: center;
-      transition: none;
-    }
-
-    .product-card p {
-      font-size: 18px;
-      margin: 10px 0;
-      color: #111;
-      text-align: center;
-    }
-
-    .product-card:hover .card-desc {
-      bottom: 0;
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    /* ИЗОБРАЖЕНИЯ СОХРАНЯЮТ СВОЙ ЕСТЕСТВЕННЫЙ РАЗМЕР */
-    .product-image-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: auto;
-      min-height: 200px;
-    }
-
-    .product-card img:not(.share-icon) {
-      display: block;
-      width: auto;
-      height: auto;
-      max-width: 100%;
-      max-height: 300px;
-      margin: 0 auto;
-      border-radius: 8px;
-      background: #f6f6f6;
-      object-fit: contain;
-    }
-
-    @media (max-width: 1199px) {
-      .features {
-        gap: 25px;
-        padding: 0 24px;
-      }
-    }
-
-    @media (max-width: 767px) {
-      .features {
-        gap: 20px;
-        padding: 0 18px;
-      }
-
-      .product-card {
-        min-width: 200px;
-        max-width: 100%;
-      }
-    }
-
-    .form-section {
-      background: #f8f8f8;
-      padding: 40px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .form-box {
-      max-width: 400px;
-      width: 100%;
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-    }
-
-    .form-box input,
-    .form-box textarea {
-      width: 100%;
-      margin-bottom: 15px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    footer {
-      background: #0b1230;
-      color: #fff;
-      text-align: center;
-      padding: 15px;
-    }
-
-    @media(max-width: 900px) {
-      .hero {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .promo {
-        align-items: flex-start;
-        width: 100%;
-      }
-
-      .promo p {
-        align-self: flex-start !important;
-      }
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-    }
-
-    .wrap-link {
-      margin-right: 60vw;
-    }
-
+    /* SEARCH */
     .search_container {
       position: absolute;
-      top: 75vh;
-      width: 100vw;
-      max-width: 100vw;
+      bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
       background-color: rgba(255, 255, 255, 0.9);
       display: flex;
       align-items: center;
-      padding: 13px 32px;
+      padding: 13px 50px;
       box-sizing: border-box;
-      margin-bottom: 32px;
+      width: 100%;
     }
 
     .search_icon {
       width: 32px;
       height: 32px;
-      object-fit: contain;
       margin-right: 18px;
-      align-self: center;
-      display: block;
     }
 
     .search_input {
       flex: 1;
       font-size: 22px;
       padding: 12px 18px;
-      border-radius: 8px;
-      border: 0px solid #ccc;
-      background-color: transparent;
-      color: #111;
+      border: none;
+      background: transparent;
       outline: none;
-      box-shadow: none;
-      transition: background 0.2s;
+      color: #111;
     }
 
     .search_input::placeholder {
       color: #888;
-      opacity: 1;
     }
 
-    @media (max-width: 767px) {
-      .search_container {
-        padding: 10px 8px;
-      }
+    /* FEATURES (Masonry Layout) */
+    #products-list {
+      column-count: 4;
+      column-gap: 20px;
+      max-width: 100vw;
+      width: 100%;
+      margin-top: 4vw;
+      margin-left: 13vw;
 
-      .search_input {
-        font-size: 18px;
-        padding: 10px 8px;
-      }
-
-      .search_icon {
-        width: 24px;
-        height: 24px;
-        margin-right: 8px;
-      }
     }
 
-    .modal-buttons {
-      box-sizing: border-box;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 10vw;
-    }
-
-    .transparent {
-      background-color: transparent !important;
-      color: rgba(0, 60, 170, 1) !important;
-      border: rgba(0, 60, 170, 1) solid 1px !important;
-    }
-
-    .modal-button {
-      background: rgba(0, 60, 170, 1);
-      color: #fff;
-      padding: 10px 6vw;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 20px;
+    .product-card {
       display: inline-block;
-      border: 0;
+      margin-bottom: 20px;
+      width: 100%;
+      break-inside: avoid;
+      border: 1px solid #000;
+      border-radius: 8px;
+      padding: 10px;
+      background: #fff;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      background: #f6f6f6;
+      object-fit: contain;
+      transform-origin: center;
+      margin: 0 auto;
+    }
+
+    .product-card h3 {
+      margin: 10px 0;
+      font-size: 18px;
+      color: #111;
+    }
+
+    .product-card p {
+      font-size: 14px;
+      color: #555;
+    }
+
+    @media screen and (max-width: 992px) {
+      #products-list {
+        column-count: 3;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      #products-list {
+        column-count: 2;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      #products-list {
+        column-count: 1;
+      }
+    }
+
+    /* FORM */
+    .form-section {
+      background: #fff;
+      padding: 60px 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .form-container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      max-width: 64vw;
+      width: 100%;
+      gap: 30vw;
+    }
+
+    .form-logo img {
+      max-width: 200px;
+      height: auto;
+    }
+
+    .form-box {
+      flex: 1;
+    }
+
+    .form-box p {
+      margin-bottom: 20px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #111;
+    }
+
+    .form-box form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .form-box input,
+    .form-box textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .form-box textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .form-box .btn {
+      align-self: flex-end;
+      margin-top: 10px;
+      padding: 10px 30px;
+      font-size: 18px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #0b1230;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
     }
   </style>
 </head>
@@ -471,108 +328,34 @@
       <p>Гарантия 12 – 36 месяцев</p>
       <p>Сервис по РФ и ЕАЭС</p>
     </div>
+    <div class="search_container">
+      <img class="search_icon" src="./icon/search.svg" />
+      <input class="search_input" type="text" placeholder="">
+    </div>
   </section>
-
-  <div class="search_container">
-    <img class="search_icon" src="./icon/search.svg" />
-    <input class="search_input" type="text" placeholder="">
-  </div>
 
   <section class="features">
     <div id="products-list"></div>
-    <div id="product-modal"
-      style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); align-items:center; justify-content:center;">
-      <div style="background:#fff; border-radius:12px; width:90vw; padding:32px; position:relative;">
-        <button id="modal-close"
-          style="position:absolute; top:12px; right:18px; background:none; border:none; font-size:28px; cursor:pointer;">×</button>
-        <h2 id="modal-title" style="margin-bottom:18px;"></h2>
-        <div id="modal-desc" style="font-size:18px;"></div>
-        <div class="modal-buttons" style="margin-top:24px; display:flex; gap:12px;">
-          <button class="modal-button"> Сохранить в PDF</button>
-          <button class="modal-button transparent"> Поделиться</button>
-          <button class="modal-button">Подобрать</button>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      const products = [
-        {
-          img: './product_photo/NETAC TM-21.png',
-          title: 'NETAC TM-21',
-          full_title: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-          desc: 'Сенсорный монитор 21.5 здесь может быть html',
-          full_desc: 'описание для контекстного меню там может быть html Сенсорный монитор 21.5',
-        },
-        {
-          img: './product_photo/NETAC NB-300_улучшен.png',
-          title: 'NETAC NB-300',
-          full_title: 'NETAC NB-300',
-          desc: 'Компактная и мощная портативная электростанция',
-          full_desc: 'Полное описание электростанции',
-        },
-        {
-          img: '/product_photo/высокий 3.png',
-          title: 'PP 303',
-          full_title: 'PP 303',
-          desc: 'Мини-терминал самообслуживания для ПВЗ',
-          full_desc: 'Полное описание мини-терминала',
-        },
-        {
-          img: 'pp606.jpg',
-          title: 'PP 606',
-          full_title: 'PP 606',
-          desc: 'Терминал самообслуживания для ПВЗ',
-          full_desc: 'Полное описание терминала',
-        },
-      ];
-
-      document.getElementById('products-list').innerHTML = products.map((p, i) => `
-        <div class="product-card">
-          <div class="share-icon" title="Поделиться"></div>
-     
-            <img src="${p.img}" alt="${p.title}" />
-          
-          <p>${p.full_title}</p>
-          <h3>${p.title}</h3>
-          <div class="card-desc">
-            <h3>${p.full_title || p.title}</h3>
-            <div class="desc-text">${p.full_desc || p.desc}</div>
-            <button href="#" class="btn_more" data-index="${i}">Подробнее</button>
-          </div>
-        </div>
-      `).join('');
-
-      // Модальное окно
-      const modal = document.getElementById('product-modal');
-      const modalTitle = document.getElementById('modal-title');
-      const modalDesc = document.getElementById('modal-desc');
-
-      document.addEventListener('click', function (e) {
-        if (e.target.classList.contains('btn_more')) {
-          e.preventDefault();
-          const idx = e.target.getAttribute('data-index');
-          modalTitle.innerHTML = products[idx].full_title || products[idx].title;
-          modalDesc.innerHTML = products[idx].full_desc || products[idx].desc;
-          modal.style.display = 'flex';
-        }
-        if (e.target.id === 'modal-close' || e.target === modal) {
-          modal.style.display = 'none';
-        }
-      });
-    </script>
   </section>
 
   <section class="form-section">
-    <div class="form-box">
-      <h3>Оставьте контакты — мы подберём решение</h3>
-      <form>
-        <input type="text" placeholder="Имя">
-        <input type="text" placeholder="Контактный телефон">
-        <input type="email" placeholder="E-mail">
-        <textarea placeholder="Сообщение (необязательно)"></textarea>
-        <button type="submit" class="btn">Подобрать</button>
-      </form>
+    <div class="form-container">
+      <!-- левая часть с логотипом -->
+      <div class="form-logo">
+        <img src="./icon/netac_logo_blue.png" alt="Netac logo" />
+      </div>
+
+      <!-- правая часть с формой -->
+      <div class="form-box">
+        <p>Оставьте контакты — мы подберём решение</p>
+        <form>
+          <input type="text" placeholder="Имя">
+          <input type="text" placeholder="Контактный телефон">
+          <input type="email" placeholder="E-mail">
+          <textarea placeholder="Сообщение (необязательно)"></textarea>
+          <button type="submit" class="btn">Подобрать</button>
+        </form>
+      </div>
     </div>
   </section>
 
@@ -580,6 +363,55 @@
     <p>© 2025 Netac Technology Co.Ltd All rights reserved</p>
     <p><a href="mailto:info@netac.eu" style="color:#fff;">info@netac.eu</a></p>
   </footer>
+
+  <script>
+    const products = [
+      {
+        img: './product_photo/NETAC TM-21.png',
+        title: 'NETAC TM-21',
+        full_title: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
+        desc: 'Сенсорный монитор 21.5 здесь может быть html',
+      },
+      {
+        img: './product_photo/NETAC NB-300_улучшен.png',
+        title: 'NETAC NB-300',
+        full_title: 'NETAC NB-300',
+        desc: 'Компактная и мощная портативная электростанция',
+      },
+      {
+        img: 'product_photo/высокий 3.png',
+        title: 'PP 303',
+        full_title: 'PP 303',
+        desc: 'Мини-терминал самообслуживания для ПВЗ',
+      },
+      {
+        img: './product_photo/NETAC TM-21.png',
+        title: 'NETAC TM-21',
+        full_title: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
+        desc: 'Сенсорный монитор 21.5 здесь может быть html',
+      },
+      {
+        img: './product_photo/NETAC NB-300_улучшен.png',
+        title: 'NETAC NB-300',
+        full_title: 'NETAC NB-300',
+        desc: 'Компактная и мощная портативная электростанция',
+      },
+      {
+        img: '/product_photo/высокий 3.png',
+        title: 'PP 303',
+        full_title: 'PP 303',
+        desc: 'Мини-терминал самообслуживания для ПВЗ',
+      }
+    ];
+
+    document.getElementById('products-list').innerHTML = products.map((p, i) => `
+      <div class="product-card">
+        <img src="${p.img}" alt="${p.title}" />
+        <h3>${p.title}</h3>
+        <p>${p.desc}</p>
+      </div>
+    `).join('');
+  </script>
 
 </body>
 
