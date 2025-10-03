@@ -24,12 +24,23 @@
     }
 
     header {
-      background: #0b1230;
-      color: #fff;
-      padding: 15px 40px;
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 15px 40px;
+      z-index: 100;
+      background: transparent;
+      /* default прозрачный */
+      transition: background 0.2s ease-in-out;
+    }
+
+    header.scrolled {
+      background: #0b1230;
+      /* фон при скролле */
     }
 
 
@@ -46,6 +57,41 @@
       align-content: center;
       align-items: center;
       width: 100%;
+    }
+
+    @media screen and (max-width: 768px) {
+      .nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 100%;
+        background: #0b1230;
+        padding: 20px;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.25s ease, transform 0.25s ease;
+      }
+
+      .nav.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* затемнение */
+      #burger-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 90;
+      }
+
+      #burger-overlay.active {
+        display: block;
+      }
     }
 
     .wrap-link {
@@ -566,6 +612,7 @@
 <body>
 
   <header>
+    <div id="burger-overlay"></div>
     <img src="./icon/netac_logo.png" />
     <div class="burger" id="burger">
       <span></span><span></span><span></span>
@@ -854,6 +901,33 @@
         shareModal.style.display = 'none';
       }
     });
+
+    // Хедер фон при скролле
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      if (window.scrollY > 10) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Бургер меню
+    const burger = document.getElementById('burger');
+    const nav = document.querySelector('.nav');
+    const overlay = document.getElementById('burger-overlay');
+
+    burger.addEventListener('click', () => {
+      nav.classList.toggle('active');
+      overlay.classList.toggle('active');
+    });
+
+    // Закрытие меню по клику вне
+    overlay.addEventListener('click', () => {
+      nav.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+
   </script>
 
 </body>
