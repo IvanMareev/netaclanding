@@ -696,12 +696,48 @@
       color: red;
       font-size: 14px;
       margin-top: 4px;
-          text-align: -webkit-auto;
+      text-align: -webkit-auto;
     }
 
     input.error,
     textarea.error {
       border: 1px solid red;
+    }
+
+    #success-modal {
+      display: none;
+      position: fixed;
+      z-index: 2001;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.45);
+      align-items: center;
+      justify-content: center;
+    }
+
+    #success-modal .modal-content {
+      background: #fff;
+      border-radius: 12px;
+      width: max-content;
+      padding: 3vw 5vw;
+      text-align: center;
+      position: relative;
+    }
+
+    #success-close {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    #success-new {
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -767,6 +803,16 @@
         <button class="modal-button">Поделиться в Telegram</button>
         <button class="modal-button">Поделиться в WhatsApp</button>
       </div>
+    </div>
+  </div>
+  <div id="success-modal">
+    <div class="modal-content">
+      <button id="success-close">×</button>
+      <h2>Ваши данные отправлены</h2>
+      <p style="margin:15px 0; font-size:18px;">
+        Мы уже обрабатываем запрос.
+      </p>
+      <button id="success-new" class="modal-button">Отправить ещё один запрос</button>
     </div>
   </div>
 
@@ -1112,7 +1158,7 @@
     });
 
     // подтверждение после отправки
-    
+
 
 
     contactForm.addEventListener('submit', function (e) {
@@ -1151,12 +1197,32 @@
       }
 
       if (valid) {
-        // тут отправка формы или AJAX-запрос
-        alert("Данные корректны, можно отправлять");
+        // показать модалку успеха
+        const successModal = document.getElementById('success-modal');
+        successModal.style.display = 'flex';
+
         contactForm.reset();
       }
+
     });
 
+    const successModal = document.getElementById('success-modal');
+    const successClose = document.getElementById('success-close');
+    const successNew = document.getElementById('success-new');
+
+    successClose.addEventListener('click', () => {
+      successModal.style.display = 'none';
+    });
+
+    successNew.addEventListener('click', () => {
+      successModal.style.display = 'none';
+    });
+
+    successModal.addEventListener('click', e => {
+      if (e.target === successModal) {
+        successModal.style.display = 'none';
+      }
+    });
 
   </script>
 
