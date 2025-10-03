@@ -165,7 +165,7 @@
       padding: 13px 50px;
       box-sizing: border-box;
       width: 100%;
-      height:10%;
+      height: 10%;
     }
 
     .search_icon {
@@ -330,14 +330,13 @@
       backdrop-filter: blur(4px);
       position: absolute;
       left: 0;
-      bottom: -50%;
+      bottom: 50%;
       width: 100%;
       height: 60%;
       background: rgba(207, 200, 200, 0.6);
       color: #fff;
       padding: 24px 18px 18px 18px;
       opacity: 0;
-      pointer-events: none;
       transition: bottom 0.18s cubic-bezier(.4, 0, .2, 1), opacity 0.18s cubic-bezier(.4, 0, .2, 1);
       display: flex;
       flex-direction: column;
@@ -529,6 +528,38 @@
         column-count: 1;
       }
     }
+
+    #share-modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      /* выше основной */
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.45);
+      align-items: center;
+      justify-content: center;
+    }
+
+    #share-modal .modal-content {
+      background: #fff;
+      border-radius: 12px;
+      width: max-content;
+      padding: 3vw;
+      position: relative;
+    }
+
+    .product-card.highlight {
+      transform: scale(1.02);
+      border: 1px solid #003CAA;
+      /* netac_blue */
+      box-shadow: 0px 4px 10px rgba(0, 60, 170, 0.3);
+      /* button_shaddow */
+      transition: all 0.3s ease;
+      z-index: 1;
+    }
   </style>
 </head>
 
@@ -576,13 +607,24 @@
       <div id="modal-desc" style="margin-top:15px; font-size:18px;"></div>
       <div class="modal-buttons" style="margin-top:78px; display:flex; gap:12px;">
         <button class="modal-button"> Сохранить в PDF</button>
-        <button class="modal-button transparent"> Поделиться</button>
+        <button class="modal-button transparent" id="share-btn"> Поделиться</button>
         <button class="modal-button">Подобрать</button>
       </div>
     </div>
   </div>
 
-
+  <div id="share-modal">
+    <div class="modal-content">
+      <button id="share-close">×</button>
+      <h2>Поделиться</h2>
+      <p>Выберите способ:</p>
+      <div style="display:flex; flex-direction:column; gap:10px; margin-top:15px;">
+        <button class="modal-button">Скопировать ссылку</button>
+        <button class="modal-button">Поделиться в Telegram</button>
+        <button class="modal-button">Поделиться в WhatsApp</button>
+      </div>
+    </div>
+  </div>
 
   <footer>
     <section class="form-section">
@@ -615,7 +657,6 @@
   </footer>
 
   <script>
-
     document.getElementById('burger').addEventListener('click', () => {
       document.querySelector('.nav').classList.toggle('active');
     });
@@ -666,7 +707,7 @@
         img: './product_photo/NETAC NB-300_улучшен.png',
         title: 'NETAC NB-300',
         full_title: 'NETAC NB-300',
-        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
+        full_desc: 'NETAC NB-300 - <b>портативная электростанция</b>',
         desc: 'Компактная и мощная портативная электростанция',
       },
       {
@@ -710,64 +751,109 @@
     function renderProducts(items) {
       currentProducts = items;
       list.innerHTML = items.map((p, idx) => `
-    <div class="product-card">
-      <img src="${p.img}" alt="${p.title}" />
-      <h3>${p.title}</h3>
-      <div class="card-desc">
-        <p>${p.desc}</p>
-        <button class="btn btn_more" data-index="${idx}">Подробнее</button>
+      <div class="product-card">
+        <img src="${p.img}" alt="${p.title}" />
+        <h3>${p.title}</h3>
+        <div class="card-desc">
+          <p>${p.desc}</p>
+          <button class="btn btn_more" type="button" data-index="${idx}">Подробнее</button>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `).join('');
     }
 
-    document.addEventListener('click', e => {
-      if (e.target.classList.contains('btn_more')) {
-        const idx = e.target.dataset.index;
-        const product = currentProducts[idx];
-        modalTitle.textContent = product.title;
-        modalDesc.innerHTML = product.full_desc;
-        modal.style.display = 'flex';
-      }
-    });
-
-
-
-    // Первичная отрисовка
+    // начальная отрисовка
     renderProducts(products);
 
-    // Поиск
     searchInput.addEventListener('input', () => {
       const q = searchInput.value.trim().toLowerCase();
 
+      // снимаем старое выделение
+      document.querySelectorAll('.product-card').forEach(card =>
+        card.classList.remove('highlight')
+      );
+
       if (!q) {
-        renderProducts(products);
+        renderProducts(products); // вернули в исходное состояние
         return;
       }
 
-      const filtered = products.filter(p => {
-        return Object.values(p).some(val =>
+      // ищем индекс первого совпадения
+      const idx = products.findIndex(p =>
+        Object.values(p).some(val =>
           String(val).toLowerCase().includes(q)
-        );
-      });
+        )
+      );
 
-      renderProducts(filtered);
+      if (idx === -1) {
+        renderProducts(products); // не нашли, ничего не двигаем
+        return;
+      }
+
+      // делаем цикл: переносим найденный вверх
+      const found = products[idx];
+      const rest = products.slice(0, idx).concat(products.slice(idx + 1));
+      const newList = [found, ...rest];
+
+      renderProducts(newList);
+
+      // выделяем первый (найденный)
+      const firstCard = document.querySelector('.product-card');
+      if (firstCard) firstCard.classList.add('highlight');
     });
 
-    // Модалка
+
     document.addEventListener('click', e => {
+      console.log("Клик по элементу:", e.target);
+
       if (e.target.classList.contains('btn_more')) {
+        console.log("Нажата кнопка Подробнее");
+
+        e.preventDefault(); // блокируем дефолтное поведение
+
         const idx = e.target.dataset.index;
-        const product = products[idx];
-        modalTitle.innerHTML = product.title;
+        console.log("data-index кнопки:", idx);
+
+        const product = currentProducts[idx];
+        console.log("Найденный продукт:", product);
+
+        if (!product) {
+          console.warn("⚠ Продукт не найден по индексу:", idx);
+          return;
+        }
+
+        modalTitle.textContent = product.title;
         modalDesc.innerHTML = product.full_desc;
         modal.style.display = 'flex';
+
+        console.log("Модалка открыта с продуктом:", product.title);
       }
+
       if (e.target.id === 'modal-close' || e.target === modal) {
+        console.log("Закрытие модалки");
         modal.style.display = 'none';
       }
     });
 
+
+    const shareModal = document.getElementById('share-modal');
+    const shareBtn = document.getElementById('share-btn');
+    const shareClose = document.getElementById('share-close');
+
+    shareBtn.addEventListener('click', e => {
+      e.preventDefault();
+      shareModal.style.display = 'flex';
+    });
+
+    shareClose.addEventListener('click', () => {
+      shareModal.style.display = 'none';
+    });
+
+    shareModal.addEventListener('click', e => {
+      if (e.target === shareModal) {
+        shareModal.style.display = 'none';
+      }
+    });
   </script>
 
 </body>
