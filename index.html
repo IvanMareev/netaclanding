@@ -212,7 +212,7 @@
       padding: 13px 50px;
       box-sizing: border-box;
       width: 100%;
-      height: 10%;
+      height: 4vw;
     }
 
     .search_icon {
@@ -795,13 +795,20 @@
 
   <div id="share-modal">
     <div class="modal-content">
-      <button id="share-close">×</button>
       <h2>Поделиться</h2>
       <p>Выберите способ:</p>
       <div style="display:flex; flex-direction:column; gap:10px; margin-top:15px;">
-        <button class="modal-button">Скопировать ссылку</button>
-        <button class="modal-button">Поделиться в Telegram</button>
-        <button class="modal-button">Поделиться в WhatsApp</button>
+        <div class="sosial_network">
+          <a><img src="./icon/share_icon/insta.png" alt="insta"></a>
+          <a><img src="./icon/share_icon/vk.png"/></a>
+          <a><img src="./icon/share_icon/tg.png" alt="insta" /></a>
+          <a><img src="./icon/share_icon/wa.png" alt="insta" /></a>
+          <a><img src="./icon/share_icon/ds.png" alt="insta" /></a>
+          <a><img src="./icon/share_icon/in.png" alt="insta" /></a>
+        </div>
+        <button class="modal-button"><img src="./icon/bxs_copy.svg" />Скопировать</button>
+        <button class="modal-button"><img src="./icon/mynaui_save-solid.svg" />Сохранить в файлы</button>
+        <button class="modal-button"><img src="./icon/gg_google.svg" />Поиск в Google</button>
       </div>
     </div>
   </div>
