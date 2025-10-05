@@ -172,7 +172,6 @@
 
     .btn {
       padding: 4px 3.5vw;
-      margin-top: 4.5vw;
     }
 
     .btn_more {
@@ -351,7 +350,6 @@
       break-inside: avoid;
       background: #fff;
       border: 1px solid #000;
-      border-radius: 6px;
       text-align: start;
       padding: 10px;
       transition: transform .2s ease;
@@ -376,9 +374,10 @@
     }
 
     .card-desc {
+      pointer-events: none; 
       position: absolute;
       left: 0;
-      bottom: 30%;
+      bottom: -100%;
       width: 100%;
       height: min-content;
       background: rgba(207, 200, 200, 0.6);
@@ -403,6 +402,7 @@
     .product-card:hover .card-desc {
       bottom: 0;
       opacity: 1;
+      pointer-events: auto;
     }
 
     .product-card.highlight {
