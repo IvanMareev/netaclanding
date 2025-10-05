@@ -2,591 +2,714 @@
 <html lang="ru">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Netac</title>
 
-</head>
-<style>
-  @font-face {
-    font-family: "Nunito";
-    src: url("./font/static/Nunito-Light.ttf");
-  }
-
-  * {
-    font-family: Nunito, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    color: #111;
-    line-height: 1.4;
-  }
-
-  /* HEADER */
-  header {
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 40px;
-    z-index: 100;
-    background: rgba(39, 37, 60, 0.6);
-    transition: background 0.2s ease-in-out;
-  }
-
-  header.scrolled {
-    background: #0b1230;
-  }
-
-  .nav {
-    display: flex;
-    align-items: center;
-  }
-
-  .nav a {
-    color: #fff;
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 20px;
-  }
-
-  .burger {
-    display: none;
-    cursor: pointer;
-    width: 32px;
-    height: 24px;
-    position: relative;
-  }
-
-  .burger span {
-    position: absolute;
-    height: 3px;
-    width: 100%;
-    background: #fff;
-    left: 0;
-    transition: 0.3s;
-  }
-
-  .burger span:nth-child(1) {
-    top: 0
-  }
-
-  .burger span:nth-child(2) {
-    top: 10px
-  }
-
-  .burger span:nth-child(3) {
-    top: 20px
-  }
-
-  .wrap-link {
-    white-space: nowrap;
-    margin-right: 67vw;
-  }
-
-  .btn,
-  .btn_more,
-  .btn-nav {
-    background: rgba(0, 60, 170, 1);
-    color: #fff;
-    border-radius: 10px;
-    text-decoration: none;
-    font-size: 20px;
-    display: inline-block;
-    border: 0;
-  }
-
-  .btn {
-    padding: 10px 6vw;
-    margin-top: 4.5vw;
-  }
-
-  .btn_more {
-    padding: 10px 6vw;
-  }
-
-  .btn-nav {
-    padding: 10px 2.9vw;
-  }
-
-  /* HERO & PROMO */
-  .hero {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 40px;
-    margin: 0 104px;
-    min-height: 600px;
-    position: relative;
-    color: #fff;
-    background: url('bc.png') center/cover no-repeat;
-  }
-
-  .hero .overlay {
-    grid-column: span 7;
-    backdrop-filter: blur(4px);
-    background: rgba(37, 54, 112, 0.6);
-    padding: 2.5vw;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-width: 0 0 3px 3px;
-    border-style: solid;
-    border-color: #003CAA;
-  }
-
-  .hero h1 {
-    font-size: 44px;
-    margin-bottom: 15px;
-  }
-
-  .hero .promo {
-    grid-column: span 5;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .hero .promo p {
-    backdrop-filter: blur(5px);
-    background: rgba(37, 54, 112, 0.6);
-    padding: 32px 97px;
-    border-radius: 8px;
-    font-size: 20px;
-    margin-bottom: 6vw;
-    border-width: 0 0 3px 3px;
-    border-style: solid;
-    border-color: #003CAA;
-  }
-
-  .hero .promo p:nth-child(1) {
-    align-self: flex-end
-  }
-
-  .promo p:nth-child(2) {
-    align-self: flex-start
-  }
-
-  .promo p:nth-child(3) {
-    align-self: flex-end
-  }
-
-  /* SEARCH */
-  .search_container {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.9);
-    display: flex;
-    align-items: center;
-    padding: 13px 50px;
-    width: 100%;
-    height: 4vw;
-    box-sizing: border-box;
-  }
-
-  .search_icon {
-    width: 32px;
-    height: 32px;
-    margin-right: 18px;
-  }
-
-  .search_input {
-    flex: 1;
-    font-size: 22px;
-    padding: 12px 18px;
-    border: none;
-    background: transparent;
-    outline: none;
-    color: #111;
-  }
-
-  .search_input::placeholder {
-    color: #888;
-  }
-
-  /* PRODUCTS GRID
-#products-list {
-  display:grid;
-  grid-template-columns: repeat(12,1fr);
-  gap:40px;
-  margin:40px 104px;
-}
-.product-card { grid-column: span 4; background:#fff; border:1px solid #000; border-radius:6px; text-align:center; padding:10px; transition: transform 0.2s ease; position: relative; }
-.product-card img { width:100%; height:auto; border-radius:6px; object-fit:contain; margin:0 auto; display:block; transform: scale(1); transform-origin:center center; background:#f6f6f6; } */
-  #products-list {
-    column-count: 4;
-    /* desktop */
-    column-gap: 40px;
-    /* gutter */
-    margin: 0 104px;
-  }
-
-  .product-card {
-    display: inline-block;
-    width: 100%;
-    margin-bottom: 20px;
-    break-inside: avoid;
-    background: #fff;
-    border: 1px solid #000;
-    border-radius: 6px;
-    text-align: center;
-    padding: 10px;
-    transition: transform 0.2s ease;
-    position: relative;
-  }
-
-  .product-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 6px;
-    object-fit: contain;
-  }
-
-  .product-card h3 {
-    margin: 10px 0;
-    font-size: 18px;
-    color: #111;
-  }
-
-  .card-desc {
-    position: absolute;
-    left: 0;
-    bottom: 50%;
-    width: 100%;
-    height: 60%;
-    background: rgba(207, 200, 200, 0.6);
-    color: #fff;
-    padding: 24px 18px 18px 18px;
-    opacity: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    justify-content: center;
-    backdrop-filter: blur(4px);
-    transition: bottom 0.18s, opacity 0.18s;
-  }
-
-  .product-card:hover .card-desc {
-    bottom: 0;
-    opacity: 1;
-  }
-
-  /* FORM / FOOTER */
-  .form-container {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 30px;
-    max-width: 64vw;
-    margin: 0 auto;
-  }
-
-  .form-logo {
-    grid-column: span 4;
-  }
-
-  .form-box {
-    grid-column: span 8;
-  }
-
-  .form-box p {
-    margin-bottom: 20px;
-    font-size: 20px;
-    font-weight: 600;
-    color: #111;
-  }
-
-  .form-box form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .form-box input,
-  .form-box textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
-  }
-
-  .form-box textarea {
-    min-height: 100px;
-    resize: vertical;
-  }
-
-  .form-box .btn {
-    align-self: flex-end;
-    margin-top: 10px;
-    padding: 10px 30px;
-    font-size: 18px;
-  }
-
-  /* FOOTER */
-  footer {
-    text-align: center;
-    padding: 15px;
-    border-top: 1px solid rgba(51, 51, 51, 1);
-  }
-
-  .info_footer {
-    color: rgba(207, 200, 200, 0.6);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-evenly;
-    margin-left: 5vw;
-    border-top: 1px solid rgba(51, 51, 51, 0.3);
-    padding: 40px 0;
-  }
-
-  .desktop-footer {
-    display: flex;
-  }
-
-  .info_footer a {
-    color: rgba(0, 60, 170, 1);
-    text-decoration: underline;
-  }
-
-  .btn-nav:hover,
-  .btn_more:hover,
-  .btn:hover {
-    background-color: rgba(4, 52, 140, 1);
-    cursor: pointer;
-  }
-
-  /* MODALS */
-  #product-modal,
-  #share-modal,
-  #success-modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.45);
-    align-items: center;
-    justify-content: center;
-  }
-
-  #product-modal .modal-content,
-  #share-modal .modal-content,
-  #success-modal .modal-content {
-    background: #fff;
-    border-radius: 12px;
-    width: max-content;
-    padding: 5vw;
-    position: relative;
-  }
-
-  #modal-close,
-  #success-close {
-    position: absolute;
-    top: 12px;
-    right: 18px;
-    background: none;
-    border: none;
-    font-size: 28px;
-    cursor: pointer;
-  }
-
-  .modal-buttons {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 16vw;
-  }
-
-  .modal-button {
-    background: rgba(0, 60, 170, 1);
-    color: #fff;
-    padding: 10px 6vw;
-    border-radius: 10px;
-    text-decoration: none;
-    font-size: 20px;
-    display: inline-block;
-    border: 0;
-  }
-
-  .modal-button.transparent {
-    background: transparent !important;
-    color: rgba(0, 60, 170, 1) !important;
-    border: 1px solid rgba(0, 60, 170, 1) !important;
-  }
-
-  .product-card.highlight {
-    transform: scale(1.04);
-    border: 1px solid #003CAA;
-    box-shadow: 0px 4px 10px rgba(0, 60, 170, 0.3);
-    transition: all 0.3s ease;
-    z-index: 1;
-  }
-
-  .error {
-    color: red;
-    font-size: 14px;
-    margin-top: 4px;
-    text-align: -webkit-auto;
-  }
-
-  input.error,
-  textarea.error {
-    border: 1px solid red;
-  }
-
-  /* MEDIA QUERIES */
-  /* Tablet 768–1199px */
-  @media (max-width: 1199px) and (min-width: 768px) {
-    .hero {
-      gap: 32px;
-      margin: 0 24px;
+  <style>
+    /* ======= BASE ======= */
+    @font-face {
+      font-family: "Nunito";
+      src: url("./font/static/Nunito-Light.ttf");
     }
 
-    .hero .overlay {
-      grid-column: span 8;
+    :root {
+      --gutter: 40px;
+      --margin-x: 104px;
+      --header-height: 78px;
     }
 
-    .hero .promo {
-      grid-column: span 4;
+    /* Tablet */
+    @media (max-width:1199px) and (min-width:768px) {
+      :root {
+        --gutter: 32px;
+        --margin-x: 24px;
+        --header-height: 72px;
+      }
     }
 
-    #products-list {
-      column-count: 3;
-      column-gap: 32px;
-      margin: 0 24px;
+    /* Mobile */
+    @media (max-width:767px) {
+      :root {
+        --gutter: 14px;
+        --margin-x: 18px;
+        --header-height: 68px;
+      }
     }
 
-    .product-card {
-      grid-column: span 4;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Nunito, sans-serif;
     }
 
-    .form-logo {
-      grid-column: span 4;
+    body {
+      color: #111;
+      line-height: 1.4;
     }
 
-    .form-box {
-      grid-column: span 8;
+    /* ======= GLOBAL GRID (CONTENT) ======= */
+    .layout {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gutter);
+      padding-top: var(--header-height);
+      /* не наезжаем на fixed header */
     }
 
-    .nav {
-      display: none;
-      flex-direction: column;
-      position: absolute;
-      top: 100%;
-      right: 0;
-      width: 100%;
+    .row {
+      grid-column: 1 / -1;
+    }
+
+    /* Унифицированная внутренняя строка для всех секций (одинаковые поля и колонки) */
+    .content-row {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gutter);
+      padding-inline: var(--margin-x);
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    /* ======= HEADER (fixed) ======= */
+    header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: var(--header-height);
+      z-index: 100;
+      background: rgba(39, 37, 60, 1);
+      /* как в макете */
+      transition: background .2s ease-in-out;
+      display: flex;
+      /* <-- исправление! */
+      align-items: center;
+    }
+
+    header.scrolled {
       background: #0b1230;
     }
 
-    .nav.active {
+    /* Внутри хедера используем ту же "content-row" сетку */
+    .header-inner {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gutter);
+      padding-inline: var(--margin-x);
+      width: 100%;
+      align-items: center;
+    }
+
+    header .logo {
+      grid-column: 1 / span 2;
+      margin-left: 19%;
+      max-width: 100%;
+      height: auto;
+    }
+
+    header nav.nav {
+      grid-column: 3 / span 12;
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
     }
 
-    .burger {
-      display: block;
+    header .nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 20px;
+      /* margin-right: 1%; */
     }
-  }
 
-  /* Mobile ≤767px */
-  @media (max-width: 767px) {
+    .wrap-link {
+      display: flex;
+      gap: 2vw;
+    }
+
+    header .burger {
+      grid-column: 11 / span 2;
+      display: none;
+      cursor: pointer;
+      width: 32px;
+      height: 24px;
+      position: relative;
+    }
+
+    header .burger span {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: #fff;
+      transition: .3s;
+    }
+
+    header .burger span:nth-child(1) {
+      top: 0;
+    }
+
+    header .burger span:nth-child(2) {
+      top: 10px;
+    }
+
+    header .burger span:nth-child(3) {
+      top: 20px;
+    }
+
+    /* ======= BUTTONS ======= */
+    .btn,
+    .btn_more,
+    .btn-nav {
+      background: rgba(0, 60, 170, 1);
+      color: #fff;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 20px;
+      display: inline-block;
+      border: 0;
+    }
+
+    .btn {
+      padding: 4px 3.5vw;
+      margin-top: 4.5vw;
+    }
+
+    .btn_more {
+      padding: 10px 6vw;
+    }
+
+    .btn-nav {
+      padding: 10px 2.9vw;
+    }
+
+    .btn-nav:hover,
+    .btn_more:hover,
+    .btn:hover {
+      background-color: rgba(4, 52, 140, 1);
+      cursor: pointer;
+    }
+
+    /* ======= HERO ======= */
     .hero {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-      margin: 0 18px;
+      grid-column: 1 / -1;
+      position: relative;
+      color: #fff;
+      background: url('bc.png') center/cover no-repeat;
+      background-attachment: fixed;
+      /* ✅ фиксируем фон */
     }
 
-    .hero .overlay,
+    .hero-inner {
+      /* та же сетка и те же поля, что и у header */
+      min-height: 600px;
+      row-gap: var(--gutter);
+      align-items: start;
+      padding-top: calc(var(--gutter) + 30px);
+      padding-bottom: calc(96px + var(--gutter));
+      /* место под поиск */
+    }
+
+    .hero .overlay {
+      grid-column: 1 / span 5;
+      /* ЛЕВАЯ ГРАНИЦА = ЛОГО: колонка 1 той же сетки */
+      backdrop-filter: blur(4px);
+      background: rgba(37, 54, 112, 0.6);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      border-width: 0 0 3px 3px;
+      border-style: solid;
+      border-color: #003CAA;
+      max-height: 500px;
+      padding: 0;
+      font-family: Nunito;
+      font-weight: 200;
+      font-style: normal;
+      font-size: 44px;
+      line-height: 44px;
+      letter-spacing: -0.2px;
+      vertical-align: middle;
+
+    }
+
+    .hero .overlay-inner {
+      padding: 3rem;
+      /* внутренний отступ */
+    }
+
     .hero .promo {
-      grid-column: span 4;
+      grid-column: 7 / span 5;
+      /* справа на десктопе */
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .hero h1 {
+      font-size: 44px;
+      margin-bottom: 15px;
+    }
+
+    .hero .promo p {
+      backdrop-filter: blur(5px);
+      background: rgba(37, 54, 112, 0.6);
+      padding: 32px 97px;
+      border-radius: 8px;
+      font-size: 20px;
+      margin-bottom: 6vw;
+      border-width: 0 0 3px 3px;
+      border-style: solid;
+      border-color: #003CAA;
+      width: max-content;
+      max-width: 100%;
+    }
+
+    .hero .promo p:nth-child(1) {
+      align-self: flex-end;
+    }
+
+    .hero .promo p:nth-child(2) {
+      align-self: flex-start;
+    }
+
+    .hero .promo p:nth-child(3) {
+      align-self: flex-end;
+    }
+
+
+    .search_wrapper {
+      position: relative;
+      height: 64px;
+      /* чтобы в hero оставалось место под поиск */
+    }
+
+    /* SEARCH (снизу hero, выравнивание по тем же полям) */
+    .search_container {
+      position: absolute;
+      left: 50%;
+      bottom: 30px;
+      transform: translateX(-50%);
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      padding: 13px 7%;
+      height: 64px;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    /* Когда прилипает вниз */
+    .search_container.fixed {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      transform: none;
+      width: 100%;
+      z-index: 100;
+    }
+
+    .search_icon {
+      width: 32px;
+      height: 32px;
+      margin-right: 18px;
+    }
+
+    .search_input {
+      flex: 1;
+      font-size: 22px;
+      padding: 12px 18px;
+      border: none;
+      background: transparent;
+      outline: none;
+      color: #111;
+    }
+
+    .search_input::placeholder {
+      color: #888;
+    }
+
+    /* ======= FEATURES / PRODUCTS ======= */
+    .features {
+      grid-column: 1 / -1;
+      margin-top: 2.6vw;
     }
 
     #products-list {
-      column-count: 2;
-      column-gap: 14px;
-      margin: 0 18px;
+      column-count: 4;
+      column-gap: var(--gutter);
+      margin-inline: var(--margin-x);
     }
 
     .product-card {
-      grid-column: span 4;
+      display: inline-block;
+      width: 100%;
+      margin-bottom: 20px;
+      break-inside: avoid;
+      background: #fff;
+      border: 1px solid #000;
+      border-radius: 6px;
+      text-align: center;
+      padding: 10px;
+      transition: transform .2s ease;
+      position: relative;
     }
 
-    .form-container {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-      margin: 0 18px;
+    .product-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      object-fit: contain;
     }
 
-    .form-logo,
-    .form-box {
-      grid-column: span 4;
+    .product-card h3 {
+      margin: 10px 0;
+      font-size: 18px;
+      color: #111;
+    }
+
+    .card-desc {
+      position: absolute;
+      left: 0;
+      bottom: 50%;
+      width: 100%;
+      height: 60%;
+      background: rgba(207, 200, 200, 0.6);
+      color: #fff;
+      padding: 24px 18px 18px 18px;
+      opacity: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+      transition: bottom .18s, opacity .18s;
+    }
+
+    .product-card:hover .card-desc {
+      bottom: 0;
+      opacity: 1;
+    }
+
+    .product-card.highlight {
+      transform: scale(1.04);
+      border: 1px solid #003CAA;
+      box-shadow: 0 4px 10px rgba(0, 60, 170, .3);
+      transition: all .3s ease;
+      z-index: 1;
+    }
+
+    /* ======= FOOTER ======= */
+    footer {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 15px;
+      border-top: 1px solid rgba(51, 51, 51, 1);
+    }
+
+    .form-section.desktop-footer .form-container {
+      margin-inline: var(--margin-x);
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gutter);
+      row-gap: 30px;
+      max-width: 100%;
     }
 
     .form-logo {
-      text-align: center;
+      grid-column: 1 / span 4;
     }
 
-    .nav {
-      display: none;
+    .form-box {
+      grid-column: 5 / span 8;
+    }
+
+    .form-box p {
+      margin-bottom: 20px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #111;
+    }
+
+    .form-box form {
+      display: flex;
       flex-direction: column;
+      gap: 12px;
     }
 
-    .burger {
-      display: block;
+    .form-box input,
+    .form-box textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
     }
-  }
-</style>
 
-<body>
+    .form-box textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
 
+    .form-box .btn {
+      align-self: flex-end;
+      margin-top: 10px;
+      padding: 10px 30px;
+      font-size: 18px;
+    }
+
+    .info_footer {
+      color: rgba(207, 200, 200, 0.6);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-evenly;
+      margin-left: 5vw;
+      border-top: 1px solid rgba(51, 51, 51, .3);
+      padding: 40px 0;
+    }
+
+    .desktop-footer {
+      display: flex;
+    }
+
+    .info_footer a {
+      color: rgba(0, 60, 170, 1);
+      text-decoration: underline;
+    }
+
+    /* ======= MODALS ======= */
+    #product-modal,
+    #share-modal,
+    #success-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, .45);
+      align-items: center;
+      justify-content: center;
+    }
+
+    #product-modal .modal-content,
+    #share-modal .modal-content,
+    #success-modal .modal-content {
+      background: #fff;
+      border-radius: 12px;
+      width: max-content;
+      padding: 5vw;
+      position: relative;
+    }
+
+    #modal-close,
+    #success-close {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 16vw;
+    }
+
+    .modal-button {
+      background: rgba(0, 60, 170, 1);
+      color: #fff;
+      padding: 10px 6vw;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 20px;
+      display: inline-block;
+      border: 0;
+    }
+
+    .modal-button.transparent {
+      background: transparent !important;
+      color: rgba(0, 60, 170, 1) !important;
+      border: 1px solid rgba(0, 60, 170, 1) !important;
+    }
+
+    /* ======= ERRORS ======= */
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 4px;
+      text-align: -webkit-auto;
+    }
+
+    input.error,
+    textarea.error {
+      border: 1px solid red;
+    }
+
+    /* ======= MEDIA ======= */
+    /* Tablet 768–1199px */
+    @media (max-width:1199px) and (min-width:768px) {
+
+      /* header */
+      .header-inner {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+      }
+
+      header .logo {
+        grid-column: 1 / span 3;
+      }
+
+      header nav.nav {
+        grid-column: 4 / span 6;
+      }
+
+      header .burger {
+        grid-column: 11 / span 2;
+        display: block;
+      }
+
+      /* hero */
+      .hero-inner {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        min-height: 540px;
+      }
+
+      .hero .overlay {
+        grid-column: 1 / -1;
+      }
+
+      .hero .promo {
+        grid-column: 1 / -1;
+      }
+
+      /* products */
+      #products-list {
+        column-count: 3;
+      }
+    }
+
+    /* Mobile ≤767px */
+    @media (max-width:767px) {
+
+      /* header */
+      .header-inner {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      header .logo {
+        grid-column: 1 / span 2;
+      }
+
+      header nav.nav {
+        grid-column: 1 / span 3;
+        display: none;
+        flex-direction: column;
+      }
+
+      header .burger {
+        grid-column: 4 / span 1;
+        display: block;
+      }
+
+      /* hero */
+      .hero-inner {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        min-height: 520px;
+      }
+
+      .hero .overlay {
+        grid-column: 1 / -1;
+      }
+
+      .hero .promo {
+        grid-column: 1 / -1;
+      }
+
+      /* products */
+      #products-list {
+        column-count: 2;
+      }
+
+      /* footer form */
+      .form-section.desktop-footer .form-container {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        row-gap: 14px;
+      }
+
+      .form-logo {
+        grid-column: 1 / -1;
+        text-align: center;
+      }
+
+      .form-box {
+        grid-column: 1 / -1;
+      }
+    }
+  </style>
+</head>
+
+<body class="layout">
+  <!-- ======= FIXED HEADER ======= -->
   <header>
-    <div id="burger-overlay"></div>
-    <img src="./icon/netac_logo.png" />
-    <div class="burger" id="burger">
-      <span></span><span></span><span></span>
-    </div>
-    <nav class="nav">
-      <div class="wrap-link">
-        <a href="#">Продукты</a>
-        <a href="#">Контакты</a>
+    <div class="content-row header-inner">
+      <div id="burger-overlay"></div>
+      <img class="logo" src="./icon/netac_logo.png" alt="Netac" />
+      <div class="burger" id="burger">
+        <span></span><span></span><span></span>
       </div>
-      <a href="#" class="btn-nav">Подробнее</a>
-    </nav>
+      <nav class="nav">
+        <div class="wrap-link">
+          <a href="#">Продукты</a>
+          <a href="#">Контакты</a>
+        </div>
+        <a href="#" class="btn-nav">Подробнее</a>
+      </nav>
+    </div>
   </header>
 
-  <section class="hero">
-    <div class="overlay">
-      <h1>Netac: технологии для ритейла и ПВЗ — быстрее, удобнее, выгоднее</h1>
-      <p style="font-size: 30px;">Самообслуживание, удобное управление и консультирование</p>
-      <a href="#" class="btn">Получить предложение</a>
+  <!-- ======= HERO ======= -->
+  <section class="hero row">
+    <div class="content-row hero-inner">
+      <div class="overlay">
+        <div class="overlay-inner">
+          <h1>Netac: технологии для ритейла <br />и ПВЗ — быстрее,<br /> удобнее, выгоднее</h1>
+          <p style="font-size: 30px;">Самообслуживание, удобное управление <br />и консультирование</p>
+          <a href="#" class="btn">Получить предложение</a>
+        </div>
+      </div>
+      <div class="promo">
+        <p>OEM и брендинг</p>
+        <p>Гарантия 12 – 36 месяцев</p>
+        <p>Сервис по РФ и ЕАЭС</p>
+      </div>
     </div>
-    <div class="promo">
-      <p>OEM и брендинг</p>
-      <p>Гарантия 12 – 36 месяцев</p>
-      <p>Сервис по РФ и ЕАЭС</p>
     </div>
+
+
+
     <div class="search_container">
-      <img class="search_icon" src="./icon/search.svg" />
-      <input class="search_input" type="text" placeholder="">
+      <img class="search_icon" src="./icon/search.svg" alt="search" />
+      <input class="search_input" type="text" placeholder="Поиск">
     </div>
   </section>
 
-  <section class="features">
+  <!-- ======= FEATURES / PRODUCTS ======= -->
+  <section class="features row">
     <div id="products-list"></div>
   </section>
 
+  <!-- ======= MODALS ======= -->
   <div id="product-modal">
     <div class="modal-content">
       <button id="modal-close">×</button>
@@ -607,30 +730,30 @@
       <div style="display:flex; flex-direction:column; gap:10px; margin-top:15px;">
         <div class="sosial_network">
           <a><img src="./icon/share_icon/insta.png" alt="insta"></a>
-          <a><img src="./icon/share_icon/vk.png" /></a>
-          <a><img src="./icon/share_icon/tg.png" alt="insta" /></a>
-          <a><img src="./icon/share_icon/wa.png" alt="insta" /></a>
-          <a><img src="./icon/share_icon/ds.png" alt="insta" /></a>
-          <a><img src="./icon/share_icon/in.png" alt="insta" /></a>
+          <a><img src="./icon/share_icon/vk.png" alt="vk"></a>
+          <a><img src="./icon/share_icon/tg.png" alt="tg"></a>
+          <a><img src="./icon/share_icon/wa.png" alt="wa"></a>
+          <a><img src="./icon/share_icon/ds.png" alt="ds"></a>
+          <a><img src="./icon/share_icon/in.png" alt="in"></a>
         </div>
-        <button class="modal-button"><img src="./icon/bxs_copy.svg" />Скопировать</button>
-        <button class="modal-button"><img src="./icon/mynaui_save-solid.svg" />Сохранить в файлы</button>
-        <button class="modal-button"><img src="./icon/gg_google.svg" />Поиск в Google</button>
+        <button class="modal-button"><img src="./icon/bxs_copy.svg" alt="copy" />Скопировать</button>
+        <button class="modal-button"><img src="./icon/mynaui_save-solid.svg" alt="save" />Сохранить в файлы</button>
+        <button class="modal-button"><img src="./icon/gg_google.svg" alt="google" />Поиск в Google</button>
       </div>
     </div>
   </div>
+
   <div id="success-modal">
     <div class="modal-content">
       <button id="success-close">×</button>
       <h2>Ваши данные отправлены</h2>
-      <p style="margin:15px 0; font-size:18px;">
-        Мы уже обрабатываем запрос.
-      </p>
+      <p style="margin:15px 0; font-size:18px;">Мы уже обрабатываем запрос.</p>
       <button id="success-new" class="modal-button">Отправить ещё один запрос</button>
     </div>
   </div>
 
-  <footer>
+  <!-- ======= FOOTER ======= -->
+  <footer class="row">
     <!-- Десктоп-версия -->
     <section class="form-section desktop-footer">
       <div class="form-container">
@@ -641,17 +764,17 @@
           <p>Оставьте контакты — мы подберём решение</p>
           <form id="contact-form">
             <div class="form-group">
-              <input type="text" id="name" placeholder="Имя">
+              <input type="text" id="name" placeholder="Имя" />
               <div class="error" id="error-name"></div>
             </div>
 
             <div class="form-group">
-              <input type="tel" id="phone" placeholder="Контактный телефон">
+              <input type="tel" id="phone" placeholder="Контактный телефон" />
               <div class="error" id="error-phone"></div>
             </div>
 
             <div class="form-group">
-              <input type="email" id="email" placeholder="E-mail">
+              <input type="email" id="email" placeholder="E-mail" />
               <div class="error" id="error-email"></div>
             </div>
 
@@ -717,8 +840,6 @@
       <a href="mailto:info@netac.eu">info@netac.eu</a>
     </div>
   </footer>
-
-
   <script>
     document.getElementById('burger').addEventListener('click', () => {
       document.querySelector('.nav').classList.toggle('active');
@@ -1037,6 +1158,17 @@
         successModal.style.display = 'none';
       }
     });
+
+    const searchBar = document.querySelector('.search_container');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        searchBar.classList.add('fixed');
+      } else {
+        searchBar.classList.remove('fixed');
+      }
+    });
+
 
   </script>
 
