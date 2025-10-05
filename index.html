@@ -352,10 +352,11 @@
       background: #fff;
       border: 1px solid #000;
       border-radius: 6px;
-      text-align: center;
+      text-align: start;
       padding: 10px;
       transition: transform .2s ease;
       position: relative;
+      padding: 9%;
     }
 
     .product-card img {
@@ -366,28 +367,37 @@
     }
 
     .product-card h3 {
-      margin: 10px 0;
-      font-size: 18px;
-      color: #111;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 28px;
+      letter-spacing: -0.2px;
+      vertical-align: middle;
+
     }
 
     .card-desc {
       position: absolute;
       left: 0;
-      bottom: 50%;
+      bottom: 30%;
       width: 100%;
-      height: 60%;
+      height: min-content;
       background: rgba(207, 200, 200, 0.6);
-      color: #fff;
-      padding: 24px 18px 18px 18px;
+      color: #333333;
+      padding: 1vw 2vw;
       opacity: 0;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: start;
       gap: 12px;
       justify-content: center;
       backdrop-filter: blur(4px);
       transition: bottom .18s, opacity .18s;
+      font-weight: 400;
+      font-size: 20.42px;
+      line-height: 28.58px;
+      letter-spacing: -0.2px;
+      vertical-align: middle;
+
     }
 
     .product-card:hover .card-desc {
@@ -847,66 +857,102 @@
     const products = [
       {
         img: './product_photo/NETAC TM-21.png',
-        title: 'NETAC TM-21',
+        title: 'NETAC TM-21 — <br><b>Сенсорный монитор</b>',
         full_title: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Сенсорный монитор 21.5 здесь может быть html',
+        desc: `• IPS Full HD, 10 касаний<br>
+• USB-хаб, HDMI/VGA, динамики<br>
+• для касс, Digital-Signage, терминалов<br>
+• POS-ПО, интерактивные витрины<br>
+        `,
       },
       {
         img: './product_photo/NETAC NB-300_улучшен.png',
-        title: 'NETAC NB-300',
+        title: 'NETAC NB-300 <br><b>Компактная и мощная портативная электростанция</b>',
         full_title: 'NETAC NB-300',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Компактная и мощная портативная электростанция',
+        desc: `• IPS Full HD, 10 касаний<br>
+• USB-хаб, HDMI/VGA, динамики<br>
+• для касс, Digital-Signage, терминалов<br>
+• POS-ПО, интерактивные витрины<br>
+        `,
       },
       {
         img: 'product_photo/высокий 3.png',
-        title: 'PP 303',
+        title: 'PP 606 <br><b>Терминал самообслуживания для ПВЗ</b>',
         full_title: 'PP 303',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Мини-терминал самообслуживания для ПВЗ',
+        desc: `• IPS Full HD, 10 касаний<br>
+• USB-хаб, HDMI/VGA, динамики<br>
+• для касс, Digital-Signage, терминалов<br>
+• POS-ПО, интерактивные витрины<br>
+        `,
       },
       {
-        img: './product_photo/NETAC NB-300_улучшен.png',
+        img: './product_photo/высокий 1_улучшен.png',
         title: 'NETAC NB-300',
         full_title: 'NETAC NB-300',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Компактная и мощная портативная электростанция',
+        desc: `• IPS Full HD, 10 касаний<br>
+• USB-хаб, HDMI/VGA, динамики<br>
+• для касс, Digital-Signage, терминалов<br>
+• POS-ПО, интерактивные витрины<br>
+        `,
       },
       {
         img: '/product_photo/высокий 3.png',
         title: 'PP 303',
         full_title: 'PP 303',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Мини-терминал самообслуживания для ПВЗ',
+        desc: `• IPS Full HD, 10 касаний<br>
+• USB-хаб, HDMI/VGA, динамики<br>
+• для касс, Digital-Signage, терминалов<br>
+• POS-ПО, интерактивные витрины<br>
+        `,
       },
       {
         img: './product_photo/NETAC TM-21.png',
         title: 'NETAC TM-21',
         full_title: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Сенсорный монитор 21.5 здесь может быть html',
+        desc: `• IPS Full HD, 10 касаний<br>
+• USB-хаб, HDMI/VGA, динамики<br>
+• для касс, Digital-Signage, терминалов<br>
+• POS-ПО, интерактивные витрины<br>
+        `,
       },
       {
         img: './product_photo/NETAC NB-300_улучшен.png',
         title: 'NETAC NB-300',
         full_title: 'NETAC NB-300',
         full_desc: 'NETAC NB-300 - <b>портативная электростанция</b>',
-        desc: 'Компактная и мощная портативная электростанция',
+        desc: `• IPS Full HD, 10 касаний<br>
+• USB-хаб, HDMI/VGA, динамики<br>
+• для касс, Digital-Signage, терминалов<br>
+• POS-ПО, интерактивные витрины<br>
+        `,
       },
       {
         img: 'product_photo/высокий 3.png',
         title: 'PP 303',
         full_title: 'PP 303',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Мини-терминал самообслуживания для ПВЗ',
+        desc: `• IPS Full HD, 10 касаний
+ • USB-хаб, HDMI/VGA, динамики
+ • для касс, Digital-Signage, терминалов
+ • POS-ПО, интерактивные витрины
+        `,
       },
       {
         img: './product_photo/NETAC NB-300_улучшен.png',
         title: 'NETAC NB-300',
         full_title: 'NETAC NB-300',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Компактная и мощная портативная электростанция',
+        desc: `• IPS Full HD, 10 касаний<br>
+• USB-хаб, HDMI/VGA, динамики<br>
+• для касс, Digital-Signage, терминалов<br>
+• POS-ПО, интерактивные витрины<br>
+        `,
       },
       {
         img: '/product_photo/высокий 3.png',
@@ -937,9 +983,11 @@
       list.innerHTML = items.map((p, idx) => `
       <div class="product-card">
         <img src="${p.img}" alt="${p.title}" />
-        <h3>${p.title}</h3>
+        <p>${p.title}</p>
+        
         <div class="card-desc">
-          <p>${p.desc}</p>
+          <p class="title">${p.full_title}</p>
+          <p class="desc">${p.desc}</p>
           <button class="btn btn_more" type="button" data-index="${idx}">Подробнее</button>
         </div>
       </div>
