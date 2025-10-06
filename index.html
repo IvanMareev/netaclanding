@@ -2,20 +2,46 @@
 <html lang="ru">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Netac</title>
+
   <style>
+    /* ======= BASE ======= */
     @font-face {
       font-family: "Nunito";
       src: url("./font/static/Nunito-Light.ttf");
     }
 
+    :root {
+      --gutter: 40px;
+      --margin-x: 104px;
+      --header-height: 78px;
+    }
+
+    /* Tablet */
+    @media (max-width:1199px) and (min-width:768px) {
+      :root {
+        --gutter: 32px;
+        --margin-x: 24px;
+        --header-height: 72px;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width:767px) {
+      :root {
+        --gutter: 14px;
+        --margin-x: 18px;
+        --header-height: 68px;
+      }
+    }
+
     * {
-      font-family: Nunito, sans-serif;
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      font-family: Nunito, sans-serif;
     }
 
     body {
@@ -23,97 +49,203 @@
       line-height: 1.4;
     }
 
+    /* ======= GLOBAL GRID (CONTENT) ======= */
+    .layout {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gutter);
+      padding-top: var(--header-height);
+      /* не наезжаем на fixed header */
+    }
+
+    .row {
+      grid-column: 1 / -1;
+    }
+
+    /* Унифицированная внутренняя строка для всех секций (одинаковые поля и колонки) */
+    .content-row {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gutter);
+      padding-inline: var(--margin-x);
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    /* ======= HEADER (fixed) ======= */
     header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: var(--header-height);
+      z-index: 100;
+      background: rgba(39, 37, 60, 1);
+      /* как в макете */
+      transition: background .2s ease-in-out;
+      display: flex;
+      /* <-- исправление! */
+      align-items: center;
+    }
+
+    header.scrolled {
       background: #0b1230;
-      color: #fff;
-      padding: 15px 40px;
+    }
+
+    /* Внутри хедера используем ту же "content-row" сетку */
+    .header-inner {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gutter);
+      padding-inline: var(--margin-x);
+      width: 100%;
+      align-items: center;
+    }
+
+    header .logo {
+      grid-column: 1 / span 2;
+      margin-left: 19%;
+      max-width: 100%;
+      height: auto;
+    }
+
+    header nav.nav {
+      grid-column: 3 / span 12;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 20px;
     }
 
-
-
-    header nav a {
+    header .nav a {
       color: #fff;
       text-decoration: none;
-      margin-left: 20px;
       font-size: 20px;
-    }
-
-    .nav {
-      display: flex;
-      align-content: center;
-      align-items: center;
-      width: 100%;
+      /* margin-right: 1%; */
     }
 
     .wrap-link {
-      white-space: nowrap;
-      margin-right: 67vw;
+      display: flex;
+      gap: 2vw;
+    }
+
+    header .burger {
+      grid-column: 11 / span 2;
+      display: none;
+      cursor: pointer;
+      width: 32px;
+      height: 24px;
+      position: relative;
+    }
+
+    header .burger span {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: #fff;
+      transition: .3s;
+    }
+
+    header .burger span:nth-child(1) {
+      top: 0;
+    }
+
+    header .burger span:nth-child(2) {
+      top: 10px;
+    }
+
+    header .burger span:nth-child(3) {
+      top: 20px;
+    }
+
+    /* ======= BUTTONS ======= */
+    .btn,
+    .btn_more,
+    .btn-nav {
+      align-self: center;
+      background: rgba(0, 60, 170, 1);
+      color: #fff;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 20px;
+      display: inline-block;
+      border: 0;
     }
 
     .btn {
-      background: rgba(0, 60, 170, 1);
-      color: #fff;
-      padding: 10px 6vw;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 20px;
-      display: inline-block;
-      margin-top: 4.5vw;
-      border: 0;
-    }
-
-
-
-    .btn_more,
-    .btn-nav {
-      background: rgba(0, 60, 170, 1);
-      color: #fff;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 20px;
-      display: inline-block;
-      border: 0;
+      padding: 4px 3.5vw;
     }
 
     .btn_more {
-      padding: 10px 6vw;
+      padding: 0.5vw 3vw;
     }
 
     .btn-nav {
       padding: 10px 2.9vw;
     }
 
-    /* HERO */
+    .btn-nav:hover,
+    .btn_more:hover,
+    .btn:hover {
+      background-color: rgba(4, 52, 140, 1);
+      cursor: pointer;
+    }
+
+    /* ======= HERO ======= */
     .hero {
-      background: url('bc.png') center/cover no-repeat;
-      min-height: 600px;
+      grid-column: 1 / -1;
       position: relative;
       color: #fff;
-      display: flex;
-      align-items: flex-start;
-      justify-content: flex-start;
-      padding: 40px;
-      gap: 30px;
-      flex-wrap: wrap;
+      background: url('bc.png') center/cover no-repeat;
+      background-attachment: fixed;
+      /* ✅ фиксируем фон */
+    }
+
+    .hero-inner {
+      /* та же сетка и те же поля, что и у header */
+      min-height: 600px;
+      row-gap: var(--gutter);
+      align-items: start;
+      padding-top: calc(var(--gutter) + 30px);
+      padding-bottom: calc(96px + var(--gutter));
+      /* место под поиск */
     }
 
     .hero .overlay {
+      grid-column: 1 / span 5;
+      /* ЛЕВАЯ ГРАНИЦА = ЛОГО: колонка 1 той же сетки */
       backdrop-filter: blur(4px);
       background: rgba(37, 54, 112, 0.6);
-      padding: 2.5vw 15vw 2.5vw 2.5vw;
       border-radius: 12px;
       display: flex;
       flex-direction: column;
-      width: 55vw;
-      min-height: 25vw;
       align-items: flex-start;
-      justify-content: space-between;
+      justify-content: flex-start;
       border-width: 0 0 3px 3px;
       border-style: solid;
       border-color: #003CAA;
+      max-height: 500px;
+      padding: 0;
+      font-family: Nunito;
+      font-weight: 200;
+      font-style: normal;
+      font-size: 44px;
+      line-height: 44px;
+      letter-spacing: -0.2px;
+      vertical-align: middle;
+
+    }
+
+    .hero .overlay-inner {
+      padding: 3rem;
+      /* внутренний отступ */
+    }
+
+    .hero .promo {
+      grid-column: 7 / span 5;
+      /* справа на десктопе */
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
 
     .hero h1 {
@@ -121,15 +253,7 @@
       margin-bottom: 15px;
     }
 
-    .promo {
-      display: flex;
-      flex-direction: column;
-      gap: 10мц;
-      flex: 1;
-    }
-
-    .promo p {
-      white-space: nowrap;
+    .hero .promo p {
       backdrop-filter: blur(5px);
       background: rgba(37, 54, 112, 0.6);
       padding: 32px 97px;
@@ -139,36 +263,59 @@
       border-width: 0 0 3px 3px;
       border-style: solid;
       border-color: #003CAA;
+      width: max-content;
+      max-width: 100%;
     }
 
-    .promo p:nth-child(1) {
+    .hero .promo p:nth-child(1) {
       align-self: flex-end;
     }
 
-    .promo p:nth-child(2) {
+    .hero .promo p:nth-child(2) {
       align-self: flex-start;
     }
 
-    .promo p:nth-child(3) {
+    .hero .promo p:nth-child(3) {
       align-self: flex-end;
     }
 
-    /* SEARCH */
+
+    .search_wrapper {
+
+      position: relative;
+      height: 64px;
+      /* чтобы в hero оставалось место под поиск */
+    }
+
+    /* SEARCH (снизу hero, выравнивание по тем же полям) */
     .search_container {
+
       position: absolute;
-      bottom: 30px;
       left: 50%;
+      bottom: 30px;
       transform: translateX(-50%);
-      background-color: rgba(255, 255, 255, 0.9);
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
       display: flex;
       align-items: center;
-      padding: 13px 50px;
+      padding: 13px 7%;
+      height: 64px;
       box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    /* Когда прилипает вниз */
+    .search_container.fixed {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      transform: none;
       width: 100%;
-      height: 10%;
+      z-index: 100;
     }
 
     .search_icon {
+      margin-left: 1%;
       width: 32px;
       height: 32px;
       margin-right: 18px;
@@ -188,108 +335,115 @@
       color: #888;
     }
 
-    /* FEATURES (Masonry Layout) */
-    #products-list {
-      column-count: 3;
-      column-gap: 20px;
-      max-width: 100vw;
-      width: 80%;
-      margin-top: 4vw;
-      margin-left: 8.6vw;
+    /* ======= FEATURES / PRODUCTS ======= */
+    .features {
+      margin-left: 2.5%;
+      grid-column: 1 / -1;
+      margin-top: 2.6vw;
+    }
 
+    #products-list {
+      column-count: 4;
+      column-gap: var(--gutter);
+      margin-inline: var(--margin-x);
     }
 
     .product-card {
-      position: relative;
       display: inline-block;
-      margin-bottom: 20px;
       width: 100%;
+      margin-bottom: 20px;
       break-inside: avoid;
-      border: 1px solid #000;
-      padding: 10px;
       background: #fff;
-      text-align: center;
-      transition: transform 0.2s ease;
-
+      border: 1px solid #000;
+      text-align: start;
+      padding: 10px;
+      transition: transform .2s ease;
+      position: relative;
+      padding: 9%;
     }
-
-    .product-card:hover .card-desc,
-    .product-card .card-desc:hover {
-      bottom: 0;
-      opacity: 1;
-    }
-
 
     .product-card img {
       width: 100%;
       height: auto;
       border-radius: 6px;
-      background: #f6f6f6;
       object-fit: contain;
-      margin: 0 auto;
-      display: block;
-      transform: scale(1);
-      /* уменьшим картинку в 2 раза */
-      transform-origin: center center;
-      /* точка масштабирования */
-
     }
-
 
     .product-card h3 {
-      margin: 10px 0;
-      font-size: 18px;
-      color: #111;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 28px;
+      letter-spacing: -0.2px;
+      vertical-align: middle;
+
     }
 
-    .product-card p {
-      font-size: 1.5vw;
-      color: #000000;
-    }
-
-    @media screen and (max-width: 992px) {
-      #products-list {
-        column-count: 3;
-      }
-    }
-
-    @media screen and (max-width: 768px) {
-      #products-list {
-        column-count: 2;
-      }
-    }
-
-    @media screen and (max-width: 480px) {
-      #products-list {
-        column-count: 1;
-      }
-    }
-
-    /* FORM */
-    .form-section {
-      background: #fff;
-      padding: 60px 40px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .form-container {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      max-width: 64vw;
+    .card-desc {
+      pointer-events: none;
+      position: absolute;
+      left: 0;
+      bottom: -100%;
       width: 100%;
-      gap: 30vw;
+      height: min-content;
+      background: rgba(207, 200, 200, 0.6);
+      color: #333333;
+      padding: 1vw 2vw;
+      opacity: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: 12px;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+      transition: bottom .18s, opacity .18s;
+      font-weight: 400;
+      font-size: 1.1vw;
+      line-height: 1.4vw;
+      letter-spacing: -0.2px;
+      vertical-align: middle;
+
     }
 
-    .form-logo img {
-      width: 3vw;
-      max-width: 200px;
-      height: auto;
+    .product-card:hover .card-desc {
+      bottom: 0;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .product-card.highlight {
+      transform: scale(1.04);
+      border: 1px solid #003CAA;
+      box-shadow: 0 4px 10px rgba(0, 60, 170, .3);
+      transition: all .3s ease;
+      z-index: 1;
+    }
+
+    /* ======= FOOTER ======= */
+    footer {
+      background-color: rgba(255, 253, 253, 1);
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 30px;
+      border-top: 0.1px solid rgba(51, 51, 51, 1);
+    }
+
+    .form-section.desktop-footer .form-container {
+
+      margin-inline: var(--margin-x);
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gutter);
+      row-gap: 30px;
+      max-width: 100%;
+    }
+
+    .form-logo {
+      margin-left: 43%;
+      grid-column: 1 / span 1;
     }
 
     .form-box {
-      flex: 1;
+      grid-column: 12 / span 12;
     }
 
     .form-box p {
@@ -326,42 +480,48 @@
       font-size: 18px;
     }
 
-    .card-desc {
-      backdrop-filter: blur(4px);
-      position: absolute;
-      left: 0;
-      bottom: -50%;
-      width: 100%;
-      height: 60%;
-      background: rgba(207, 200, 200, 0.6);
-      color: #fff;
-      padding: 24px 18px 18px 18px;
-      opacity: 0;
-      pointer-events: none;
-      transition: bottom 0.18s cubic-bezier(.4, 0, .2, 1), opacity 0.18s cubic-bezier(.4, 0, .2, 1);
+    .info_footer {
+      color: rgba(207, 200, 200, 0.6);
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      justify-content: center;
-      box-sizing: border-box;
+      align-items: flex-start;
+      justify-content: space-evenly;
+      margin-left: 5vw;
+      border-top: 1px solid rgba(51, 51, 51, .3);
+      padding: 40px 20px;
+      margin-top: 40px;
     }
 
-    .product-card:hover .card-desc {
-      bottom: 0;
-      opacity: 1;
+    .desktop-footer {
+      display: flex;
     }
 
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 15px;
-      border-top: 1px solid rgba(51, 51, 51, 1);
+    .modal-button-share {
+      cursor: pointer;
+      background-color: transparent;
+      color: black;
+      border: 1px solid black;
+      border-radius: 12px;
+      padding: 0.5vw 10px 0.5vw 1vw !important;
+      display: flex;
+      flex-direction: row;
+      width: 30vw;
     }
 
+    .modal-button-share:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 60, 170, .3);
+      
+    }
+    .info_footer a {
+      color: rgba(0, 60, 170, 1);
+      text-decoration: underline;
+    }
 
-
-    #product-modal {
+    /* ======= MODALS ======= */
+    #product-modal,
+    #share-modal,
+    #success-modal {
       display: none;
       position: fixed;
       z-index: 1000;
@@ -369,20 +529,36 @@
       top: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.45);
+      background: rgba(0, 0, 0, .45);
       align-items: center;
       justify-content: center;
     }
 
-    #product-modal .modal-content {
+    .sosial_network {
+      display: flex;
+      gap: 1.3vw;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+    }
+
+    .sosial_network a img {
+      width: 3vw;
+      height: 3vw;
+    }
+
+    #product-modal .modal-content,
+    #share-modal .modal-content,
+    #success-modal .modal-content {
       background: #fff;
-      border-radius: 12px;
       width: max-content;
-      padding: 5vw;
+      padding: 3vw 10vw;
       position: relative;
     }
 
-    #modal-close {
+    #modal-close,
+    #success-close,
+    #share-close {
       position: absolute;
       top: 12px;
       right: 18px;
@@ -393,18 +569,11 @@
     }
 
     .modal-buttons {
-      box-sizing: border-box;
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
       justify-content: center;
       margin-top: 16vw;
-    }
-
-    .transparent {
-      background-color: transparent !important;
-      color: rgba(0, 60, 170, 1) !important;
-      border: rgba(0, 60, 170, 1) solid 1px !important;
     }
 
     .modal-button {
@@ -418,157 +587,178 @@
       border: 0;
     }
 
-    .info_footer {
-      color: rgba(207, 200, 200, 0.6);
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: space-evenly;
-      margin-left: 5vw;
-      border-top: 1px solid rgba(51, 51, 51, 0.3);
-      padding: 40px 0px;
-    }
-
-
-
-    .info_footer a {
+    .modal-button.transparent {
+      background: transparent !important;
       color: rgba(0, 60, 170, 1) !important;
-      text-decoration: underline;
-
+      border: 1px solid rgba(0, 60, 170, 1) !important;
     }
 
-    .btn-nav:hover,
-    .btn_more:hover,
-    .btn:hover {
-      background-color: rgba(4, 52, 140, 1) !important;
-      cursor: pointer;
+    /* ======= ERRORS ======= */
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 4px;
+      text-align: -webkit-auto;
     }
 
-    /* --- мобильная адаптивность --- */
-    @media screen and (max-width: 768px) {
-      header {
-        position: relative;
+    input.error,
+    textarea.error {
+      border: 1px solid red;
+    }
+
+    /* ======= MEDIA ======= */
+    /* Tablet 768–1199px */
+    @media (max-width:1199px) and (min-width:768px) {
+
+      /* header */
+      .header-inner {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
       }
 
-      /* скрываем меню, показываем бургер */
-      .nav {
-        display: none;
-        flex-direction: column;
-        background: #0b1230;
-        position: absolute;
-        top: 100%;
-        right: 0;
-        width: 100%;
+      header .logo {
+        grid-column: 1 / span 3;
       }
 
-      .nav.active {
-        display: flex;
+      header nav.nav {
+        grid-column: 4 / span 6;
       }
 
-      .burger {
+      header .burger {
+        grid-column: 11 / span 2;
         display: block;
-        cursor: pointer;
-        width: 32px;
-        height: 24px;
-        position: relative;
       }
 
-      .burger span {
-        position: absolute;
-        height: 3px;
-        width: 100%;
-        background: #fff;
-        left: 0;
-        transition: 0.3s;
-      }
-
-      .burger span:nth-child(1) {
-        top: 0;
-      }
-
-      .burger span:nth-child(2) {
-        top: 10px;
-      }
-
-      .burger span:nth-child(3) {
-        top: 20px;
-      }
-
-      /* hero блоки друг под другом */
-      .hero {
-        flex-direction: column;
-        align-items: stretch;
+      /* hero */
+      .hero-inner {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        min-height: 540px;
       }
 
       .hero .overlay {
-        width: 100%;
+        grid-column: 1 / -1;
       }
 
-      .promo {
-        order: 2;
-        /* ниже overlay */
-        width: 100%;
+      .hero .promo {
+        grid-column: 1 / -1;
       }
 
-      /* товары в 2 колонки */
+      /* products */
       #products-list {
-        column-count: 2;
-        margin-left: auto;
-        margin-right: auto;
-        width: 95%;
-      }
-
-      .search_container {
-        height: 40px;
+        column-count: 3;
       }
     }
 
-    /* совсем маленькие (телефон в портрете) */
-    @media screen and (max-width: 480px) {
+    /* Mobile ≤767px */
+    @media (max-width:767px) {
+
+      /* header */
+      .header-inner {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      header .logo {
+        grid-column: 1 / span 2;
+      }
+
+      header nav.nav {
+        grid-column: 1 / span 3;
+        display: none;
+        flex-direction: column;
+      }
+
+      header .burger {
+        grid-column: 4 / span 1;
+        display: block;
+      }
+
+      /* hero */
+      .hero-inner {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        min-height: 520px;
+      }
+
+      .hero .overlay {
+        grid-column: 1 / -1;
+      }
+
+      .hero .promo {
+        grid-column: 1 / -1;
+      }
+
+      /* products */
       #products-list {
-        column-count: 1;
+        column-count: 2;
+      }
+
+      /* footer form */
+      .form-section.desktop-footer .form-container {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        row-gap: 14px;
+      }
+
+      .form-logo {
+        grid-column: 1 / -1;
+        text-align: center;
+      }
+
+      .form-box {
+        grid-column: 1 / -1;
       }
     }
   </style>
 </head>
 
-<body>
-
+<body class="layout">
+  <!-- ======= FIXED HEADER ======= -->
   <header>
-    <img src="./icon/netac_logo.png" />
-    <div class="burger" id="burger">
-      <span></span><span></span><span></span>
-    </div>
-    <nav class="nav">
-      <div class="wrap-link">
-        <a href="#">Продукты</a>
-        <a href="#">Контакты</a>
+    <div class="content-row header-inner">
+      <div id="burger-overlay"></div>
+      <img class="logo" src="./icon/netac_logo.png" alt="Netac" />
+      <div class="burger" id="burger">
+        <span></span><span></span><span></span>
       </div>
-      <a href="#" class="btn-nav">Подробнее</a>
-    </nav>
+      <nav class="nav">
+        <div class="wrap-link">
+          <a href="#">Продукты</a>
+          <a href="#">Контакты</a>
+        </div>
+        <a href="#" class="btn-nav">Подробнее</a>
+      </nav>
+    </div>
   </header>
 
-  <section class="hero">
-    <div class="overlay">
-      <h1>Netac: технологии для ритейла и ПВЗ — быстрее, удобнее, выгоднее</h1>
-      <p style="font-size: 30px;">Самообслуживание, удобное управление и консультирование</p>
-      <a href="#" class="btn">Получить предложение</a>
+  <!-- ======= HERO ======= -->
+  <section class="hero row">
+    <div class="content-row hero-inner">
+      <div class="overlay">
+        <div class="overlay-inner">
+          <h1>Netac: технологии для ритейла <br />и ПВЗ — быстрее,<br /> удобнее, выгоднее</h1>
+          <p style="font-size: 30px;">Самообслуживание, удобное управление <br />и консультирование</p>
+          <a href="#" class="btn">Получить предложение</a>
+        </div>
+      </div>
+      <div class="promo">
+        <p>OEM и брендинг</p>
+        <p>Гарантия 12 – 36 месяцев</p>
+        <p>Сервис по РФ и ЕАЭС</p>
+      </div>
     </div>
-    <div class="promo">
-      <p>OEM и брендинг</p>
-      <p>Гарантия 12 – 36 месяцев</p>
-      <p>Сервис по РФ и ЕАЭС</p>
     </div>
+
+
+
     <div class="search_container">
-      <img class="search_icon" src="./icon/search.svg" />
-      <input class="search_input" type="text" placeholder="">
+      <img class="search_icon" src="./icon/search.svg" alt="search" />
+      <input class="search_input" type="text" placeholder="Поиск">
     </div>
   </section>
 
-  <section class="features">
+  <!-- ======= FEATURES / PRODUCTS ======= -->
+  <section class="features row">
     <div id="products-list"></div>
   </section>
 
+  <!-- ======= MODALS ======= -->
   <div id="product-modal">
     <div class="modal-content">
       <button id="modal-close">×</button>
@@ -576,109 +766,232 @@
       <div id="modal-desc" style="margin-top:15px; font-size:18px;"></div>
       <div class="modal-buttons" style="margin-top:78px; display:flex; gap:12px;">
         <button class="modal-button"> Сохранить в PDF</button>
-        <button class="modal-button transparent"> Поделиться</button>
+        <button class="modal-button transparent" id="share-btn"> Поделиться</button>
         <button class="modal-button">Подобрать</button>
       </div>
     </div>
   </div>
 
+  <div id="share-modal">
+    <div class="modal-content">
+      <button id="share-close">×</button>
+      <div style="display:flex; flex-direction:column; gap:10px; margin-top:15px;">
+        <div class="sosial_network">
+          <a><img src="./icon/share_icon/insta.png" alt="insta"></a>
+          <a><img src="./icon/share_icon/vk.png" alt="vk"></a>
+          <a><img src="./icon/share_icon/tg.png" alt="tg"></a>
+          <a><img src="./icon/share_icon/wa.png" alt="wa"></a>
+          <a><img src="./icon/share_icon/ds.png" alt="ds"></a>
+          <a><img src="./icon/share_icon/in.png" alt="in"></a>
+        </div>
+        <button class="modal-button-share"><img src="./icon/bxs_copy.svg" alt="copy" />Скопировать</button>
+        <button class="modal-button-share"><img src="./icon/mynaui_save-solid.svg" alt="save" />Сохранить в
+          файлы</button>
+        <button class="modal-button-share"><img src="./icon/gg_google.svg" alt="google" />Поиск в Google</button>
+      </div>
+    </div>
+  </div>
 
+  <div id="success-modal">
+    <div class="modal-content">
+      <button id="success-close">×</button>
+      <h2>Ваши данные отправлены</h2>
+      <p style="margin:15px 0; font-size:18px;">Мы уже обрабатываем запрос.</p>
+      <button id="success-new" class="modal-button">Отправить ещё один запрос</button>
+    </div>
+  </div>
 
-  <footer id="main-footer" style="display:none; position:fixed; left:0; right:0; bottom:0; background:#fff; z-index:2000; box-shadow:0 -2px 12px rgba(0,0,0,0.12);">
-    <section class="form-section">
+  <!-- ======= FOOTER ======= -->
+  <footer class="row">
+    <!-- Десктоп-версия -->
+    <section class="form-section desktop-footer">
       <div class="form-container">
         <div class="form-logo">
           <img src="./icon/netac_logo_blue.png" alt="Netac logo" />
         </div>
         <div class="form-box">
           <p>Оставьте контакты — мы подберём решение</p>
-          <form id="feedback-form">
-            <input type="text" placeholder="Имя" required>
-            <input type="text" placeholder="Контактный телефон" required>
-            <input type="email" placeholder="E-mail" required>
-            <textarea placeholder="Сообщение (необязательно)"></textarea>
-            <button type="submit" class="btn" style="position:sticky; bottom:0;">Подобрать</button>
+          <form id="contact-form">
+            <div class="form-group">
+              <input type="text" id="name" placeholder="Имя" />
+              <div class="error" id="error-name"></div>
+            </div>
+
+            <div class="form-group">
+              <input type="tel" id="phone" placeholder="Контактный телефон" />
+              <div class="error" id="error-phone"></div>
+            </div>
+
+            <div class="form-group">
+              <input type="email" id="email" placeholder="E-mail" />
+              <div class="error" id="error-email"></div>
+            </div>
+
+            <div class="form-group">
+              <textarea id="message" placeholder="Сообщение (необязательно)"></textarea>
+            </div>
+
+            <button type="submit" class="btn">Подобрать</button>
           </form>
         </div>
       </div>
     </section>
+
+    <!-- Mobile / Tablet — шторка -->
+    <!-- <div id="footer-swipe-zone"></div>
+    <div id="footer-sheet" data-state="closed">
+      <div class="sheet-backdrop" data-close></div>
+      <div class="sheet-panel">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+          <div class="sheet-title">Оставьте контакты — мы подберём решение</div>
+        </div>
+        <div class="sheet-content">
+          <form id="contact-form">
+            <div class="form-group">
+              <input type="text" id="name" placeholder="Имя">
+              <div class="error" id="error-name"></div>
+            </div>
+
+            <div class="form-group">
+              <input type="tel" id="phone" placeholder="Контактный телефон">
+              <div class="error" id="error-phone"></div>
+            </div>
+
+            <div class="form-group">
+              <input type="email" id="email" placeholder="E-mail">
+              <div class="error" id="error-email"></div>
+            </div>
+
+            <div class="form-group">
+              <textarea id="message" placeholder="Сообщение (необязательно)"></textarea>
+            </div>
+
+            <button type="submit" class="btn">Подобрать</button>
+          </form>
+
+          <div id="form-success" class="sheet-success" style="display:none;">
+            <h3>Данные отправлены</h3>
+          </div>
+        </div>
+        <div class="sheet-actions">
+          <button type="button" data-close>Закрыть</button>
+          <button type="submit" form="contact-form">Подобрать</button>
+        </div>
+      </div>
+    </div> -->
+
     <div class="info_footer">
-      <h1></h1>
-      <p>Copyright © 2025 Netac Technology Co.,Ltd All rights reserved <a
-          href="https://beian.miit.gov.cn/">粤ICP备11101098号-3</a></p>
-      <a href="mailto:info@netac.eu" style="color:#fff;">info@netac.eu</a>
+      <p>
+        Copyright © 2025 Netac Technology Co.,Ltd All rights reserved
+        <a href="https://beian.miit.gov.cn/">粤ICP备11101098号-3</a>
+      </p>
+      <a href="mailto:info@netac.eu">info@netac.eu</a>
     </div>
-    <div id="footer-confirm" style="display:none; position:absolute; left:0; right:0; bottom:0; background:#e6f7e6; color:#111; font-size:20px; padding:30px; text-align:center;">Данные отправлены</div>
   </footer>
-
   <script>
-
     document.getElementById('burger').addEventListener('click', () => {
       document.querySelector('.nav').classList.toggle('active');
     });
     const products = [
       {
         img: './product_photo/NETAC TM-21.png',
-        title: 'NETAC TM-21',
+        title: 'NETAC TM-21 — <br><b>Сенсорный монитор</b>',
         full_title: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Сенсорный монитор 21.5 здесь может быть html',
+        desc: `• IPS Full HD, 10 касаний<br>
+• USB-хаб, HDMI/VGA, динамики<br>
+• для касс, Digital-Signage, терминалов<br>
+• POS-ПО, интерактивные витрины<br>
+        `,
       },
       {
         img: './product_photo/NETAC NB-300_улучшен.png',
-        title: 'NETAC NB-300',
+        title: 'NETAC NB-300 <br><b>Компактная и мощная портативная электростанция</b>',
         full_title: 'NETAC NB-300',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Компактная и мощная портативная электростанция',
+        desc: `• IPS Full HD, 10 касаний<br>
+• USB-хаб, HDMI/VGA, динамики<br>
+• для касс, Digital-Signage, терминалов<br>
+• POS-ПО, интерактивные витрины<br>
+        `,
       },
       {
         img: 'product_photo/высокий 3.png',
-        title: 'PP 303',
+        title: 'PP 606 <br><b>Терминал самообслуживания для ПВЗ</b>',
         full_title: 'PP 303',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Мини-терминал самообслуживания для ПВЗ',
+        desc: `• IPS Full HD, 10 касаний<br>
+• USB-хаб, HDMI/VGA, динамики<br>
+• для касс, Digital-Signage, терминалов<br>
+• POS-ПО, интерактивные витрины<br>
+        `,
       },
       {
-        img: './product_photo/NETAC NB-300_улучшен.png',
+        img: './product_photo/высокий 1_улучшен.png',
         title: 'NETAC NB-300',
         full_title: 'NETAC NB-300',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Компактная и мощная портативная электростанция',
+        desc: `• IPS Full HD, 10 касаний<br>
+• USB-хаб, HDMI/VGA, динамики<br>
+• для касс, Digital-Signage, терминалов<br>
+• POS-ПО, интерактивные витрины<br>
+        `,
       },
       {
         img: '/product_photo/высокий 3.png',
         title: 'PP 303',
         full_title: 'PP 303',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Мини-терминал самообслуживания для ПВЗ',
+        desc: `• IPS Full HD, 10 касаний<br>
+• USB-хаб, HDMI/VGA, динамики<br>
+• для касс, Digital-Signage, терминалов<br>
+• POS-ПО, интерактивные витрины<br>
+        `,
       },
       {
         img: './product_photo/NETAC TM-21.png',
         title: 'NETAC TM-21',
         full_title: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Сенсорный монитор 21.5 здесь может быть html',
+        desc: `• IPS Full HD, 10 касаний<br>
+• USB-хаб, HDMI/VGA, динамики<br>
+• для касс, Digital-Signage, терминалов<br>
+• POS-ПО, интерактивные витрины<br>
+        `,
       },
       {
         img: './product_photo/NETAC NB-300_улучшен.png',
         title: 'NETAC NB-300',
         full_title: 'NETAC NB-300',
-        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Компактная и мощная портативная электростанция',
+        full_desc: 'NETAC NB-300 - <b>портативная электростанция</b>',
+        desc: `• IPS Full HD, 10 касаний<br>
+• USB-хаб, HDMI/VGA, динамики<br>
+• для касс, Digital-Signage, терминалов<br>
+• POS-ПО, интерактивные витрины<br>
+        `,
       },
       {
         img: 'product_photo/высокий 3.png',
         title: 'PP 303',
         full_title: 'PP 303',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Мини-терминал самообслуживания для ПВЗ',
+        desc: `• IPS Full HD, 10 касаний
+ • USB-хаб, HDMI/VGA, динамики
+ • для касс, Digital-Signage, терминалов
+ • POS-ПО, интерактивные витрины
+        `,
       },
       {
         img: './product_photo/NETAC NB-300_улучшен.png',
         title: 'NETAC NB-300',
         full_title: 'NETAC NB-300',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Компактная и мощная портативная электростанция',
+        desc: `• IPS Full HD, 10 касаний<br>
+• USB-хаб, HDMI/VGA, динамики<br>
+• для касс, Digital-Signage, терминалов<br>
+• POS-ПО, интерактивные витрины<br>
+        `,
       },
       {
         img: '/product_photo/высокий 3.png',
@@ -704,122 +1017,242 @@
 
     let currentProducts = products;
 
-    function renderProducts(items) {
-      currentProducts = items;
-      list.innerHTML = items.map((p, idx) => `
-    <div class="product-card">
-      <img src="${p.img}" alt="${p.title}" />
-      <h3>${p.title}</h3>
-      <div class="card-desc">
-        <p>${p.desc}</p>
-        <button class="btn btn_more" data-index="${idx}">Подробнее</button>
-      </div>
-    </div>
-  `).join('');
+    const netac_blue = '#003CAA';
+    const button_shadow = '0 4px 10px rgba(0, 60, 170, .3)';
+
+    // Функция рендера товаров с выделением найденного
+    function renderProducts(items, highlightIndex = null) {
+      const list = document.getElementById('products-list');
+      list.innerHTML = items.map((p, i) => `
+        <div class="product-card${highlightIndex === i ? ' highlight' : ''}" style="${highlightIndex === i ? `
+          transform: scale(1.04);
+          border: 1px solid ${netac_blue};
+          box-shadow: ${button_shadow};
+          z-index: 1;
+        ` : ''}">
+          <img src="${p.img}" alt="${p.title}" />
+          <h3>${p.title}</h3>
+          <div class="card-desc">
+            <h3>${p.title}</h3>
+            ${p.desc}<a href="#" class="btn_more" data-index="${i}">Подробнее</a>
+            </div>
+          
+        </div>
+      `).join('');
     }
 
+    // начальная отрисовка
+    renderProducts(products);
+
+    document.querySelector('.search_input').addEventListener('input', function () {
+      const query = this.value.trim().toLowerCase();
+      let foundIndex = -1;
+
+      if (query.length > 0) {
+        foundIndex = products.findIndex(p =>
+          p.title.toLowerCase().includes(query) ||
+          (p.desc && p.desc.toLowerCase().includes(query))
+        );
+      }
+
+      if (foundIndex > -1) {
+        // Циклично перемещаем найденный товар наверх
+        const foundProduct = products.splice(foundIndex, 1)[0];
+        products.unshift(foundProduct);
+        renderProducts(products, 0);
+        // Возвращаем порядок после рендера для следующего поиска
+        products.push(products.shift());
+      } else {
+        renderProducts(products);
+      }
+    });
+
+
+
     document.addEventListener('click', e => {
+      console.log("Клик по элементу:", e.target);
+
       if (e.target.classList.contains('btn_more')) {
+        console.log("Нажата кнопка Подробнее");
+
+        e.preventDefault(); // блокируем дефолтное поведение
+
         const idx = e.target.dataset.index;
+        console.log("data-index кнопки:", idx);
+
         const product = currentProducts[idx];
+        console.log("Найденный продукт:", product);
+
+        if (!product) {
+          console.warn("⚠ Продукт не найден по индексу:", idx);
+          return;
+        }
+
         modalTitle.textContent = product.title;
         modalDesc.innerHTML = product.full_desc;
         modal.style.display = 'flex';
-      }
-    });
 
-
-
-    // Первичная отрисовка
-    renderProducts(products);
-
-    // Поиск
-    searchInput.addEventListener('input', () => {
-      const q = searchInput.value.trim().toLowerCase();
-
-      if (!q) {
-        renderProducts(products);
-        return;
+        console.log("Модалка открыта с продуктом:", product.title);
       }
 
-      const filtered = products.filter(p => {
-        return Object.values(p).some(val =>
-          String(val).toLowerCase().includes(q)
-        );
-      });
-
-      renderProducts(filtered);
-    });
-
-    // Модалка
-    document.addEventListener('click', e => {
-      if (e.target.classList.contains('btn_more')) {
-        const idx = e.target.dataset.index;
-        const product = products[idx];
-        modalTitle.innerHTML = product.title;
-        modalDesc.innerHTML = product.full_desc;
-        modal.style.display = 'flex';
-      }
       if (e.target.id === 'modal-close' || e.target === modal) {
+        console.log("Закрытие модалки");
         modal.style.display = 'none';
       }
     });
 
-    // --- Футер ---
-    const footer = document.getElementById('main-footer');
-    function showFooter() {
-      footer.style.display = 'block';
-      setTimeout(() => {
-        footer.scrollIntoView({behavior:'smooth', block:'end'});
-      }, 100);
+
+    const shareModal = document.getElementById('share-modal');
+    const shareBtn = document.getElementById('share-btn');
+    const shareClose = document.getElementById('share-close');
+
+    shareBtn.addEventListener('click', e => {
+      e.preventDefault();
+      modal.style.display = 'none'; // скрыть модалку товара
+      shareModal.style.display = 'flex';
+    });
+
+    shareClose.addEventListener('click', () => {
+      shareModal.style.display = 'none';
+    });
+
+    shareModal.addEventListener('click', e => {
+      if (e.target === shareModal) {
+        shareModal.style.display = 'none';
+      }
+    });
+
+    // Хедер фон при скролле
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      if (window.scrollY > 10) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Бургер меню
+    const burger = document.getElementById('burger');
+    const nav = document.querySelector('.nav');
+    const overlay = document.getElementById('burger-overlay');
+
+    burger.addEventListener('click', () => {
+      nav.classList.toggle('active');
+      overlay.classList.toggle('active');
+    });
+
+    // Закрытие меню по клику вне
+    overlay.addEventListener('click', () => {
+      nav.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+
+    const footerSheet = document.getElementById('footer-sheet');
+    const contactForm = document.getElementById('contact-form');
+    const successBlock = document.getElementById('form-success');
+
+    function openFooter() {
+      footerSheet.dataset.state = 'open';
     }
-    // Кнопки вызова футера
-    document.querySelectorAll('.btn-nav, .btn').forEach(btn => {
+    function closeFooter() {
+      footerSheet.dataset.state = 'closed';
+    }
+
+    document.querySelectorAll('.btn-nav, .hero .btn').forEach(btn => {
       btn.addEventListener('click', e => {
         e.preventDefault();
-        showFooter();
+        openFooter();
       });
     });
-    // Свайп снизу (моб/планшет)
-    let touchStartY = null;
-    window.addEventListener('touchstart', function(e) {
-      if (e.touches.length === 1) touchStartY = e.touches[0].clientY;
+
+    footerSheet.addEventListener('click', e => {
+      if (e.target.hasAttribute('data-close')) closeFooter();
     });
-    window.addEventListener('touchend', function(e) {
-      if (touchStartY !== null && e.changedTouches.length === 1) {
-        let touchEndY = e.changedTouches[0].clientY;
-        if (touchStartY > window.innerHeight - 80 && touchEndY < touchStartY - 40) {
-          showFooter();
-        }
+    // подтверждение после отправки
+
+    const successModal = document.getElementById('success-modal');
+    const successClose = document.getElementById('success-close');
+    const successNew = document.getElementById('success-new');
+
+    successClose.addEventListener('click', () => {
+      successModal.style.display = 'none';
+    });
+
+    successNew.addEventListener('click', () => {
+      successModal.style.display = 'none';
+    });
+
+    successModal.addEventListener('click', e => {
+      if (e.target === successModal) {
+        successModal.style.display = 'none';
       }
-      touchStartY = null;
     });
 
-    // --- Форма: авторасширение при фокусе ---
-    const formBox = document.querySelector('.form-box');
-    document.querySelectorAll('#feedback-form input, #feedback-form textarea').forEach(el => {
-      el.addEventListener('focus', () => {
-        formBox.style.transition = 'max-height 0.3s';
-        formBox.style.maxHeight = '600px';
-        formBox.style.background = '#f7faff';
-      });
-      el.addEventListener('blur', () => {
-        formBox.style.maxHeight = '';
-        formBox.style.background = '';
-      });
+    const searchBar = document.querySelector('.search_container');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        searchBar.classList.add('fixed');
+      } else {
+        searchBar.classList.remove('fixed');
+      }
     });
 
-    // --- Отправка формы ---
-    document.getElementById('feedback-form').addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', function (e) {
+      alert('Форма отправлена! (тестовое сообщение)');
       e.preventDefault();
-      document.getElementById('footer-confirm').style.display = 'block';
-      setTimeout(() => {
-        document.getElementById('footer-confirm').style.display = 'none';
-        footer.style.display = 'none';
-      }, 2000);
-      this.reset();
-    });
 
+      // очищаем прошлые ошибки
+      document.querySelectorAll('.error').forEach(el => el.textContent = '');
+      document.querySelectorAll('#contact-form input, #contact-form textarea').forEach(el => el.classList.remove('error'));
+
+      let valid = true;
+
+      // имя (обязательное)
+      const name = document.getElementById('name');
+      if (name.value.trim().length < 2) {
+        document.getElementById('error-name').textContent = 'Введите имя (минимум 2 символа)';
+        name.classList.add('error');
+        valid = false;
+      }
+
+      // телефон (обязательное)
+      const phone = document.getElementById('phone');
+      const phonePattern = /^[0-9+\-\s]{6,}$/;
+      if (!phone.value.trim()) {
+        document.getElementById('error-phone').textContent = 'Поле обязательно';
+        phone.classList.add('error');
+        valid = false;
+      } else if (!phonePattern.test(phone.value.trim())) {
+        document.getElementById('error-phone').textContent = 'Введите корректный телефон';
+        phone.classList.add('error');
+        valid = false;
+      }
+
+      // email (обязательное)
+      const email = document.getElementById('email');
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email.value.trim()) {
+        document.getElementById('error-email').textContent = 'Поле обязательно';
+        email.classList.add('error');
+        valid = false;
+      } else if (!emailPattern.test(email.value.trim())) {
+        document.getElementById('error-email').textContent = 'Введите корректный E-mail';
+        email.classList.add('error');
+        valid = false;
+      }
+
+      // сообщение — необязательное, не проверяем
+
+      if (valid) {
+        // показать модалку успеха
+        const successModal = document.getElementById('success-modal');
+        successModal.style.display = 'flex';
+
+        contactForm.reset();
+      }
+    });
   </script>
 
 </body>
