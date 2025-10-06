@@ -691,6 +691,7 @@
 
     /* Mobile ≤767px */
     @media (max-width:767px) {
+      
 
       /* header */
       .header-inner {
@@ -702,9 +703,44 @@
       }
 
       header nav.nav {
-        grid-column: 1 / span 3;
         display: none;
         flex-direction: column;
+        position: absolute;
+        top: var(--header-height);
+        right: 10px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        padding: 15px;
+        z-index: 200;
+        width: auto;
+        min-width: 160px;
+      }
+
+
+      nav.nav.active {
+        display: flex;
+      }
+
+      nav.nav a {
+        color: #111;
+        font-size: 18px;
+        padding: 8px 0;
+      }
+
+      nav.nav .btn-nav {
+        margin-top: 10px;
+        font-size: 16px;
+        padding: 8px 12px;
+        width: 100%;
+        text-align: center;
+      }
+
+      #burger-overlay.active {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 150;
       }
 
       header .burger {
@@ -746,6 +782,23 @@
         grid-column: 1 / -1;
       }
     }
+
+    .search-no-result {
+      display: none;
+      text-align: center;
+      padding: 15px;
+      margin-top: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      font-size: 18px;
+    }
+
+    .search-no-result .btn-offer {
+      margin-top: 10px;
+      font-size: 16px;
+      padding: 8px 20px;
+    }
   </style>
 </head>
 
@@ -780,7 +833,7 @@
       </div>
       <div class="promo">
         <p>OEM и брендинг</p>
-        <p>Гарантия 12 – 36 месяцев</p>
+        <p>Гарантия 12 — 36 месяцев</p>
         <p>Сервис по РФ и ЕАЭС</p>
       </div>
     </div>
@@ -793,7 +846,11 @@
       <input class="search_input" type="text" placeholder="Поиск">
     </div>
   </section>
-  
+  <div class="search-no-result">
+    Такого товара нет в списке. Но, возможно, мы можем подобрать для вас подходящее решение.
+    <button class="btn btn-offer">Получить предложение</button>
+  </div>
+
 
   <!-- ======= FEATURES / PRODUCTS ======= -->
   <section class="features row">
@@ -998,7 +1055,7 @@
       },
       {
         img: './product_photo/NETAC TM-21.png',
-        title: 'NETAC TM-21',
+        title: 'AAAAA',
         full_title: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
         desc: `• IPS Full HD, 10 касаний<br>
@@ -1074,27 +1131,55 @@
     // --- Стартовый рендер
     renderProducts(currentProducts);
 
-    // --- Поиск (поднимаем найденный товар наверх «каруселью»)
+    const noResultBlock = document.querySelector('.search-no-result');
+    if (noResultBlock) noResultBlock.style.display = 'none';
+
     searchInput.addEventListener('input', function () {
       const query = this.value.trim().toLowerCase();
-      let foundIndex = -1;
+      const noResultBlock = document.querySelector('.search-no-result');
+      const productsList = document.getElementById("products-list");
 
-      if (query) {
-        foundIndex = currentProducts.findIndex(p =>
-          p.title.toLowerCase().includes(query) ||
-          (p.desc && p.desc.toLowerCase().includes(query))
-        );
+      // Если поле очищено — вернуть всё обратно
+      if (!query) {
+        renderProducts(currentProducts);
+        productsList.style.display = "block";
+        noResultBlock.style.display = "none";
+        return;
       }
 
+      let foundIndex = currentProducts.findIndex(p =>
+        p.title.toLowerCase().includes(query) ||
+        (p.desc && p.desc.toLowerCase().includes(query))
+      );
+
       if (foundIndex > -1) {
+        // ✅ Найден товар
         const foundProduct = currentProducts.splice(foundIndex, 1)[0];
         currentProducts.unshift(foundProduct);
         renderProducts(currentProducts);
+
+        // Авто-скролл + выделение
+        const firstCard = document.querySelector('.product-card');
+        firstCard.classList.add('highlight');
+        firstCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        productsList.style.display = "block";
+        noResultBlock.style.display = "none";
+
+        // Убираем highlight через время
+        setTimeout(() => firstCard.classList.remove('highlight'), 2000);
+
+        // Вернём в конец
         currentProducts.push(currentProducts.shift());
       } else {
-        renderProducts(currentProducts);
+        // ❌ Не найдено
+        productsList.style.display = "none";
+        noResultBlock.style.display = "block";
       }
     });
+
+
+
 
     // --- Делегирование кликов по всей странице
     document.addEventListener('click', async (e) => {
