@@ -212,7 +212,7 @@
     }
 
     .hero .overlay {
-      grid-column: 1 / span 5;
+      grid-column: 1 / span 8;
       /* ЛЕВАЯ ГРАНИЦА = ЛОГО: колонка 1 той же сетки */
       backdrop-filter: blur(4px);
       background: rgba(37, 54, 112, 0.6);
@@ -229,7 +229,6 @@
       font-family: Nunito;
       font-weight: 200;
       font-style: normal;
-      font-size: 44px;
       line-height: 44px;
       letter-spacing: -0.2px;
       vertical-align: middle;
@@ -238,11 +237,22 @@
 
     .hero .overlay-inner {
       padding: 3rem;
+      height: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-around;
+
       /* внутренний отступ */
     }
 
+    .hero .overlay-inner .btn {
+      font-size: 100%;
+      align-self: inherit;
+    }
+
     .hero .promo {
-      grid-column: 7 / span 5;
+      grid-column: 9 / span 12;
       /* справа на десктопе */
       display: flex;
       flex-direction: column;
@@ -250,7 +260,7 @@
     }
 
     .hero h1 {
-      font-size: 44px;
+      font-size: 161%;
       margin-bottom: 15px;
     }
 
@@ -309,7 +319,7 @@
     /* Когда прилипает вниз */
     .search_container.fixed {
       position: fixed;
-      top: 10%;
+      top: 18%;
       left: 0;
       transform: none;
       width: 100%;
@@ -691,7 +701,7 @@
 
     /* Mobile ≤767px */
     @media (max-width:767px) {
-      
+
 
       /* header */
       .header-inner {
@@ -799,6 +809,8 @@
       font-size: 16px;
       padding: 8px 20px;
     }
+
+    
   </style>
 </head>
 
