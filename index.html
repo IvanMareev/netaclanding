@@ -165,7 +165,7 @@
       color: #fff;
       border-radius: 10px;
       text-decoration: none;
-      font-size: 20px;
+      font-size: 1vw;
       display: inline-block;
       border: 0;
     }
@@ -175,7 +175,7 @@
     }
 
     .btn_more {
-      padding: 10px 6vw;
+      padding: clamp(10px, 0.5vw, 20px) 6vw;
     }
 
     .btn-nav {
@@ -184,7 +184,8 @@
 
     .btn-nav:hover,
     .btn_more:hover,
-    .btn:hover {
+    .btn:hover,
+    .modal-button:hover {
       background-color: rgba(4, 52, 140, 1);
       cursor: pointer;
     }
@@ -392,7 +393,7 @@
       backdrop-filter: blur(4px);
       transition: bottom .18s, opacity .18s;
       font-weight: 400;
-      font-size: 20.42px;
+      font-size: clamp(7px, 1vw, 20px);;
       line-height: 28.58px;
       letter-spacing: -0.2px;
       vertical-align: middle;
@@ -554,6 +555,11 @@
       border: 1px solid rgba(0, 60, 170, 1) !important;
     }
 
+    .transparent:hover {
+      transform: scale(1.04);
+      color: rgb(6, 72, 195) !important;
+      transition: .3s;
+    }
     /* ======= ERRORS ======= */
     .error {
       color: red;
@@ -988,7 +994,7 @@
         <div class="card-desc">
           <p class="title">${p.full_title}</p>
           <p class="desc">${p.desc}</p>
-          <button class="btn btn_more" type="button" data-index="${idx}">Подробнее</button>
+          <button class="btn_more" type="button" style="align-self: center;"data-index="${idx}">Подробнее</button>
         </div>
       </div>
     `).join('');
