@@ -3,24 +3,40 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Netac</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Netac — responsive fix</title>
 
   <style>
-    /* ======= BASE ======= */
+    /* =========================================
+       BASE / TOKENS
+    ========================================= */
     @font-face {
       font-family: "Nunito";
       src: url("./font/static/Nunito-Light.ttf");
+      font-display: swap;
     }
 
     :root {
+      /* Spacing */
       --gutter: 40px;
       --margin-x: 104px;
       --header-height: 78px;
+
+      /* Radii & shadows */
+      --radius: 12px;
+
+      /* Fluid typography */
+      --fs-body: clamp(15px, 0.9vw + 0.25rem, 18px);
+      --fs-small: clamp(13px, 0.6vw + 0.2rem, 16px);
+      --fs-btn: clamp(14px, 0.8vw + 0.2rem, 18px);
+      --fs-h1: clamp(26px, 2vw + 0.9rem, 48px);
+      --fs-h2: clamp(20px, 1.2vw + 0.6rem, 32px);
+      --fs-lead: clamp(16px, 1vw + 0.4rem, 22px);
+      --fs-nav: clamp(14px, 0.9vw + 0.2rem, 18px);
     }
 
     /* Tablet */
-    @media (max-width:1199px) and (min-width:768px) {
+    @media (max-width:1199.98px) and (min-width:768px) {
       :root {
         --gutter: 32px;
         --margin-x: 24px;
@@ -29,7 +45,7 @@
     }
 
     /* Mobile */
-    @media (max-width:767px) {
+    @media (max-width:767.98px) {
       :root {
         --gutter: 14px;
         --margin-x: 18px;
@@ -41,56 +57,61 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: Nunito, sans-serif;
+      font-family: Nunito, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    html, body {
+      height: 100%;
     }
 
     body {
       color: #111;
-      line-height: 1.4;
+      line-height: 1.45;
+      font-size: var(--fs-body);
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      background: #fff;
     }
 
-    /* ======= GLOBAL GRID (CONTENT) ======= */
+    /* =========================================
+       GLOBAL GRID (CONTENT)
+    ========================================= */
     .layout {
       display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
       column-gap: var(--gutter);
-      padding-top: var(--header-height);
-      /* не наезжаем на fixed header */
+      padding-top: var(--header-height); /* отступ под fixed header */
     }
 
     .row {
       grid-column: 1 / -1;
     }
 
-    /* Унифицированная внутренняя строка для всех секций (одинаковые поля и колонки) */
     .content-row {
       display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
       column-gap: var(--gutter);
       padding-inline: var(--margin-x);
-      max-width: 100%;
+      max-width: 1440px; /* читаемая ширина */
       margin: 0 auto;
     }
 
-    /* ======= HEADER (fixed) ======= */
+    /* =========================================
+       HEADER (fixed)
+    ========================================= */
     header {
       position: fixed;
       inset: 0 0 auto 0;
       height: var(--header-height);
       z-index: 100;
       background: rgba(39, 37, 60, 1);
-      /* как в макете */
       transition: background .2s ease-in-out;
       display: flex;
-      /* <-- исправление! */
       align-items: center;
     }
 
-    header.scrolled {
-      background: #0b1230;
-    }
+    header.scrolled { background: #0b1230; }
 
-    /* Внутри хедера используем ту же "content-row" сетку */
     .header-inner {
       display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -102,13 +123,13 @@
 
     header .logo {
       grid-column: 1 / span 2;
-      margin-left: 19%;
+      margin-left: 0; /* убрал магический отступ 19% */
       max-width: 100%;
       height: auto;
     }
 
     header nav.nav {
-      grid-column: 3 / span 12;
+      grid-column: 4 / -1; /* шире сетка, без переполнений */
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -118,518 +139,48 @@
     header .nav a {
       color: #fff;
       text-decoration: none;
-      font-size: 20px;
-      /* margin-right: 1%; */
+      font-size: var(--fs-nav);
+      line-height: 1.2;
+      white-space: nowrap;
     }
 
-    .wrap-link {
-      display: flex;
-      gap: 2vw;
-    }
+    .wrap-link { display: flex; gap: 2vw; }
 
     header .burger {
-      grid-column: 11 / span 2;
+      grid-column: 12 / span 1;
       display: none;
       cursor: pointer;
-      width: 32px;
-      height: 24px;
-      position: relative;
+      width: 32px; height: 24px; position: relative;
     }
+    header .burger span { position: absolute; left: 0; width: 100%; height: 3px; background: #fff; transition: .3s; }
+    header .burger span:nth-child(1) { top: 0; }
+    header .burger span:nth-child(2) { top: 10px; }
+    header .burger span:nth-child(3) { top: 20px; }
 
-    header .burger span {
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: #fff;
-      transition: .3s;
-    }
-
-    header .burger span:nth-child(1) {
-      top: 0;
-    }
-
-    header .burger span:nth-child(2) {
-      top: 10px;
-    }
-
-    header .burger span:nth-child(3) {
-      top: 20px;
-    }
-
-    /* ======= BUTTONS ======= */
-    .btn,
-    .btn_more,
-    .btn-nav {
+    /* =========================================
+       BUTTONS
+    ========================================= */
+    .btn, .btn_more, .btn-nav, .modal-button {
       align-self: center;
       background: rgba(0, 60, 170, 1);
       color: #fff;
       border-radius: 10px;
       text-decoration: none;
-      font-size: 1vw;
-      display: inline-block;
+      font-size: var(--fs-btn);
+      display: inline-flex;
       border: 0;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px; /* удобный тап-таргет */
     }
 
-    .btn {
-      padding: 4px 3.5vw;
-    }
+    .btn { padding: 8px clamp(18px, 3vw, 48px); }
+    .btn_more { padding: clamp(10px, 1.2vw, 16px) clamp(18px, 4vw, 56px); }
+    .btn-nav { padding: 10px clamp(16px, 2.4vw, 40px); }
 
-    .btn_more {
-      padding: clamp(10px, 0.3vw, 20px) 4vw;
-    }
-
-    .btn-nav {
-      padding: 10px 2.9vw;
-    }
-
-    .btn-nav:hover,
-    .btn_more:hover,
-    .btn:hover,
-    .modal-button:hover {
+    .btn-nav:hover, .btn_more:hover, .btn:hover, .modal-button:hover {
       background-color: rgba(4, 52, 140, 1);
       cursor: pointer;
-    }
-
-    /* ======= HERO ======= */
-    .hero {
-      grid-column: 1 / -1;
-      position: relative;
-      color: #fff;
-      background: url('bc.png') center/cover no-repeat;
-      background-attachment: fixed;
-      /* ✅ фиксируем фон */
-    }
-
-    .hero-inner {
-      /* та же сетка и те же поля, что и у header */
-      min-height: 600px;
-      row-gap: var(--gutter);
-      align-items: start;
-      padding-top: calc(var(--gutter) + 30px);
-      padding-bottom: calc(96px + var(--gutter));
-      /* место под поиск */
-    }
-
-    .hero .overlay {
-      grid-column: 1 / span 8;
-      /* ЛЕВАЯ ГРАНИЦА = ЛОГО: колонка 1 той же сетки */
-      backdrop-filter: blur(4px);
-      background: rgba(37, 54, 112, 0.6);
-      border-radius: 12px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
-      border-width: 0 0 3px 3px;
-      border-style: solid;
-      border-color: #003CAA;
-      max-height: 500px;
-      padding: 0;
-      font-family: Nunito;
-      font-weight: 200;
-      font-style: normal;
-      line-height: 44px;
-      letter-spacing: -0.2px;
-      vertical-align: middle;
-
-    }
-
-    .hero .overlay-inner {
-      padding: 3rem;
-      height: 100vw;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: space-around;
-
-      /* внутренний отступ */
-    }
-
-    .hero .overlay-inner .btn {
-      font-size: 100%;
-      align-self: inherit;
-    }
-
-    .hero .promo {
-      grid-column: 9 / span 12;
-      /* справа на десктопе */
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .hero h1 {
-      font-size: 161%;
-      margin-bottom: 15px;
-    }
-
-    .hero .promo p {
-      backdrop-filter: blur(5px);
-      background: rgba(37, 54, 112, 0.6);
-      padding: 2vw 6vw;
-      border-radius: 8px;
-      font-size: 20px;
-      margin-bottom: 6vw;
-      border-width: 0 0 3px 3px;
-      border-style: solid;
-      border-color: #003CAA;
-      width: max-content;
-      max-width: 100%;
-      white-space: nowrap;
-    }
-
-    .hero .promo p:nth-child(1) {
-      align-self: flex-end;
-    }
-
-    .hero .promo p:nth-child(2) {
-      align-self: flex-start;
-    }
-
-    .hero .promo p:nth-child(3) {
-      align-self: flex-end;
-    }
-
-
-    .search_wrapper {
-
-      position: relative;
-      height: 64px;
-      /* чтобы в hero оставалось место под поиск */
-    }
-
-    /* SEARCH (снизу hero, выравнивание по тем же полям) */
-    .search_container {
-
-      position: absolute;
-      left: 50%;
-      bottom: 30px;
-      transform: translateX(-50%);
-      width: 100%;
-      background: rgba(255, 255, 255, 0.9);
-      display: flex;
-      align-items: center;
-      padding: 13px 7%;
-      height: 64px;
-      box-sizing: border-box;
-      transition: all 0.3s ease;
-    }
-
-    /* Когда прилипает вниз */
-    .search_container.fixed {
-      position: fixed;
-      top: 18%;
-      left: 0;
-      transform: none;
-      width: 100%;
-      z-index: 100;
-    }
-
-    .search_icon {
-      margin-left: 1%;
-      width: 32px;
-      height: 32px;
-      margin-right: 18px;
-    }
-
-    .search_input {
-      flex: 1;
-      font-size: 22px;
-      padding: 12px 18px;
-      border: none;
-      background: transparent;
-      outline: none;
-      color: #111;
-    }
-
-    .search_input::placeholder {
-      color: #888;
-    }
-
-    /* ======= FEATURES / PRODUCTS ======= */
-    .features {
-      margin-left: 2.5%;
-      grid-column: 1 / -1;
-      margin-top: 2.6vw;
-    }
-
-    #products-list {
-      column-count: 4;
-      column-gap: var(--gutter);
-      margin-inline: var(--margin-x);
-    }
-
-    .product-card {
-      display: inline-block;
-      width: 100%;
-      margin-bottom: 20px;
-      break-inside: avoid;
-      background: #fff;
-      border: 1px solid #000;
-      text-align: start;
-      padding: 10px;
-      transition: transform .2s ease;
-      position: relative;
-      padding: 9%;
-    }
-
-    .product-card img {
-      width: 100%;
-      height: auto;
-      border-radius: 6px;
-      object-fit: contain;
-    }
-
-    .product-card h3 {
-      font-weight: 400;
-      font-size: 20px;
-      line-height: 28px;
-      letter-spacing: -0.2px;
-      vertical-align: middle;
-
-    }
-
-    .card-desc {
-      pointer-events: none;
-      position: absolute;
-      left: 0;
-      bottom: -100%;
-      width: 100%;
-      height: min-content;
-      background: rgba(207, 200, 200, 0.6);
-      color: #333333;
-      padding: 1vw 2vw;
-      opacity: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: start;
-      gap: 12px;
-      justify-content: center;
-      backdrop-filter: blur(4px);
-      transition: bottom .18s, opacity .18s;
-      font-weight: 400;
-      font-size: 0.88vw;
-      line-height: 1.4vw;
-      letter-spacing: -0.2px;
-      vertical-align: middle;
-
-    }
-
-    .card-desc-img {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 24px !important;
-      height: auto;
-      opacity: 0;
-      transition: opacity .18s ease;
-      pointer-events: auto;
-      /* если хочешь, чтобы на неё можно было нажимать */
-      z-index: 5;
-      cursor: pointer;
-    }
-
-    .product-card:hover .card-desc-img {
-      opacity: 1;
-    }
-
-    .product-card:hover .card-desc {
-      bottom: 0;
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-
-    .product-card.highlight {
-      transform: scale(1.04);
-      border: 1px solid #003CAA;
-      box-shadow: 0 4px 10px rgba(0, 60, 170, .3);
-      transition: all .3s ease;
-      z-index: 1;
-    }
-
-    /* ======= FOOTER ======= */
-    footer {
-      background-color: rgba(255, 253, 253, 1);
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 30px;
-      border-top: 0.1px solid rgba(51, 51, 51, 1);
-    }
-
-    .form-section.desktop-footer .form-container {
-
-      margin-inline: var(--margin-x);
-      display: grid;
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      column-gap: var(--gutter);
-      row-gap: 30px;
-      max-width: 100%;
-    }
-
-    .form-logo {
-      margin-left: 43%;
-      grid-column: 1 / span 1;
-    }
-
-    .form-box {
-      grid-column: 12 / span 12;
-    }
-
-    .form-box p {
-      margin-bottom: 20px;
-      font-size: 20px;
-      font-weight: 600;
-      color: #111;
-    }
-
-    .form-box form {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .form-box input,
-    .form-box textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 16px;
-    }
-
-    .form-box textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .form-box .btn {
-      align-self: flex-end;
-      margin-top: 10px;
-      padding: 10px 30px;
-      font-size: 18px;
-    }
-
-    .info_footer {
-      color: rgba(207, 200, 200, 0.6);
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: space-evenly;
-      margin-left: 5vw;
-      border-top: 1px solid rgba(51, 51, 51, .3);
-      padding: 40px 20px;
-      margin-top: 40px;
-    }
-
-    .desktop-footer {
-      display: flex;
-    }
-
-    .modal-button-share {
-      cursor: pointer;
-      background-color: transparent;
-      color: black;
-      border: 1px solid black;
-      border-radius: 12px;
-      padding: 0.5vw 10px 0.5vw 1vw !important;
-      display: flex;
-      flex-direction: row;
-      width: 30vw;
-    }
-
-    .modal-button-share:hover {
-      transform: scale(1.05);
-      transition: .3s;
-      box-shadow: 0 4px 10px rgba(0, 60, 170, .3);
-
-    }
-
-    .info_footer a {
-      color: rgba(0, 60, 170, 1);
-      text-decoration: underline;
-    }
-
-    /* ======= MODALS ======= */
-    #product-modal,
-    #share-modal,
-    #success-modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, .45);
-      align-items: center;
-      justify-content: center;
-    }
-
-    .sosial_network {
-      display: flex;
-      gap: 1.3vw;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: center;
-    }
-
-    .sosial_network a img {
-      cursor: pointer;
-      width: 3vw;
-      height: 3vw;
-    }
-
-    .sosial_network a img:hover {
-      transform: scale(1.05);
-      transition: .3s;
-    }
-
-    #product-modal .modal-content,
-    #share-modal .modal-content,
-    #success-modal .modal-content {
-      background: #fff;
-      width: max-content;
-      padding: 3vw 10vw;
-      position: relative;
-    }
-
-    #modal-close,
-    #success-close,
-    #share-close {
-      position: absolute;
-      top: 12px;
-      right: 18px;
-      background: none;
-      border: none;
-      font-size: 28px;
-      cursor: pointer;
-    }
-
-    .modal-buttons {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 16vw;
-    }
-
-    .modal-button {
-      background: rgba(0, 60, 170, 1);
-      color: #fff;
-      padding: 10px 6vw;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 20px;
-      display: flex;
-      border: 0;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      align-content: center;
-      justify-content: space-between;
-      gap: 0.6vw;
-      align-items: baseline
     }
 
     .modal-button.transparent {
@@ -638,191 +189,289 @@
       border: 1px solid rgba(0, 60, 170, 1) !important;
     }
 
-    .transparent:hover {
-      transform: scale(1.04);
-      color: rgb(6, 72, 195) !important;
-      transition: .3s;
+    /* =========================================
+       HERO
+    ========================================= */
+    .hero {
+      grid-column: 1 / -1;
+      position: relative;
+      color: #fff;
+      background: url('bc.png') center/cover no-repeat;
+      background-attachment: fixed;
     }
 
-    /* ======= ERRORS ======= */
-    .error {
-      color: red;
-      font-size: 14px;
-      margin-top: 4px;
-      text-align: -webkit-auto;
+    /* iOS/Android: отключаем fixed, чтобы не ломать скролл */
+    @media (max-width:1199.98px) {
+      .hero { background-attachment: scroll; }
     }
 
-    input.error,
-    textarea.error {
-      border: 1px solid red;
+    .hero-inner {
+      min-height: 600px;
+      row-gap: var(--gutter);
+      align-items: start;
+      padding-top: calc(var(--gutter) + 30px);
+      padding-bottom: calc(96px + var(--gutter));
     }
 
-    /* ======= MEDIA ======= */
-    /* Tablet 768–1199px */
-    @media (max-width:1199px) and (min-width:768px) {
-
-      /* header */
-      .header-inner {
-        grid-template-columns: repeat(12, minmax(0, 1fr));
-      }
-
-      header .logo {
-        grid-column: 1 / span 3;
-      }
-
-      header nav.nav {
-        grid-column: 4 / span 6;
-      }
-
-      header .burger {
-        grid-column: 11 / span 2;
-        display: block;
-      }
-
-      /* hero */
-      .hero-inner {
-        grid-template-columns: repeat(12, minmax(0, 1fr));
-        min-height: 540px;
-      }
-
-      .hero .overlay {
-        grid-column: 1 / -1;
-      }
-
-      .hero .promo {
-        grid-column: 1 / -1;
-      }
-
-      /* products */
-      #products-list {
-        column-count: 3;
-      }
+    .hero .overlay {
+      grid-column: 1 / span 8;
+      backdrop-filter: blur(4px);
+      background: rgba(37, 54, 112, 0.6);
+      border-radius: var(--radius);
+      display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start;
+      border-width: 0 0 3px 3px; border-style: solid; border-color: #003CAA;
+      max-height: none; /* не режем контент */
+      padding: 0;
+      font-weight: 300; line-height: 1.3; letter-spacing: -0.2px;
+      overflow: hidden;
     }
 
-    /* Mobile ≤767px */
-    @media (max-width:767px) {
-
-
-      /* header */
-      .header-inner {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-
-      header .logo {
-        grid-column: 1 / span 2;
-      }
-
-      header nav.nav {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: var(--header-height);
-        right: 10px;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        padding: 15px;
-        z-index: 200;
-        width: auto;
-        min-width: 160px;
-      }
-
-
-      nav.nav.active {
-        display: flex;
-      }
-
-      nav.nav a {
-        color: #111;
-        font-size: 18px;
-        padding: 8px 0;
-      }
-
-      nav.nav .btn-nav {
-        margin-top: 10px;
-        font-size: 16px;
-        padding: 8px 12px;
-        width: 100%;
-        text-align: center;
-      }
-
-      #burger-overlay.active {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.4);
-        z-index: 150;
-      }
-
-      header .burger {
-        grid-column: 4 / span 1;
-        display: block;
-      }
-
-      /* hero */
-      .hero-inner {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        min-height: 520px;
-      }
-
-      .hero .overlay {
-        grid-column: 1 / -1;
-      }
-
-      .hero .promo {
-        grid-column: 1 / -1;
-      }
-
-      /* products */
-      #products-list {
-        column-count: 2;
-      }
-
-      /* footer form */
-      .form-section.desktop-footer .form-container {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        row-gap: 14px;
-      }
-
-      .form-logo {
-        grid-column: 1 / -1;
-        text-align: center;
-      }
-
-      .form-box {
-        grid-column: 1 / -1;
-      }
+    .hero .overlay-inner {
+      padding: clamp(20px, 3vw, 48px);
+      display: flex; flex-direction: column; gap: clamp(12px, 2.2vw, 24px);
     }
 
-    .search-no-result {
-      display: none;
-      text-align: center;
-      padding: 15px;
-      margin-top: 10px;
-      background: rgba(255, 255, 255, 0.9);
+    .hero h1 { font-size: var(--fs-h1); }
+    .hero .overlay-inner p { font-size: var(--fs-lead); }
+
+    .hero .promo {
+      grid-column: 9 / -1;
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+
+    .hero .promo p {
+      backdrop-filter: blur(5px);
+      background: rgba(37, 54, 112, 0.6);
+      padding: clamp(10px, 2vw, 24px) clamp(16px, 6vw, 72px);
       border-radius: 8px;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      font-size: 18px;
+      font-size: var(--fs-lead);
+      margin-bottom: clamp(10px, 6vw, 56px);
+      border-width: 0 0 3px 3px; border-style: solid; border-color: #003CAA;
+      width: fit-content; max-width: 100%;
+      white-space: normal; /* не рвем раскладку */
     }
 
-    .search-no-result .btn-offer {
-      margin-top: 10px;
-      font-size: 16px;
-      padding: 8px 20px;
+    .hero .promo p:nth-child(1) { align-self: flex-end; }
+    .hero .promo p:nth-child(2) { align-self: flex-start; }
+    .hero .promo p:nth-child(3) { align-self: flex-end; }
+
+    .search_wrapper { position: relative; height: clamp(56px, 6vw, 72px); }
+
+    .search_container {
+      position: absolute;
+      left: 50%;
+      bottom: 30px;
+      transform: translateX(-50%);
+      width: min(1100px, calc(100% - 2*var(--margin-x)));
+      background: rgba(255, 255, 255, 0.92);
+      display: flex; align-items: center; gap: 12px;
+      padding: 8px 16px;
+      height: clamp(48px, 6vw, 64px);
+      border-radius: 10px;
+      box-shadow: 0 8px 26px rgba(17, 17, 17, .1);
+      transition: all 0.25s ease;
     }
 
-    
+    .search_container.fixed {
+      position: fixed;
+      top: calc(var(--header-height) + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1100px, calc(100% - 2*var(--margin-x)));
+      z-index: 100;
+    }
+
+    .search_icon { width: 28px; height: 28px; }
+    .search_input {
+      flex: 1;
+      font-size: clamp(16px, 1.1vw + 0.4rem, 22px);
+      padding: 10px 6px; border: none; background: transparent; outline: none; color: #111;
+    }
+    .search_input::placeholder { color: #667085; }
+
+    /* =========================================
+       FEATURES / PRODUCTS
+    ========================================= */
+    .features { grid-column: 1 / -1; margin-top: clamp(12px, 2.6vw, 40px); }
+
+    #products-list {
+      column-count: 4;
+      column-gap: var(--gutter);
+      margin-inline: var(--margin-x);
+    }
+
+    .product-card {
+      display: inline-block; width: 100%; margin-bottom: 20px; break-inside: avoid;
+      background: #fff; border: 1px solid #E5E7EB; text-align: start;
+      padding: clamp(12px, 2.4vw, 24px);
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      position: relative;
+      border-radius: 10px;
+    }
+
+    .product-card img { width: 100%; height: auto; border-radius: 6px; object-fit: contain; }
+
+    .product-card h3, .product-card p { font-size: var(--fs-body); }
+
+    .card-desc {
+      pointer-events: none; position: absolute; left: 0; bottom: -100%; width: 100%;
+      background: rgba(248, 248, 248, 0.96); color: #333;
+      padding: clamp(12px, 2vw, 20px) clamp(16px, 2.4vw, 24px);
+      opacity: 0; display: flex; flex-direction: column; gap: 10px; justify-content: center;
+      backdrop-filter: blur(4px);
+      transition: bottom .18s, opacity .18s;
+      font-size: var(--fs-small);
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .card-desc-img {
+      position: absolute; top: 16px; right: 16px; width: clamp(22px, 1.8vw, 28px) !important; height: auto;
+      opacity: 0; transition: opacity .18s ease; pointer-events: auto; z-index: 5; cursor: pointer;
+    }
+
+    .product-card:hover .card-desc-img { opacity: 1; }
+    .product-card:hover .card-desc { bottom: 0; opacity: 1; pointer-events: auto; }
+
+    .product-card.highlight { transform: scale(1.02); border-color: #003CAA; box-shadow: 0 6px 18px rgba(0, 60, 170, .18); z-index: 1; }
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+    footer { background-color: #fff; grid-column: 1 / -1; padding: 30px 0; border-top: 1px solid #eee; }
+
+    .form-section.desktop-footer .form-container {
+      margin-inline: var(--margin-x);
+      display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: 30px; max-width: 1440px; margin: 0 auto;
+    }
+
+    .form-logo { grid-column: 1 / span 2; display: flex; align-items: center; }
+    .form-logo img { max-width: 160px; height: auto; }
+
+    .form-box { grid-column: 3 / -1; }
+    .form-box p { margin-bottom: 14px; font-size: var(--fs-h2); font-weight: 700; color: #111; }
+
+    .form-box form { display: grid; grid-template-columns: repeat(12, 1fr); gap: 12px; }
+    .form-group { grid-column: span 6; }
+    .form-group textarea { grid-column: 1 / -1; }
+
+    .form-box input, .form-box textarea {
+      width: 100%; padding: 12px; border: 1px solid #CBD5E1; border-radius: 8px; font-size: var(--fs-body);
+    }
+    .form-box textarea { min-height: 100px; resize: vertical; }
+
+    .form-box .btn { grid-column: -4 / -1; justify-self: end; padding-inline: 28px; }
+
+    .info_footer {
+      color: #667085; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; justify-content: center;
+      margin-inline: var(--margin-x); border-top: 1px solid #eaeaea; padding: 20px 0; margin-top: 24px; font-size: var(--fs-small);
+    }
+    .info_footer a { color: rgba(0, 60, 170, 1); text-decoration: underline; }
+
+    /* =========================================
+       MODALS
+    ========================================= */
+    #product-modal, #share-modal, #success-modal {
+      display: none; position: fixed; z-index: 1000; inset: 0 0 0 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, .45); align-items: center; justify-content: center; padding: 16px;
+    }
+
+    #product-modal .modal-content, #share-modal .modal-content, #success-modal .modal-content {
+      background: #fff; width: min(920px, calc(100vw - 2*var(--margin-x))); max-height: min(85vh, 900px);
+      padding: clamp(16px, 2.4vw, 36px) clamp(20px, 6vw, 80px); position: relative; overflow: auto; border-radius: 12px;
+    }
+
+    #modal-close, #success-close, #share-close {
+      position: absolute; top: 12px; right: 18px; background: none; border: none; font-size: 28px; cursor: pointer;
+      line-height: 1; color: #111;
+    }
+
+    .modal-buttons { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: clamp(16px, 4vw, 48px); }
+
+    .modal-button { padding: 10px clamp(16px, 5vw, 64px); gap: 8px; align-items: center; }
+
+    .modal-button-share {
+      cursor: pointer; background-color: transparent; color: black; border: 1px solid black; border-radius: 12px;
+      padding: 10px 14px; display: flex; gap: 10px; width: 100%; justify-content: center; font-size: var(--fs-body);
+    }
+    .modal-button-share:hover { transform: scale(1.03); transition: .2s; box-shadow: 0 4px 10px rgba(0, 60, 170, .18); }
+
+    .sosial_network { display: flex; gap: clamp(10px, 1.3vw, 16px); flex-wrap: wrap; justify-content: center; }
+    .sosial_network a img { cursor: pointer; width: clamp(28px, 3.6vw, 44px); height: clamp(28px, 3.6vw, 44px); }
+    .sosial_network a img:hover { transform: scale(1.05); transition: .2s; }
+
+    .error { color: #EF4444; font-size: var(--fs-small); margin-top: 4px; text-align: left; }
+    input.error, textarea.error { border-color: #EF4444; }
+
+    .search-no-result { display: none; text-align: center; padding: 15px; margin: 10px var(--margin-x) 0; background: #fff; border-radius: 8px; border: 1px solid #eaeaea; font-size: var(--fs-body); }
+    .search-no-result .btn-offer { margin-top: 10px; font-size: var(--fs-btn); padding: 8px 20px; }
+
+    /* =========================================
+       MEDIA
+    ========================================= */
+    /* Tablet */
+    @media (max-width:1199.98px) and (min-width:768px) {
+      .header-inner { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+      header .logo { grid-column: 1 / span 3; }
+      header nav.nav { grid-column: 4 / span 6; }
+      header .burger { grid-column: 12 / span 1; display: block; }
+
+      .hero-inner { grid-template-columns: repeat(12, minmax(0, 1fr)); min-height: 540px; }
+      .hero .overlay { grid-column: 1 / -1; }
+      .hero .promo { grid-column: 1 / -1; }
+
+      #products-list { column-count: 3; }
+    }
+
+    /* Mobile */
+    @media (max-width:767.98px) {
+      .header-inner { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      header .logo { grid-column: 1 / span 2; }
+
+      header nav.nav {
+        display: none; flex-direction: column; position: absolute; top: var(--header-height); right: 10px; background: #fff;
+        border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); padding: 12px; z-index: 200; min-width: 180px;
+      }
+      nav.nav.active { display: flex; }
+      nav.nav a { color: #111; font-size: var(--fs-body); padding: 8px 0; }
+      nav.nav .btn-nav { margin-top: 8px; width: 100%; text-align: center; }
+
+      #burger-overlay.active { position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 150; }
+      header .burger { grid-column: 4 / span 1; display: block; }
+
+      .hero-inner { grid-template-columns: repeat(4, minmax(0, 1fr)); min-height: 520px; }
+      .hero .overlay { grid-column: 1 / -1; }
+      .hero .promo { grid-column: 1 / -1; }
+
+      #products-list { column-count: 2; }
+
+      .form-section.desktop-footer .form-container { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 14px; }
+      .form-logo { grid-column: 1 / -1; justify-content: center; }
+      .form-box { grid-column: 1 / -1; }
+      .form-box form { grid-template-columns: 1fr; }
+      .form-group { grid-column: 1 / -1; }
+      .form-box .btn { grid-column: 1 / -1; justify-self: stretch; }
+    }
+
+    /* UX: отключаем "вылезающее меню" карточки на touch-устройствах */
+    @media (hover: none), (pointer: coarse) {
+      .card-desc, .card-desc-img { display: none; }
+      .product-card { cursor: pointer; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+    }
   </style>
 </head>
 
 <body class="layout">
-  <!-- ======= FIXED HEADER ======= -->
+  <!-- ============ HEADER ============ -->
   <header>
     <div class="content-row header-inner">
       <div id="burger-overlay"></div>
-      <img class="logo" src="./icon/netac_logo.png" alt="Netac" />
-      <div class="burger" id="burger">
-        <span></span><span></span><span></span>
-      </div>
+      <img class="logo" src="./icon/netac_logo.png" alt="Netac"/>
+      <div class="burger" id="burger"><span></span><span></span><span></span></div>
       <nav class="nav">
         <div class="wrap-link">
           <a href="#">Продукты</a>
@@ -833,13 +482,13 @@
     </div>
   </header>
 
-  <!-- ======= HERO ======= -->
+  <!-- ============ HERO ============ -->
   <section class="hero row">
     <div class="content-row hero-inner">
       <div class="overlay">
         <div class="overlay-inner">
-          <h1>Netac: технологии для ритейла <br />и ПВЗ — быстрее,<br /> удобнее, выгоднее</h1>
-          <p style="font-size: 30px;">Самообслуживание, удобное управление <br />и консультирование</p>
+          <h1>Netac: технологии для ритейла <br/>и ПВЗ — быстрее,<br/> удобнее, выгоднее</h1>
+          <p>Самообслуживание, удобное управление и консультирование</p>
           <a href="#" class="btn">Получить предложение</a>
         </div>
       </div>
@@ -849,37 +498,32 @@
         <p>Сервис по РФ и ЕАЭС</p>
       </div>
     </div>
-    </div>
 
-
-
-    <div class="search_container">
+    <div class="search_container" id="searchBar">
       <img class="search_icon" src="./icon/search.svg" alt="search" />
-      <input class="search_input" type="text" placeholder="Поиск">
+      <input class="search_input" type="text" placeholder="Поиск"/>
     </div>
   </section>
+
   <div class="search-no-result">
     Такого товара нет в списке. Но, возможно, мы можем подобрать для вас подходящее решение.
     <button class="btn btn-offer">Получить предложение</button>
   </div>
 
-
-  <!-- ======= FEATURES / PRODUCTS ======= -->
+  <!-- ============ PRODUCTS ============ -->
   <section class="features row">
     <div id="products-list"></div>
   </section>
 
-  <!-- ======= MODALS ======= -->
+  <!-- ============ MODALS ============ -->
   <div id="product-modal">
     <div class="modal-content">
-      <button id="modal-close">×</button>
-      <h2 id="modal-title"></h2>
-      <div id="modal-desc" style="margin-top:15px; font-size:18px;"></div>
-      <div class="modal-buttons" style="margin-top:78px; display:flex; gap:12px;">
-        <button class="modal-button"> Сохранить в PDF</button>
-        <button class="modal-button transparent" id="share-btn">
-          <p>Поделиться</p><img src="./icon/share.png" />
-        </button>
+      <button id="modal-close" aria-label="Закрыть">×</button>
+      <h2 id="modal-title" style="font-size:var(--fs-h2);"></h2>
+      <div id="modal-desc" style="margin-top:12px; font-size:var(--fs-body);"></div>
+      <div class="modal-buttons">
+        <button class="modal-button">Сохранить в PDF</button>
+        <button class="modal-button transparent" id="share-btn"><span>Поделиться</span><img src="./icon/share.png" alt="share"/></button>
         <button class="modal-button">Подобрать</button>
       </div>
     </div>
@@ -887,8 +531,8 @@
 
   <div id="share-modal">
     <div class="modal-content">
-      <button id="share-close">×</button>
-      <div style="display:flex; flex-direction:column; gap:10px; margin-top:15px;">
+      <button id="share-close" aria-label="Закрыть">×</button>
+      <div style="display:flex; flex-direction:column; gap:10px; margin-top:8px;">
         <div class="sosial_network">
           <a data-network="vk"><img src="./icon/share_icon/insta.png" alt="insta"></a>
           <a data-network="tg"><img src="./icon/share_icon/vk.png" alt="vk"></a>
@@ -897,31 +541,27 @@
           <a data-network="vk"><img src="./icon/share_icon/ds.png" alt="ds"></a>
           <a data-network="vk"><img src="./icon/share_icon/in.png" alt="in"></a>
         </div>
-        <button class="modal-button-share"><img src="./icon/bxs_copy.svg" alt="copy" />Скопировать</button>
-        <button class="modal-button-share"><img src="./icon/mynaui_save-solid.svg" alt="save" />Сохранить в
-          файлы</button>
-        <button class="modal-button-share"><img src="./icon/gg_google.svg" alt="google" />Поиск в Google</button>
+        <button class="modal-button-share"><img src="./icon/bxs_copy.svg" alt="copy"/>Скопировать</button>
+        <button class="modal-button-share"><img src="./icon/mynaui_save-solid.svg" alt="save"/>Сохранить в файлы</button>
+        <button class="modal-button-share"><img src="./icon/gg_google.svg" alt="google"/>Поиск в Google</button>
       </div>
     </div>
   </div>
 
   <div id="success-modal">
     <div class="modal-content">
-      <button id="success-close">×</button>
-      <h2>Ваши данные отправлены</h2>
-      <p style="margin:15px 0; font-size:18px;">Мы уже обрабатываем запрос.</p>
+      <button id="success-close" aria-label="Закрыть">×</button>
+      <h2 style="font-size:var(--fs-h2);">Ваши данные отправлены</h2>
+      <p style="margin:12px 0; font-size:var(--fs-body);">Мы уже обрабатываем запрос.</p>
       <button id="success-new" class="modal-button">Отправить ещё один запрос</button>
     </div>
   </div>
 
-  <!-- ======= FOOTER ======= -->
+  <!-- ============ FOOTER ============ -->
   <footer class="row">
-    <!-- Десктоп-версия -->
     <section class="form-section desktop-footer">
       <div class="form-container">
-        <div class="form-logo">
-          <img src="./icon/netac_logo_blue.png" alt="Netac logo" />
-        </div>
+        <div class="form-logo"><img src="./icon/netac_logo_blue.png" alt="Netac logo"/></div>
         <div class="form-box">
           <p>Оставьте контакты — мы подберём решение</p>
           <form id="contact-form">
@@ -929,70 +569,22 @@
               <input type="text" id="name" placeholder="Имя" />
               <div class="error" id="error-name"></div>
             </div>
-
             <div class="form-group">
               <input type="tel" id="phone" placeholder="Контактный телефон" />
               <div class="error" id="error-phone"></div>
             </div>
-
             <div class="form-group">
               <input type="email" id="email" placeholder="E-mail" />
               <div class="error" id="error-email"></div>
             </div>
-
-            <div class="form-group">
+            <div class="form-group" style="grid-column:1/-1;">
               <textarea id="message" placeholder="Сообщение (необязательно)"></textarea>
             </div>
-
             <button type="submit" class="btn">Подобрать</button>
           </form>
         </div>
       </div>
     </section>
-
-    <!-- Mobile / Tablet — шторка -->
-    <!-- <div id="footer-swipe-zone"></div>
-    <div id="footer-sheet" data-state="closed">
-      <div class="sheet-backdrop" data-close></div>
-      <div class="sheet-panel">
-        <div class="sheet-handle"></div>
-        <div class="sheet-header">
-          <div class="sheet-title">Оставьте контакты — мы подберём решение</div>
-        </div>
-        <div class="sheet-content">
-          <form id="contact-form">
-            <div class="form-group">
-              <input type="text" id="name" placeholder="Имя">
-              <div class="error" id="error-name"></div>
-            </div>
-
-            <div class="form-group">
-              <input type="tel" id="phone" placeholder="Контактный телефон">
-              <div class="error" id="error-phone"></div>
-            </div>
-
-            <div class="form-group">
-              <input type="email" id="email" placeholder="E-mail">
-              <div class="error" id="error-email"></div>
-            </div>
-
-            <div class="form-group">
-              <textarea id="message" placeholder="Сообщение (необязательно)"></textarea>
-            </div>
-
-            <button type="submit" class="btn">Подобрать</button>
-          </form>
-
-          <div id="form-success" class="sheet-success" style="display:none;">
-            <h3>Данные отправлены</h3>
-          </div>
-        </div>
-        <div class="sheet-actions">
-          <button type="button" data-close>Закрыть</button>
-          <button type="submit" form="contact-form">Подобрать</button>
-        </div>
-      </div>
-    </div> -->
 
     <div class="info_footer">
       <p>
@@ -1002,8 +594,11 @@
       <a href="mailto:info@netac.eu">info@netac.eu</a>
     </div>
   </footer>
+
   <script>
-    // --- Глобальные переменные
+    // ============================
+    // DATA
+    // ============================
     let currentSharedProduct = null;
     let currentProductIndex = null;
 
@@ -1012,197 +607,118 @@
     const modalTitle = document.getElementById('modal-title');
     const modalDesc = document.getElementById('modal-desc');
     const shareModal = document.getElementById('share-modal');
+    const searchInput = document.querySelector('.search_input');
 
-    // --- Данные
     const products = [
-      {
-        img: './product_photo/NETAC TM-21.png',
-        title: 'NETAC TM-21 — <br><b>Сенсорный монитор</b>',
-        full_title: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: `• IPS Full HD, 10 касаний<br>
-• USB-хаб, HDMI/VGA, динамики<br>
-• для касс, Digital-Signage, терминалов<br>
-• POS-ПО, интерактивные витрины<br>`
-      },
-      {
-        img: './product_photo/NETAC NB-300_улучшен.png',
-        title: 'NETAC NB-300 <br><b>Компактная и мощная портативная электростанция</b>',
-        full_title: 'NETAC NB-300',
-        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: `• IPS Full HD, 10 касаний<br>
-• USB-хаб, HDMI/VGA, динамики<br>
-• для касс, Digital-Signage, терминалов<br>
-• POS-ПО, интерактивные витрины<br>`
-      },
-      {
-        img: 'product_photo/высокий 3.png',
-        title: 'PP 606 <br><b>Терминал самообслуживания для ПВЗ</b>',
-        full_title: 'PP 303',
-        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: `• IPS Full HD, 10 касаний<br>
-• USB-хаб, HDMI/VGA, динамики<br>
-• для касс, Digital-Signage, терминалов<br>
-• POS-ПО, интерактивные витрины<br>`
-      },
-      {
-        img: './product_photo/высокий 1_улучшен.png',
-        title: 'NETAC NB-300',
-        full_title: 'NETAC NB-300',
-        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: `• IPS Full HD, 10 касаний<br>
-• USB-хаб, HDMI/VGA, динамики<br>
-• для касс, Digital-Signage, терминалов<br>
-• POS-ПО, интерактивные витрины<br>`
-      },
-      {
-        img: '/product_photo/высокий 3.png',
-        title: 'PP 303',
-        full_title: 'PP 303',
-        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: `• IPS Full HD, 10 касаний<br>
-• USB-хаб, HDMI/VGA, динамики<br>
-• для касс, Digital-Signage, терминалов<br>
-• POS-ПО, интерактивные витрины<br>`
-      },
-      {
-        img: './product_photo/NETAC TM-21.png',
-        title: 'AAAAA',
-        full_title: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: `• IPS Full HD, 10 касаний<br>
-• USB-хаб, HDMI/VGA, динамики<br>
-• для касс, Digital-Signage, терминалов<br>
-• POS-ПО, интерактивные витрины<br>`
-      },
-      {
-        img: './product_photo/NETAC NB-300_улучшен.png',
-        title: 'NETAC NB-300',
-        full_title: 'NETAC NB-300',
-        full_desc: 'NETAC NB-300 - <b>портативная электростанция</b>',
-        desc: `• IPS Full HD, 10 касаний<br>
-• USB-хаб, HDMI/VGA, динамики<br>
-• для касс, Digital-Signage, терминалов<br>
-• POS-ПО, интерактивные витрины<br>`
-      },
-      {
-        img: 'product_photo/высокий 3.png',
-        title: 'PP 303',
-        full_title: 'PP 303',
-        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: `• IPS Full HD, 10 касаний
- • USB-хаб, HDMI/VGA, динамики
- • для касс, Digital-Signage, терминалов
- • POS-ПО, интерактивные витрины`
-      },
-      {
-        img: './product_photo/NETAC NB-300_улучшен.png',
-        title: 'NETAC NB-300',
-        full_title: 'NETAC NB-300',
-        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: `• IPS Full HD, 10 касаний<br>
-• USB-хаб, HDMI/VGA, динамики<br>
-• для касс, Digital-Signage, терминалов<br>
-• POS-ПО, интерактивные витрины<br>`
-      },
-      {
-        img: '/product_photo/высокий 3.png',
-        title: 'PP 303',
-        full_title: 'PP 303',
-        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Мини-терминал самообслуживания для ПВЗ'
-      },
-      {
-        img: '/product_photo/высокий 3.png',
-        title: 'PP 303',
-        full_title: 'PP 303',
-        full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Мини-терминал самообслуживания для ПВЗ'
-      }
+      { img: './product_photo/NETAC TM-21.png', title: 'NETAC TM-21 — <br><b>Сенсорный монитор</b>', full_title: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>', full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>', desc: `• IPS Full HD, 10 касаний<br>• USB-хаб, HDMI/VGA, динамики<br>• для касс, Digital-Signage, терминалов<br>• POS-ПО, интерактивные витрины<br>` },
+      { img: './product_photo/NETAC NB-300_улучшен.png', title: 'NETAC NB-300 <br><b>Компактная и мощная портативная электростанция</b>', full_title: 'NETAC NB-300', full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>', desc: `• IPS Full HD, 10 касаний<br>• USB-хаб, HDMI/VGA, динамики<br>• для касс, Digital-Signage, терминалов<br>• POS-ПО, интерактивные витрины<br>` },
+      { img: 'product_photo/высокий 3.png', title: 'PP 606 <br><b>Терминал самообслуживания для ПВЗ</b>', full_title: 'PP 303', full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>', desc: `• IPS Full HD, 10 касаний<br>• USB-хаб, HDMI/VGA, динамики<br>• для касс, Digital-Signage, терминалов<br>• POS-ПО, интерактивные витрины<br>` },
+      { img: './product_photo/высокий 1_улучшен.png', title: 'NETAC NB-300', full_title: 'NETAC NB-300', full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>', desc: `• IPS Full HD, 10 касаний<br>• USB-хаб, HDMI/VGA, динамики<br>• для касс, Digital-Signage, терминалов<br>• POS-ПО, интерактивные витрины<br>` },
+      { img: '/product_photo/высокий 3.png', title: 'PP 303', full_title: 'PP 303', full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>', desc: `• IPS Full HD, 10 касаний<br>• USB-хаб, HDMI/VGA, динамики<br>• для касс, Digital-Signage, терминалов<br>• POS-ПО, интерактивные витрины<br>` },
+      { img: './product_photo/NETAC TM-21.png', title: 'AAAAA', full_title: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>', full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>', desc: `• IPS Full HD, 10 касаний<br>• USB-хаб, HDMI/VGA, динамики<br>• для касс, Digital-Signage, терминалов<br>• POS-ПО, интерактивные витрины<br>` },
+      { img: './product_photo/NETAC NB-300_улучшен.png', title: 'NETAC NB-300', full_title: 'NETAC NB-300', full_desc: 'NETAC NB-300 - <b>портативная электростанция</b>', desc: `• IPS Full HD, 10 касаний<br>• USB-хаб, HDMI/VGA, динамики<br>• для касс, Digital-Signage, терминалов<br>• POS-ПО, интерактивные витрины<br>` },
+      { img: 'product_photo/высокий 3.png', title: 'PP 303', full_title: 'PP 303', full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>', desc: `• IPS Full HD, 10 касаний<br> • USB-хаб, HDMI/VGA, динамики<br> • для касс, Digital-Signage, терминалов<br> • POS-ПО, интерактивные витрины` },
+      { img: './product_photo/NETAC NB-300_улучшен.png', title: 'NETAC NB-300', full_title: 'NETAC NB-300', full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>', desc: `• IPS Full HD, 10 касаний<br>• USB-хаб, HDMI/VGA, динамики<br>• для касс, Digital-Signage, терминалов<br>• POS-ПО, интерактивные витрины<br>` },
+      { img: '/product_photo/высокий 3.png', title: 'PP 303', full_title: 'PP 303', full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>', desc: 'Мини-терминал самообслуживания для ПВЗ' },
+      { img: '/product_photo/высокий 3.png', title: 'PP 303', full_title: 'PP 303', full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>', desc: 'Мини-терминал самообслуживания для ПВЗ' }
     ];
 
-    const searchInput = document.querySelector('.search_input');
+    const isTouchLike = window.matchMedia('(hover: none), (pointer: coarse)').matches || window.innerWidth < 1200;
     let currentProducts = products.slice();
 
-    // --- Рендер карточек
+    // Render
     function renderProducts(items) {
       list.innerHTML = items.map((p, idx) => `
-      <div class="product-card">
-        <img src="${p.img}" alt="${p.title}" />
-        <img class="card-desc-img share-btn" src="./icon/majesticons_share.svg" data-index="${idx}" />
-        <p>${p.title}</p>
-        <div class="card-desc">
-          <p class="title">${p.full_title}</p>
-          <p class="desc">${p.desc}</p>
-          <button class="btn_more" type="button" data-index="${idx}">Подробнее</button>
+        <div class="product-card" data-index="${idx}">
+          <img src="${p.img}" alt="${p.title}" />
+          <img class="card-desc-img share-btn" src="./icon/majesticons_share.svg" data-index="${idx}" alt="share"/>
+          <p>${p.title}</p>
+          <div class="card-desc">
+            <p class="title">${p.full_title}</p>
+            <p class="desc">${p.desc}</p>
+            <button class="btn_more" type="button" data-index="${idx}">Подробнее</button>
+          </div>
         </div>
-      </div>
-    `).join('');
+      `).join('');
     }
 
-    // --- Стартовый рендер
     renderProducts(currentProducts);
 
+    // Search no-result
     const noResultBlock = document.querySelector('.search-no-result');
     if (noResultBlock) noResultBlock.style.display = 'none';
 
-    searchInput.addEventListener('input', function () {
-      const query = this.value.trim().toLowerCase();
-      const noResultBlock = document.querySelector('.search-no-result');
-      const productsList = document.getElementById("products-list");
+    // Search logic
+    const searchBar = document.getElementById('searchBar');
+    const productsListEl = document.getElementById('products-list');
 
-      // Если поле очищено — вернуть всё обратно
+    document.addEventListener('scroll', () => {
+      if (!searchBar) return;
+      if (window.scrollY > 400) searchBar.classList.add('fixed');
+      else searchBar.classList.remove('fixed');
+    });
+
+    const searchField = document.querySelector('.search_input');
+    searchField.addEventListener('input', function () {
+      const query = this.value.trim().toLowerCase();
+
       if (!query) {
+        currentProducts = products.slice();
         renderProducts(currentProducts);
-        productsList.style.display = "block";
-        noResultBlock.style.display = "none";
+        productsListEl.style.display = 'block';
+        noResultBlock.style.display = 'none';
         return;
       }
 
       let foundIndex = currentProducts.findIndex(p =>
-        p.title.toLowerCase().includes(query) ||
-        (p.desc && p.desc.toLowerCase().includes(query))
+        p.title.toLowerCase().includes(query) || (p.desc && p.desc.toLowerCase().includes(query))
       );
 
       if (foundIndex > -1) {
-        // ✅ Найден товар
         const foundProduct = currentProducts.splice(foundIndex, 1)[0];
         currentProducts.unshift(foundProduct);
         renderProducts(currentProducts);
 
-        // Авто-скролл + выделение
         const firstCard = document.querySelector('.product-card');
-        firstCard.classList.add('highlight');
-        firstCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (firstCard) {
+          firstCard.classList.add('highlight');
+          firstCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(() => firstCard.classList.remove('highlight'), 1600);
+        }
 
-        productsList.style.display = "block";
-        noResultBlock.style.display = "none";
+        productsListEl.style.display = 'block';
+        noResultBlock.style.display = 'none';
 
-        // Убираем highlight через время
-        setTimeout(() => firstCard.classList.remove('highlight'), 2000);
-
-        // Вернём в конец
         currentProducts.push(currentProducts.shift());
       } else {
-        // ❌ Не найдено
-        productsList.style.display = "none";
-        noResultBlock.style.display = "block";
+        productsListEl.style.display = 'none';
+        noResultBlock.style.display = 'block';
       }
     });
 
-
-
-
-    // --- Делегирование кликов по всей странице
+    // Delegated clicks
     document.addEventListener('click', async (e) => {
       const target = e.target;
 
-      // Открыть модалку товара
+      // Open product modal immediately on mobile/tablet by tapping the card
+      const card = target.closest('.product-card');
+      if (card && isTouchLike) {
+        const idx = Number(card.dataset.index);
+        const product = currentProducts[idx];
+        if (product) {
+          currentProductIndex = idx;
+          modalTitle.innerHTML = product.full_title;
+          modalDesc.innerHTML = product.desc;
+          modal.style.display = 'flex';
+        }
+        return;
+      }
+
+      // Desktop: open from "Подробнее" button
       if (target.classList.contains('btn_more')) {
         const idx = Number(target.dataset.index);
         const product = currentProducts[idx];
         if (!product) return;
-
         currentProductIndex = idx;
         modalTitle.innerHTML = product.full_title;
         modalDesc.innerHTML = product.desc;
@@ -1210,128 +726,92 @@
         return;
       }
 
-      // Открыть модалку шаринга из карточки (иконка с классом .share-btn)
+      // Share from card icon
       const shareIcon = target.closest('.share-btn');
       if (shareIcon && shareIcon.dataset.index !== undefined) {
         const idx = Number(shareIcon.dataset.index);
         currentSharedProduct = currentProducts[idx];
-        // ВАЖНО: модалку товара не трогаем
         shareModal.style.display = 'flex';
         return;
       }
 
-      // Открыть модалку шаринга из модалки товара (кнопка #share-btn)
+      // Share from product modal button
       if (target.id === 'share-btn' || target.closest('#share-btn')) {
         if (currentProductIndex != null) {
           currentSharedProduct = currentProducts[currentProductIndex];
         }
-        shareModal.style.display = 'flex'; // товарная модалка остаётся открытой
+        shareModal.style.display = 'flex';
         return;
       }
 
-      // Закрыть модалку товара (крестик или клик по подложке)
+      // Close product modal
       if (target.id === 'modal-close' || target === modal) {
         modal.style.display = 'none';
         return;
       }
 
-      // Закрыть модалку шаринга (крестик или клик по подложке)
+      // Close share modal
       if (target.id === 'share-close' || target === shareModal) {
         shareModal.style.display = 'none';
         return;
       }
 
-      // Копирование ссылки (кнопка с текстом "Скопировать" и классом .modal-button-share)
+      // Copy link in share
       const shareButton = target.closest('.modal-button-share');
       if (shareButton && /Скопировать/i.test(shareButton.innerText)) {
         if (!currentSharedProduct) return;
         const cleanTitle = currentSharedProduct.full_title.replace(/<[^>]+>/g, '').trim();
         const url = `${window.location.origin}${window.location.pathname}?name=${encodeURIComponent(cleanTitle)}`;
-
         try {
           await navigator.clipboard.writeText(url);
           showToast('Скопировано!');
         } catch {
-          // Фолбэк для старых браузеров
           const tmp = document.createElement('textarea');
-          tmp.value = url;
-          tmp.style.position = 'fixed';
-          tmp.style.opacity = '0';
-          document.body.appendChild(tmp);
-          tmp.select();
-          try { document.execCommand('copy'); } catch { }
-          tmp.remove();
-          showToast('Скопировано!');
+          tmp.value = url; tmp.style.position = 'fixed'; tmp.style.opacity = '0';
+          document.body.appendChild(tmp); tmp.select(); try { document.execCommand('copy'); } catch {}
+          tmp.remove(); showToast('Скопировано!');
         }
         return;
       }
 
-      // Клики по соц.сетям (контейнер внутри share-модалки)
+      // Social share
       const socialLink = target.closest('.sosial_network a');
       if (socialLink) {
         if (!currentSharedProduct) return;
-
         const cleanTitle = currentSharedProduct.full_title.replace(/<[^>]+>/g, '').trim();
         const productUrl = encodeURIComponent(`${window.location.origin}${window.location.pathname}?name=${encodeURIComponent(cleanTitle)}`);
-        const text = encodeURIComponent(
-          `${cleanTitle} — ${currentSharedProduct.full_desc.replace(/<[^>]+>/g, ' ').trim()}`
-        );
-
+        const text = encodeURIComponent(`${cleanTitle} — ${currentSharedProduct.full_desc.replace(/<[^>]+>/g, ' ').trim()}`);
         let shareUrl = '';
         switch (socialLink.dataset.network) {
-          case 'vk':
-            shareUrl = `https://vk.com/share.php?url=${productUrl}&title=${text}`;
-            break;
-          case 'tg':
-            shareUrl = `https://t.me/share/url?url=${productUrl}&text=${text}`;
-            break;
-          case 'wa':
-            shareUrl = `https://api.whatsapp.com/send?text=${text}%20${productUrl}`;
-            break;
-          case 'insta':
-            alert('Instagram не поддерживает прямой шаринг ссылкой — придётся копировать вручную');
-            return;
-          default:
-            return;
+          case 'vk': shareUrl = `https://vk.com/share.php?url=${productUrl}&title=${text}`; break;
+          case 'tg': shareUrl = `https://t.me/share/url?url=${productUrl}&text=${text}`; break;
+          case 'wa': shareUrl = `https://api.whatsapp.com/send?text=${text}%20${productUrl}`; break;
+          case 'insta': alert('Instagram не поддерживает прямой шаринг ссылкой — скопируй вручную'); return;
+          default: return;
         }
         window.open(shareUrl, '_blank');
         return;
       }
     });
 
-    // --- Тост-уведомление
+    // Toast
     function showToast(text) {
       const toast = document.createElement('div');
       toast.textContent = text;
-      toast.style.position = 'fixed';
-      toast.style.left = '50%';
-      toast.style.bottom = '20px';
-      toast.style.transform = 'translateX(-50%)';
-      toast.style.background = '#003CAA';
-      toast.style.color = '#fff';
-      toast.style.padding = '10px 20px';
-      toast.style.borderRadius = '8px';
-      toast.style.fontSize = '16px';
-      toast.style.opacity = '0';
-      toast.style.transition = 'opacity .3s ease';
-      toast.style.zIndex = '2000';
+      toast.style.position = 'fixed'; toast.style.left = '50%'; toast.style.bottom = '20px'; toast.style.transform = 'translateX(-50%)';
+      toast.style.background = '#003CAA'; toast.style.color = '#fff'; toast.style.padding = '10px 20px'; toast.style.borderRadius = '8px';
+      toast.style.fontSize = '16px'; toast.style.opacity = '0'; toast.style.transition = 'opacity .25s ease'; toast.style.zIndex = '2000';
       document.body.appendChild(toast);
       requestAnimationFrame(() => { toast.style.opacity = '1'; });
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 300);
-      }, 1500);
+      setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 250); }, 1400);
     }
 
-    // --- Открытие модалки по URL ?name=
+    // Open modal from URL ?name=
     (function openFromQuery() {
       const urlParams = new URLSearchParams(window.location.search);
       if (!urlParams.has('name')) return;
-
       const name = decodeURIComponent(urlParams.get('name')).toLowerCase();
-      const index = currentProducts.findIndex(
-        p => p.full_title.replace(/<[^>]+>/g, '').toLowerCase().includes(name)
-      );
+      const index = currentProducts.findIndex(p => p.full_title.replace(/<[^>]+>/g, '').toLowerCase().includes(name));
       if (index > -1) {
         currentProductIndex = index;
         const product = currentProducts[index];
@@ -1341,122 +821,56 @@
       }
     })();
 
-    // --- Хедер фон при скролле
+    // Header background on scroll
     window.addEventListener('scroll', () => {
       const header = document.querySelector('header');
-      if (window.scrollY > 10) header.classList.add('scrolled');
-      else header.classList.remove('scrolled');
+      if (window.scrollY > 10) header.classList.add('scrolled'); else header.classList.remove('scrolled');
     });
 
-    // --- Бургер-меню
+    // Burger menu
     const burger = document.getElementById('burger');
     const nav = document.querySelector('.nav');
     const overlay = document.getElementById('burger-overlay');
 
-    burger.addEventListener('click', () => {
-      nav.classList.toggle('active');
-      overlay.classList.toggle('active');
-    });
+    function closeNav() { nav.classList.remove('active'); overlay.classList.remove('active'); }
 
-    overlay.addEventListener('click', () => {
-      nav.classList.remove('active');
-      overlay.classList.remove('active');
-    });
+    burger.addEventListener('click', () => { nav.classList.toggle('active'); overlay.classList.toggle('active'); });
+    overlay.addEventListener('click', closeNav);
+    nav.addEventListener('click', (e) => { if (e.target.tagName === 'A' || e.target.classList.contains('btn-nav')) closeNav(); });
 
-    // --- Форма (валидация и успех)
-    const footerSheet = document.getElementById('footer-sheet');
+    // Form validation
     const contactForm = document.getElementById('contact-form');
     const successModal = document.getElementById('success-modal');
     const successClose = document.getElementById('success-close');
     const successNew = document.getElementById('success-new');
 
-    function openFooter() { if (footerSheet) footerSheet.dataset.state = 'open'; }
-    function closeFooter() { if (footerSheet) footerSheet.dataset.state = 'closed'; }
-
-    document.querySelectorAll('.btn-nav, .hero .btn').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.preventDefault();
-        openFooter();
-      });
-    });
-
-    if (footerSheet) {
-      footerSheet.addEventListener('click', e => {
-        if (e.target.hasAttribute('data-close')) closeFooter();
-      });
-    }
-
     if (contactForm) {
       contactForm.addEventListener('submit', function (e) {
         e.preventDefault();
-
-        // очищаем прошлые ошибки
         document.querySelectorAll('.error').forEach(el => el.textContent = '');
         document.querySelectorAll('#contact-form input, #contact-form textarea').forEach(el => el.classList.remove('error'));
 
         let valid = true;
-
-        // имя
         const name = document.getElementById('name');
-        if (name.value.trim().length < 2) {
-          document.getElementById('error-name').textContent = 'Введите имя (минимум 2 символа)';
-          name.classList.add('error');
-          valid = false;
-        }
+        if (name.value.trim().length < 2) { document.getElementById('error-name').textContent = 'Введите имя (минимум 2 символа)'; name.classList.add('error'); valid = false; }
 
-        // телефон
         const phone = document.getElementById('phone');
         const phonePattern = /^[0-9+\-\s]{6,}$/;
-        if (!phone.value.trim()) {
-          document.getElementById('error-phone').textContent = 'Поле обязательно';
-          phone.classList.add('error');
-          valid = false;
-        } else if (!phonePattern.test(phone.value.trim())) {
-          document.getElementById('error-phone').textContent = 'Введите корректный телефон';
-          phone.classList.add('error');
-          valid = false;
-        }
+        if (!phone.value.trim()) { document.getElementById('error-phone').textContent = 'Поле обязательно'; phone.classList.add('error'); valid = false; }
+        else if (!phonePattern.test(phone.value.trim())) { document.getElementById('error-phone').textContent = 'Введите корректный телефон'; phone.classList.add('error'); valid = false; }
 
-        // email
         const email = document.getElementById('email');
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!email.value.trim()) {
-          document.getElementById('error-email').textContent = 'Поле обязательно';
-          email.classList.add('error');
-          valid = false;
-        } else if (!emailPattern.test(email.value.trim())) {
-          document.getElementById('error-email').textContent = 'Введите корректный E-mail';
-          email.classList.add('error');
-          valid = false;
-        }
+        if (!email.value.trim()) { document.getElementById('error-email').textContent = 'Поле обязательно'; email.classList.add('error'); valid = false; }
+        else if (!emailPattern.test(email.value.trim())) { document.getElementById('error-email').textContent = 'Введите корректный E-mail'; email.classList.add('error'); valid = false; }
 
-        if (valid) {
-          successModal.style.display = 'flex';
-          contactForm.reset();
-        }
+        if (valid) { successModal.style.display = 'flex'; contactForm.reset(); }
       });
     }
 
-    if (successClose) {
-      successClose.addEventListener('click', () => { successModal.style.display = 'none'; });
-    }
-    if (successNew) {
-      successNew.addEventListener('click', () => { successModal.style.display = 'none'; });
-    }
-    if (successModal) {
-      successModal.addEventListener('click', e => { if (e.target === successModal) successModal.style.display = 'none'; });
-    }
-
-    // --- Прилипающий поиск
-    const searchBar = document.querySelector('.search_container');
-    window.addEventListener('scroll', () => {
-      if (!searchBar) return;
-      if (window.scrollY > 400) searchBar.classList.add('fixed');
-      else searchBar.classList.remove('fixed');
-    });
+    if (successClose) successClose.addEventListener('click', () => { successModal.style.display = 'none'; });
+    if (successNew) successNew.addEventListener('click', () => { successModal.style.display = 'none'; });
+    if (successModal) successModal.addEventListener('click', e => { if (e.target === successModal) successModal.style.display = 'none'; });
   </script>
-
-
 </body>
-
 </html>
