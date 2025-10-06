@@ -161,6 +161,7 @@
     .btn,
     .btn_more,
     .btn-nav {
+      align-self: center;
       background: rgba(0, 60, 170, 1);
       color: #fff;
       border-radius: 10px;
@@ -175,7 +176,7 @@
     }
 
     .btn_more {
-      padding: clamp(10px, 0.5vw, 20px) 6vw;
+      padding: clamp(10px, 0.3vw, 20px) 4vw;
     }
 
     .btn-nav {
@@ -256,7 +257,7 @@
     .hero .promo p {
       backdrop-filter: blur(5px);
       background: rgba(37, 54, 112, 0.6);
-      padding: 32px 97px;
+      padding: 2vw 6vw;
       border-radius: 8px;
       font-size: 20px;
       margin-bottom: 6vw;
@@ -265,6 +266,7 @@
       border-color: #003CAA;
       width: max-content;
       max-width: 100%;
+      white-space: nowrap;
     }
 
     .hero .promo p:nth-child(1) {
@@ -281,6 +283,7 @@
 
 
     .search_wrapper {
+
       position: relative;
       height: 64px;
       /* чтобы в hero оставалось место под поиск */
@@ -288,6 +291,7 @@
 
     /* SEARCH (снизу hero, выравнивание по тем же полям) */
     .search_container {
+
       position: absolute;
       left: 50%;
       bottom: 30px;
@@ -305,7 +309,7 @@
     /* Когда прилипает вниз */
     .search_container.fixed {
       position: fixed;
-      bottom: 0;
+      top: 10%;
       left: 0;
       transform: none;
       width: 100%;
@@ -313,6 +317,7 @@
     }
 
     .search_icon {
+      margin-left: 1%;
       width: 32px;
       height: 32px;
       margin-right: 18px;
@@ -334,6 +339,7 @@
 
     /* ======= FEATURES / PRODUCTS ======= */
     .features {
+      margin-left: 2.5%;
       grid-column: 1 / -1;
       margin-top: 2.6vw;
     }
@@ -375,7 +381,7 @@
     }
 
     .card-desc {
-      pointer-events: none; 
+      pointer-events: none;
       position: absolute;
       left: 0;
       bottom: -100%;
@@ -393,11 +399,29 @@
       backdrop-filter: blur(4px);
       transition: bottom .18s, opacity .18s;
       font-weight: 400;
-      font-size: clamp(7px, 1vw, 20px);;
-      line-height: 28.58px;
+      font-size: 0.88vw;
+      line-height: 1.4vw;
       letter-spacing: -0.2px;
       vertical-align: middle;
 
+    }
+
+    .card-desc-img {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 24px !important;
+      height: auto;
+      opacity: 0;
+      transition: opacity .18s ease;
+      pointer-events: auto;
+      /* если хочешь, чтобы на неё можно было нажимать */
+      z-index: 5;
+      cursor: pointer;
+    }
+
+    .product-card:hover .card-desc-img {
+      opacity: 1;
     }
 
     .product-card:hover .card-desc {
@@ -405,6 +429,7 @@
       opacity: 1;
       pointer-events: auto;
     }
+
 
     .product-card.highlight {
       transform: scale(1.04);
@@ -416,13 +441,15 @@
 
     /* ======= FOOTER ======= */
     footer {
+      background-color: rgba(255, 253, 253, 1);
       grid-column: 1 / -1;
       text-align: center;
-      padding: 15px;
-      border-top: 1px solid rgba(51, 51, 51, 1);
+      padding: 30px;
+      border-top: 0.1px solid rgba(51, 51, 51, 1);
     }
 
     .form-section.desktop-footer .form-container {
+
       margin-inline: var(--margin-x);
       display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -432,11 +459,12 @@
     }
 
     .form-logo {
-      grid-column: 1 / span 4;
+      margin-left: 43%;
+      grid-column: 1 / span 1;
     }
 
     .form-box {
-      grid-column: 5 / span 8;
+      grid-column: 12 / span 12;
     }
 
     .form-box p {
@@ -481,11 +509,31 @@
       justify-content: space-evenly;
       margin-left: 5vw;
       border-top: 1px solid rgba(51, 51, 51, .3);
-      padding: 40px 0;
+      padding: 40px 20px;
+      margin-top: 40px;
     }
 
     .desktop-footer {
       display: flex;
+    }
+
+    .modal-button-share {
+      cursor: pointer;
+      background-color: transparent;
+      color: black;
+      border: 1px solid black;
+      border-radius: 12px;
+      padding: 0.5vw 10px 0.5vw 1vw !important;
+      display: flex;
+      flex-direction: row;
+      width: 30vw;
+    }
+
+    .modal-button-share:hover {
+      transform: scale(1.05);
+      transition: .3s;
+      box-shadow: 0 4px 10px rgba(0, 60, 170, .3);
+
     }
 
     .info_footer a {
@@ -509,18 +557,37 @@
       justify-content: center;
     }
 
+    .sosial_network {
+      display: flex;
+      gap: 1.3vw;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+    }
+
+    .sosial_network a img {
+      cursor: pointer;
+      width: 3vw;
+      height: 3vw;
+    }
+
+    .sosial_network a img:hover {
+      transform: scale(1.05);
+      transition: .3s;
+    }
+
     #product-modal .modal-content,
     #share-modal .modal-content,
     #success-modal .modal-content {
       background: #fff;
-      border-radius: 12px;
       width: max-content;
-      padding: 5vw;
+      padding: 3vw 10vw;
       position: relative;
     }
 
     #modal-close,
-    #success-close {
+    #success-close,
+    #share-close {
       position: absolute;
       top: 12px;
       right: 18px;
@@ -545,8 +612,14 @@
       border-radius: 10px;
       text-decoration: none;
       font-size: 20px;
-      display: inline-block;
+      display: flex;
       border: 0;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-content: center;
+      justify-content: space-between;
+      gap: 0.6vw;
+      align-items: baseline
     }
 
     .modal-button.transparent {
@@ -560,6 +633,7 @@
       color: rgb(6, 72, 195) !important;
       transition: .3s;
     }
+
     /* ======= ERRORS ======= */
     .error {
       color: red;
@@ -719,6 +793,7 @@
       <input class="search_input" type="text" placeholder="Поиск">
     </div>
   </section>
+  
 
   <!-- ======= FEATURES / PRODUCTS ======= -->
   <section class="features row">
@@ -733,7 +808,9 @@
       <div id="modal-desc" style="margin-top:15px; font-size:18px;"></div>
       <div class="modal-buttons" style="margin-top:78px; display:flex; gap:12px;">
         <button class="modal-button"> Сохранить в PDF</button>
-        <button class="modal-button transparent" id="share-btn"> Поделиться</button>
+        <button class="modal-button transparent" id="share-btn">
+          <p>Поделиться</p><img src="./icon/share.png" />
+        </button>
         <button class="modal-button">Подобрать</button>
       </div>
     </div>
@@ -741,20 +818,20 @@
 
   <div id="share-modal">
     <div class="modal-content">
-      <h2>Поделиться</h2>
-      <p>Выберите способ:</p>
+      <button id="share-close">×</button>
       <div style="display:flex; flex-direction:column; gap:10px; margin-top:15px;">
         <div class="sosial_network">
-          <a><img src="./icon/share_icon/insta.png" alt="insta"></a>
-          <a><img src="./icon/share_icon/vk.png" alt="vk"></a>
-          <a><img src="./icon/share_icon/tg.png" alt="tg"></a>
-          <a><img src="./icon/share_icon/wa.png" alt="wa"></a>
-          <a><img src="./icon/share_icon/ds.png" alt="ds"></a>
-          <a><img src="./icon/share_icon/in.png" alt="in"></a>
+          <a data-network="vk"><img src="./icon/share_icon/insta.png" alt="insta"></a>
+          <a data-network="tg"><img src="./icon/share_icon/vk.png" alt="vk"></a>
+          <a data-network="wa"><img src="./icon/share_icon/tg.png" alt="tg"></a>
+          <a data-network="insta"><img src="./icon/share_icon/wa.png" alt="wa"></a>
+          <a data-network="vk"><img src="./icon/share_icon/ds.png" alt="ds"></a>
+          <a data-network="vk"><img src="./icon/share_icon/in.png" alt="in"></a>
         </div>
-        <button class="modal-button"><img src="./icon/bxs_copy.svg" alt="copy" />Скопировать</button>
-        <button class="modal-button"><img src="./icon/mynaui_save-solid.svg" alt="save" />Сохранить в файлы</button>
-        <button class="modal-button"><img src="./icon/gg_google.svg" alt="google" />Поиск в Google</button>
+        <button class="modal-button-share"><img src="./icon/bxs_copy.svg" alt="copy" />Скопировать</button>
+        <button class="modal-button-share"><img src="./icon/mynaui_save-solid.svg" alt="save" />Сохранить в
+          файлы</button>
+        <button class="modal-button-share"><img src="./icon/gg_google.svg" alt="google" />Поиск в Google</button>
       </div>
     </div>
   </div>
@@ -805,7 +882,7 @@
     </section>
 
     <!-- Mobile / Tablet — шторка -->
-    <div id="footer-swipe-zone"></div>
+    <!-- <div id="footer-swipe-zone"></div>
     <div id="footer-sheet" data-state="closed">
       <div class="sheet-backdrop" data-close></div>
       <div class="sheet-panel">
@@ -846,7 +923,7 @@
           <button type="submit" form="contact-form">Подобрать</button>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="info_footer">
       <p>
@@ -857,20 +934,27 @@
     </div>
   </footer>
   <script>
-    document.getElementById('burger').addEventListener('click', () => {
-      document.querySelector('.nav').classList.toggle('active');
-    });
+    // --- Глобальные переменные
+    let currentSharedProduct = null;
+    let currentProductIndex = null;
+
+    const list = document.getElementById('products-list');
+    const modal = document.getElementById('product-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDesc = document.getElementById('modal-desc');
+    const shareModal = document.getElementById('share-modal');
+
+    // --- Данные
     const products = [
       {
         img: './product_photo/NETAC TM-21.png',
-        title: 'NETAC TM-21 — <br><b>Сенсорный монитор</b>',
+        title: 'NETAC TM-21 — <br><b>Сенсорный монитор</b>',
         full_title: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
         desc: `• IPS Full HD, 10 касаний<br>
 • USB-хаб, HDMI/VGA, динамики<br>
 • для касс, Digital-Signage, терминалов<br>
-• POS-ПО, интерактивные витрины<br>
-        `,
+• POS-ПО, интерактивные витрины<br>`
       },
       {
         img: './product_photo/NETAC NB-300_улучшен.png',
@@ -880,8 +964,7 @@
         desc: `• IPS Full HD, 10 касаний<br>
 • USB-хаб, HDMI/VGA, динамики<br>
 • для касс, Digital-Signage, терминалов<br>
-• POS-ПО, интерактивные витрины<br>
-        `,
+• POS-ПО, интерактивные витрины<br>`
       },
       {
         img: 'product_photo/высокий 3.png',
@@ -891,8 +974,7 @@
         desc: `• IPS Full HD, 10 касаний<br>
 • USB-хаб, HDMI/VGA, динамики<br>
 • для касс, Digital-Signage, терминалов<br>
-• POS-ПО, интерактивные витрины<br>
-        `,
+• POS-ПО, интерактивные витрины<br>`
       },
       {
         img: './product_photo/высокий 1_улучшен.png',
@@ -902,8 +984,7 @@
         desc: `• IPS Full HD, 10 касаний<br>
 • USB-хаб, HDMI/VGA, динамики<br>
 • для касс, Digital-Signage, терминалов<br>
-• POS-ПО, интерактивные витрины<br>
-        `,
+• POS-ПО, интерактивные витрины<br>`
       },
       {
         img: '/product_photo/высокий 3.png',
@@ -913,8 +994,7 @@
         desc: `• IPS Full HD, 10 касаний<br>
 • USB-хаб, HDMI/VGA, динамики<br>
 • для касс, Digital-Signage, терминалов<br>
-• POS-ПО, интерактивные витрины<br>
-        `,
+• POS-ПО, интерактивные витрины<br>`
       },
       {
         img: './product_photo/NETAC TM-21.png',
@@ -924,8 +1004,7 @@
         desc: `• IPS Full HD, 10 касаний<br>
 • USB-хаб, HDMI/VGA, динамики<br>
 • для касс, Digital-Signage, терминалов<br>
-• POS-ПО, интерактивные витрины<br>
-        `,
+• POS-ПО, интерактивные витрины<br>`
       },
       {
         img: './product_photo/NETAC NB-300_улучшен.png',
@@ -935,8 +1014,7 @@
         desc: `• IPS Full HD, 10 касаний<br>
 • USB-хаб, HDMI/VGA, динамики<br>
 • для касс, Digital-Signage, терминалов<br>
-• POS-ПО, интерактивные витрины<br>
-        `,
+• POS-ПО, интерактивные витрины<br>`
       },
       {
         img: 'product_photo/высокий 3.png',
@@ -946,8 +1024,7 @@
         desc: `• IPS Full HD, 10 касаний
  • USB-хаб, HDMI/VGA, динамики
  • для касс, Digital-Signage, терминалов
- • POS-ПО, интерактивные витрины
-        `,
+ • POS-ПО, интерактивные витрины`
       },
       {
         img: './product_photo/NETAC NB-300_улучшен.png',
@@ -957,153 +1034,224 @@
         desc: `• IPS Full HD, 10 касаний<br>
 • USB-хаб, HDMI/VGA, динамики<br>
 • для касс, Digital-Signage, терминалов<br>
-• POS-ПО, интерактивные витрины<br>
-        `,
+• POS-ПО, интерактивные витрины<br>`
       },
       {
         img: '/product_photo/высокий 3.png',
         title: 'PP 303',
         full_title: 'PP 303',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Мини-терминал самообслуживания для ПВЗ',
+        desc: 'Мини-терминал самообслуживания для ПВЗ'
       },
       {
         img: '/product_photo/высокий 3.png',
         title: 'PP 303',
         full_title: 'PP 303',
         full_desc: 'NETAC TM-21 - <b>сенсорный монитор 21.5</b>',
-        desc: 'Мини-терминал самообслуживания для ПВЗ',
+        desc: 'Мини-терминал самообслуживания для ПВЗ'
       }
     ];
 
-    const list = document.getElementById('products-list');
     const searchInput = document.querySelector('.search_input');
-    const modal = document.getElementById('product-modal');
-    const modalTitle = document.getElementById('modal-title');
-    const modalDesc = document.getElementById('modal-desc');
+    let currentProducts = products.slice();
 
-    let currentProducts = products;
-
+    // --- Рендер карточек
     function renderProducts(items) {
-      currentProducts = items;
       list.innerHTML = items.map((p, idx) => `
       <div class="product-card">
         <img src="${p.img}" alt="${p.title}" />
+        <img class="card-desc-img share-btn" src="./icon/majesticons_share.svg" data-index="${idx}" />
         <p>${p.title}</p>
-        
         <div class="card-desc">
           <p class="title">${p.full_title}</p>
           <p class="desc">${p.desc}</p>
-          <button class="btn_more" type="button" style="align-self: center;"data-index="${idx}">Подробнее</button>
+          <button class="btn_more" type="button" data-index="${idx}">Подробнее</button>
         </div>
       </div>
     `).join('');
     }
 
-    // начальная отрисовка
-    renderProducts(products);
+    // --- Стартовый рендер
+    renderProducts(currentProducts);
 
-    searchInput.addEventListener('input', () => {
-      const q = searchInput.value.trim().toLowerCase();
+    // --- Поиск (поднимаем найденный товар наверх «каруселью»)
+    searchInput.addEventListener('input', function () {
+      const query = this.value.trim().toLowerCase();
+      let foundIndex = -1;
 
-      // снимаем старое выделение
-      document.querySelectorAll('.product-card').forEach(card =>
-        card.classList.remove('highlight')
-      );
-
-      if (!q) {
-        renderProducts(products); // вернули в исходное состояние
-        return;
+      if (query) {
+        foundIndex = currentProducts.findIndex(p =>
+          p.title.toLowerCase().includes(query) ||
+          (p.desc && p.desc.toLowerCase().includes(query))
+        );
       }
 
-      // ищем индекс первого совпадения
-      const idx = products.findIndex(p =>
-        Object.values(p).some(val =>
-          String(val).toLowerCase().includes(q)
-        )
-      );
-
-      if (idx === -1) {
-        renderProducts(products); // не нашли, ничего не двигаем
-        return;
+      if (foundIndex > -1) {
+        const foundProduct = currentProducts.splice(foundIndex, 1)[0];
+        currentProducts.unshift(foundProduct);
+        renderProducts(currentProducts);
+        currentProducts.push(currentProducts.shift());
+      } else {
+        renderProducts(currentProducts);
       }
-
-      // делаем цикл: переносим найденный вверх
-      const found = products[idx];
-      const rest = products.slice(0, idx).concat(products.slice(idx + 1));
-      const newList = [found, ...rest];
-
-      renderProducts(newList);
-
-      // выделяем первый (найденный)
-      const firstCard = document.querySelector('.product-card');
-      if (firstCard) firstCard.classList.add('highlight');
     });
 
+    // --- Делегирование кликов по всей странице
+    document.addEventListener('click', async (e) => {
+      const target = e.target;
 
-    document.addEventListener('click', e => {
-      console.log("Клик по элементу:", e.target);
-
-      if (e.target.classList.contains('btn_more')) {
-        console.log("Нажата кнопка Подробнее");
-
-        e.preventDefault(); // блокируем дефолтное поведение
-
-        const idx = e.target.dataset.index;
-        console.log("data-index кнопки:", idx);
-
+      // Открыть модалку товара
+      if (target.classList.contains('btn_more')) {
+        const idx = Number(target.dataset.index);
         const product = currentProducts[idx];
-        console.log("Найденный продукт:", product);
+        if (!product) return;
 
-        if (!product) {
-          console.warn("⚠ Продукт не найден по индексу:", idx);
-          return;
-        }
-
-        modalTitle.textContent = product.title;
-        modalDesc.innerHTML = product.full_desc;
+        currentProductIndex = idx;
+        modalTitle.innerHTML = product.full_title;
+        modalDesc.innerHTML = product.desc;
         modal.style.display = 'flex';
-
-        console.log("Модалка открыта с продуктом:", product.title);
+        return;
       }
 
-      if (e.target.id === 'modal-close' || e.target === modal) {
-        console.log("Закрытие модалки");
+      // Открыть модалку шаринга из карточки (иконка с классом .share-btn)
+      const shareIcon = target.closest('.share-btn');
+      if (shareIcon && shareIcon.dataset.index !== undefined) {
+        const idx = Number(shareIcon.dataset.index);
+        currentSharedProduct = currentProducts[idx];
+        // ВАЖНО: модалку товара не трогаем
+        shareModal.style.display = 'flex';
+        return;
+      }
+
+      // Открыть модалку шаринга из модалки товара (кнопка #share-btn)
+      if (target.id === 'share-btn' || target.closest('#share-btn')) {
+        if (currentProductIndex != null) {
+          currentSharedProduct = currentProducts[currentProductIndex];
+        }
+        shareModal.style.display = 'flex'; // товарная модалка остаётся открытой
+        return;
+      }
+
+      // Закрыть модалку товара (крестик или клик по подложке)
+      if (target.id === 'modal-close' || target === modal) {
         modal.style.display = 'none';
+        return;
       }
-    });
 
-
-    const shareModal = document.getElementById('share-modal');
-    const shareBtn = document.getElementById('share-btn');
-    const shareClose = document.getElementById('share-close');
-
-    shareBtn.addEventListener('click', e => {
-      e.preventDefault();
-      shareModal.style.display = 'flex';
-    });
-
-    shareClose.addEventListener('click', () => {
-      shareModal.style.display = 'none';
-    });
-
-    shareModal.addEventListener('click', e => {
-      if (e.target === shareModal) {
+      // Закрыть модалку шаринга (крестик или клик по подложке)
+      if (target.id === 'share-close' || target === shareModal) {
         shareModal.style.display = 'none';
+        return;
+      }
+
+      // Копирование ссылки (кнопка с текстом "Скопировать" и классом .modal-button-share)
+      const shareButton = target.closest('.modal-button-share');
+      if (shareButton && /Скопировать/i.test(shareButton.innerText)) {
+        if (!currentSharedProduct) return;
+        const cleanTitle = currentSharedProduct.full_title.replace(/<[^>]+>/g, '').trim();
+        const url = `${window.location.origin}${window.location.pathname}?name=${encodeURIComponent(cleanTitle)}`;
+
+        try {
+          await navigator.clipboard.writeText(url);
+          showToast('Скопировано!');
+        } catch {
+          // Фолбэк для старых браузеров
+          const tmp = document.createElement('textarea');
+          tmp.value = url;
+          tmp.style.position = 'fixed';
+          tmp.style.opacity = '0';
+          document.body.appendChild(tmp);
+          tmp.select();
+          try { document.execCommand('copy'); } catch { }
+          tmp.remove();
+          showToast('Скопировано!');
+        }
+        return;
+      }
+
+      // Клики по соц.сетям (контейнер внутри share-модалки)
+      const socialLink = target.closest('.sosial_network a');
+      if (socialLink) {
+        if (!currentSharedProduct) return;
+
+        const cleanTitle = currentSharedProduct.full_title.replace(/<[^>]+>/g, '').trim();
+        const productUrl = encodeURIComponent(`${window.location.origin}${window.location.pathname}?name=${encodeURIComponent(cleanTitle)}`);
+        const text = encodeURIComponent(
+          `${cleanTitle} — ${currentSharedProduct.full_desc.replace(/<[^>]+>/g, ' ').trim()}`
+        );
+
+        let shareUrl = '';
+        switch (socialLink.dataset.network) {
+          case 'vk':
+            shareUrl = `https://vk.com/share.php?url=${productUrl}&title=${text}`;
+            break;
+          case 'tg':
+            shareUrl = `https://t.me/share/url?url=${productUrl}&text=${text}`;
+            break;
+          case 'wa':
+            shareUrl = `https://api.whatsapp.com/send?text=${text}%20${productUrl}`;
+            break;
+          case 'insta':
+            alert('Instagram не поддерживает прямой шаринг ссылкой — придётся копировать вручную');
+            return;
+          default:
+            return;
+        }
+        window.open(shareUrl, '_blank');
+        return;
       }
     });
 
-    // Хедер фон при скролле
+    // --- Тост-уведомление
+    function showToast(text) {
+      const toast = document.createElement('div');
+      toast.textContent = text;
+      toast.style.position = 'fixed';
+      toast.style.left = '50%';
+      toast.style.bottom = '20px';
+      toast.style.transform = 'translateX(-50%)';
+      toast.style.background = '#003CAA';
+      toast.style.color = '#fff';
+      toast.style.padding = '10px 20px';
+      toast.style.borderRadius = '8px';
+      toast.style.fontSize = '16px';
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity .3s ease';
+      toast.style.zIndex = '2000';
+      document.body.appendChild(toast);
+      requestAnimationFrame(() => { toast.style.opacity = '1'; });
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+      }, 1500);
+    }
+
+    // --- Открытие модалки по URL ?name=
+    (function openFromQuery() {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (!urlParams.has('name')) return;
+
+      const name = decodeURIComponent(urlParams.get('name')).toLowerCase();
+      const index = currentProducts.findIndex(
+        p => p.full_title.replace(/<[^>]+>/g, '').toLowerCase().includes(name)
+      );
+      if (index > -1) {
+        currentProductIndex = index;
+        const product = currentProducts[index];
+        modalTitle.innerHTML = product.full_title;
+        modalDesc.innerHTML = product.desc;
+        modal.style.display = 'flex';
+      }
+    })();
+
+    // --- Хедер фон при скролле
     window.addEventListener('scroll', () => {
       const header = document.querySelector('header');
-      if (window.scrollY > 10) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
+      if (window.scrollY > 10) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
     });
 
-    // Бургер меню
+    // --- Бургер-меню
     const burger = document.getElementById('burger');
     const nav = document.querySelector('.nav');
     const overlay = document.getElementById('burger-overlay');
@@ -1113,22 +1261,20 @@
       overlay.classList.toggle('active');
     });
 
-    // Закрытие меню по клику вне
     overlay.addEventListener('click', () => {
       nav.classList.remove('active');
       overlay.classList.remove('active');
     });
 
+    // --- Форма (валидация и успех)
     const footerSheet = document.getElementById('footer-sheet');
     const contactForm = document.getElementById('contact-form');
-    const successBlock = document.getElementById('form-success');
+    const successModal = document.getElementById('success-modal');
+    const successClose = document.getElementById('success-close');
+    const successNew = document.getElementById('success-new');
 
-    function openFooter() {
-      footerSheet.dataset.state = 'open';
-    }
-    function closeFooter() {
-      footerSheet.dataset.state = 'closed';
-    }
+    function openFooter() { if (footerSheet) footerSheet.dataset.state = 'open'; }
+    function closeFooter() { if (footerSheet) footerSheet.dataset.state = 'closed'; }
 
     document.querySelectorAll('.btn-nav, .hero .btn').forEach(btn => {
       btn.addEventListener('click', e => {
@@ -1137,94 +1283,82 @@
       });
     });
 
-    footerSheet.addEventListener('click', e => {
-      if (e.target.hasAttribute('data-close')) closeFooter();
-    });
+    if (footerSheet) {
+      footerSheet.addEventListener('click', e => {
+        if (e.target.hasAttribute('data-close')) closeFooter();
+      });
+    }
 
-    // авто-расширение при фокусе
-    contactForm.addEventListener('focusin', () => {
-      footerSheet.querySelector('.sheet-panel').style.maxHeight = "95vh";
-    });
+    if (contactForm) {
+      contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
 
-    // подтверждение после отправки
+        // очищаем прошлые ошибки
+        document.querySelectorAll('.error').forEach(el => el.textContent = '');
+        document.querySelectorAll('#contact-form input, #contact-form textarea').forEach(el => el.classList.remove('error'));
 
+        let valid = true;
 
+        // имя
+        const name = document.getElementById('name');
+        if (name.value.trim().length < 2) {
+          document.getElementById('error-name').textContent = 'Введите имя (минимум 2 символа)';
+          name.classList.add('error');
+          valid = false;
+        }
 
-    contactForm.addEventListener('submit', function (e) {
-      e.preventDefault();
+        // телефон
+        const phone = document.getElementById('phone');
+        const phonePattern = /^[0-9+\-\s]{6,}$/;
+        if (!phone.value.trim()) {
+          document.getElementById('error-phone').textContent = 'Поле обязательно';
+          phone.classList.add('error');
+          valid = false;
+        } else if (!phonePattern.test(phone.value.trim())) {
+          document.getElementById('error-phone').textContent = 'Введите корректный телефон';
+          phone.classList.add('error');
+          valid = false;
+        }
 
-      // очищаем прошлые ошибки
-      document.querySelectorAll('.error').forEach(el => el.textContent = '');
-      document.querySelectorAll('#contact-form input, #contact-form textarea').forEach(el => el.classList.remove('error'));
+        // email
+        const email = document.getElementById('email');
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email.value.trim()) {
+          document.getElementById('error-email').textContent = 'Поле обязательно';
+          email.classList.add('error');
+          valid = false;
+        } else if (!emailPattern.test(email.value.trim())) {
+          document.getElementById('error-email').textContent = 'Введите корректный E-mail';
+          email.classList.add('error');
+          valid = false;
+        }
 
-      let valid = true;
+        if (valid) {
+          successModal.style.display = 'flex';
+          contactForm.reset();
+        }
+      });
+    }
 
-      // имя
-      const name = document.getElementById('name');
-      if (name.value.trim().length < 2) {
-        document.getElementById('error-name').textContent = 'Введите имя (минимум 2 символа)';
-        name.classList.add('error');
-        valid = false;
-      }
+    if (successClose) {
+      successClose.addEventListener('click', () => { successModal.style.display = 'none'; });
+    }
+    if (successNew) {
+      successNew.addEventListener('click', () => { successModal.style.display = 'none'; });
+    }
+    if (successModal) {
+      successModal.addEventListener('click', e => { if (e.target === successModal) successModal.style.display = 'none'; });
+    }
 
-      // телефон (простейшая проверка цифр)
-      const phone = document.getElementById('phone');
-      const phonePattern = /^[0-9+\-\s]{6,}$/;
-      if (!phonePattern.test(phone.value.trim())) {
-        document.getElementById('error-phone').textContent = 'Введите корректный телефон';
-        phone.classList.add('error');
-        valid = false;
-      }
-
-      // email
-      const email = document.getElementById('email');
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailPattern.test(email.value.trim())) {
-        document.getElementById('error-email').textContent = 'Введите корректный E-mail';
-        email.classList.add('error');
-        valid = false;
-      }
-
-      if (valid) {
-        // показать модалку успеха
-        const successModal = document.getElementById('success-modal');
-        successModal.style.display = 'flex';
-
-        contactForm.reset();
-      }
-
-    });
-
-    const successModal = document.getElementById('success-modal');
-    const successClose = document.getElementById('success-close');
-    const successNew = document.getElementById('success-new');
-
-    successClose.addEventListener('click', () => {
-      successModal.style.display = 'none';
-    });
-
-    successNew.addEventListener('click', () => {
-      successModal.style.display = 'none';
-    });
-
-    successModal.addEventListener('click', e => {
-      if (e.target === successModal) {
-        successModal.style.display = 'none';
-      }
-    });
-
+    // --- Прилипающий поиск
     const searchBar = document.querySelector('.search_container');
-
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        searchBar.classList.add('fixed');
-      } else {
-        searchBar.classList.remove('fixed');
-      }
+      if (!searchBar) return;
+      if (window.scrollY > 400) searchBar.classList.add('fixed');
+      else searchBar.classList.remove('fixed');
     });
-
-
   </script>
+
 
 </body>
 
