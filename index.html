@@ -94,7 +94,7 @@
       grid-template-columns: repeat(12, minmax(0, 1fr));
       column-gap: var(--gutter);
       padding-inline: var(--margin-x);
-      max-width: 1440px;
+      /* max-width: 1440px; */
       /* читаемая ширина */
       margin: 0 auto;
     }
@@ -128,7 +128,7 @@
 
     header .logo {
       grid-column: 1 / span 2;
-      margin-left: 0;
+      margin-left: 20%;
       /* убрал магический отступ 19% */
       max-width: 100%;
       height: auto;
@@ -193,7 +193,7 @@
     .btn_more,
     .btn-nav,
     .modal-button {
-      align-self: center;
+      align-self: flex-start;
       background: rgba(0, 60, 170, 1);
       color: #fff;
       border-radius: 10px;
@@ -303,6 +303,7 @@
     }
 
     .hero .promo p {
+      white-space: nowrap;
       backdrop-filter: blur(5px);
       background: rgba(37, 54, 112, 0.6);
       padding: clamp(10px, 2vw, 24px) clamp(16px, 6vw, 72px);
@@ -340,7 +341,7 @@
       left: 50%;
       bottom: 30px;
       transform: translateX(-50%);
-      width: min(1100px, calc(100% - 2*var(--margin-x)));
+      width: 100vw;
       background: rgba(255, 255, 255, 0.92);
       display: flex;
       align-items: center;
@@ -357,13 +358,14 @@
       top: calc(var(--header-height) + 8px);
       left: 50%;
       transform: translateX(-50%);
-      width: min(1100px, calc(100% - 2*var(--margin-x)));
+      width: 100vw;
       z-index: 100;
     }
 
     .search_icon {
       width: 28px;
       height: 28px;
+      margin-left: 7.5%;
     }
 
     .search_input {
@@ -392,6 +394,7 @@
       column-count: 4;
       column-gap: var(--gutter);
       margin-inline: var(--margin-x);
+      margin-left: 8%;
     }
 
     .product-card {
@@ -400,12 +403,11 @@
       margin-bottom: 20px;
       break-inside: avoid;
       background: #fff;
-      border: 1px solid #E5E7EB;
+      border: 1px solid #000000;
       text-align: start;
       padding: clamp(12px, 2.4vw, 24px);
       transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
       position: relative;
-      border-radius: 10px;
     }
 
     .product-card img {
@@ -426,7 +428,7 @@
       left: 0;
       bottom: -100%;
       width: 100%;
-      background: rgba(248, 248, 248, 0.96);
+      background: rgba(248, 248, 248, 0.4);
       color: #333;
       padding: clamp(12px, 2vw, 20px) clamp(16px, 2.4vw, 24px);
       opacity: 0;
@@ -592,7 +594,6 @@
       padding: clamp(16px, 2.4vw, 36px) clamp(20px, 6vw, 80px);
       position: relative;
       overflow: auto;
-      border-radius: 12px;
     }
 
     #modal-close,
@@ -680,8 +681,9 @@
       margin: 10px var(--margin-x) 0;
       background: #fff;
       border-radius: 8px;
-      border: 1px solid #eaeaea;
+      /* border: 1px solid #eaeaea; */
       font-size: var(--fs-body);
+      width: 101vw;
     }
 
     .search-no-result .btn-offer {
