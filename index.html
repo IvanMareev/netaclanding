@@ -66,6 +66,11 @@
       height: 100%;
     }
 
+
+
+
+
+
     body {
       color: #111;
       line-height: 1.45;
@@ -108,7 +113,7 @@
       inset: 0 0 auto 0;
       height: var(--header-height);
       z-index: 100;
-      background: rgba(39, 37, 60, 1);
+      background: #020419;
       transition: background .2s ease-in-out;
       display: flex;
       align-items: center;
@@ -147,19 +152,12 @@
     header .nav a {
       color: #fff;
       text-decoration: none;
-      font-size: var(--fs-nav);
+      font-size: var(--fs-lead);
       line-height: 1.2;
       white-space: nowrap;
     }
 
-    .wrap-link {
-      display: flex;
-      flex-direction: column;
-    }
 
-    .wrap-link a {
-      color: #000000 !important;
-    }
 
     header .burger {
       grid-column: 12 / span 1;
@@ -209,6 +207,7 @@
       align-items: center;
       justify-content: center;
       min-height: 44px;
+      white-space: nowrap;
       /* удобный тап-таргет */
     }
 
@@ -375,11 +374,16 @@
 
     footer.fixed {
       position: fixed;
-      top: calc(var(--header-height) + 40px);
-      left: 50%;
-      transform: translateX(-50%);
+      left: 0;
+      right: 0;
+      bottom: max(0px, env(safe-area-inset-bottom));
+      /* iOS safe-area */
       width: 100%;
       z-index: 200;
+      /* ниже модалок (у тебя 1000) */
+      /* желательно фон, чтобы не просвечивал контент */
+      background: #fff;
+      border-top: 1px solid #eaeaea;
     }
 
     .search_icon {
@@ -641,7 +645,7 @@
     .modal-buttons {
       display: flex;
       gap: 12px;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       justify-content: center;
       margin-top: clamp(16px, 4vw, 48px);
     }
@@ -719,6 +723,13 @@
       padding: 8px 20px;
     }
 
+    .wrap-link {
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+
+    }
+
     /* =========================================
        MEDIA
     ========================================= */
@@ -761,6 +772,16 @@
 
     /* Mobile */
     @media (max-width:767.98px) {
+
+      .wrap-link {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .wrap-link a {
+        color: #000000 !important;
+      }
+
       .header-inner {
         grid-template-columns: repeat(4, minmax(0, 1fr));
       }
