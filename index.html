@@ -373,6 +373,15 @@
       z-index: 85;
     }
 
+    footer.fixed {
+      position: fixed;
+      top: calc(var(--header-height) + 40px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      z-index: 200;
+    }
+
     .search_icon {
       width: 28px;
       height: 28px;
@@ -585,7 +594,7 @@
       text-decoration: underline;
     }
 
-    
+
     /* =========================================
        MODALS
     ========================================= */
@@ -846,6 +855,100 @@
         grid-column: 1 / -1;
         justify-self: stretch;
       }
+
+      footer {
+        background-color: #fff;
+        grid-column: 1 / -1;
+        padding: 30px 0;
+        border-top: 1px solid #eee;
+      }
+
+      .form-section.desktop-footer .form-container {
+        margin-inline: var(--margin-x);
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        column-gap: var(--gutter);
+        row-gap: 30px;
+        max-width: 1440px;
+        margin: var(--margin-x);
+      }
+
+      .form-logo {
+        grid-column: 1 / span 2;
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .form-logo img {
+        max-width: 160px;
+        height: auto;
+      }
+
+      .form-box {
+        grid-column: 3 / -1;
+      }
+
+      #contact-form p {
+        grid-column: 3 / -1;
+        margin-bottom: 14px;
+        font-size: var(--fs-small);
+        font-weight: 700;
+        color: #111;
+      }
+
+      .form-box form {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1px;
+      }
+
+      .form-group {
+        grid-column: 3/ span 12;
+      }
+
+      .form-group textarea {
+        grid-column: 4 / span 12;
+      }
+
+      .form-box input,
+      .form-box textarea {
+        width: 100%;
+        padding: 7px;
+        border: 1px solid #CBD5E1;
+        border-radius: 8px;
+        font-size: var(--fs-small);
+      }
+
+      .form-box textarea {
+        min-height: 50px;
+        resize: vertical;
+      }
+
+      .form-box .btn {
+        white-space: nowrap;
+        grid-column: 5 / 11;
+        justify-self: center;
+        padding-inline: 28px;
+      }
+
+      .info_footer {
+        color: #667085;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+        justify-content: center;
+        margin-inline: var(--margin-x);
+        border-top: 1px solid #eaeaea;
+        padding: 20px 0;
+        margin-top: 24px;
+        font-size: var(--fs-small);
+      }
+
+      .info_footer a {
+        color: rgba(0, 60, 170, 1);
+        text-decoration: underline;
+      }
     }
 
     /* UX: отключаем "вылезающее меню" карточки на touch-устройствах */
@@ -991,7 +1094,7 @@
             <div class="form-group">
               <textarea id="message" placeholder="Сообщение (необязательно)"></textarea>
             </div>
-            <button type="submit" class="btn">Подобрать</button>
+            <button type="submit" class="btn">Подобрать решение</button>
           </form>
         </div>
       </div>
@@ -1230,11 +1333,17 @@
     const nav = document.querySelector('.nav');
     const overlay = document.getElementById('burger-overlay');
 
-    function closeNav() { nav.classList.remove('active'); overlay.classList.remove('active'); }
+    function closeNav() {
+      document.getElementsByTagName('footer')[0].classList.remove('fixed');
+      nav.classList.remove('active'); overlay.classList.remove('active');
+    }
 
-    burger.addEventListener('click', () => { nav.classList.toggle('active'); overlay.classList.toggle('active'); });
+    burger.addEventListener('click', () => {
+      nav.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.getElementsByTagName('footer')[0].classList.add('fixed');
+    });
     overlay.addEventListener('click', closeNav);
-    nav.addEventListener('click', (e) => { if (e.target.tagName === 'A' || e.target.classList.contains('btn-nav')) closeNav(); });
 
     // Form validation
     const contactForm = document.getElementById('contact-form');
