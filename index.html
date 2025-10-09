@@ -608,6 +608,7 @@
     }
 
     .form-section.desktop-footer .form-container {
+
       margin-inline: var(--margin-x);
       display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -621,6 +622,17 @@
       grid-column: 1 / span 2;
       display: flex;
       align-items: flex-start;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-logo a {
+      font-size: var(--fs-body);
+      color: #003CAA;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 8px;
     }
 
     .form-logo img {
@@ -1021,6 +1033,7 @@
       }
 
       .form-section.desktop-footer .form-container {
+
         grid-template-columns: repeat(4, minmax(0, 1fr));
         row-gap: 14px;
       }
@@ -1051,6 +1064,7 @@
       }
 
       .form-section.desktop-footer .form-container {
+
         margin-inline: var(--margin-x);
         display: grid;
         grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -1156,10 +1170,10 @@
       <div class="burger" id="burger"><span></span><span></span><span></span></div>
       <nav class="nav">
         <div class="wrap-link">
-          <a href="#">Продукты</a>
-          <a href="#">Контакты</a>
+          <a href="#products-list">Продукты</a>
+          <a href="#contact-form">Контакты</a>
         </div>
-        <a href="#" class="btn-nav">Подробнее</a>
+        <a href="#contact-form" class="btn-nav">Подробнее</a>
       </nav>
     </div>
   </header>
@@ -1207,7 +1221,7 @@
         <a id="pdf-download" class="modal-button" href="#" target="_blank">Сохранить в PDF</a>
         <button class="modal-button transparent" id="share-btn"><span>Поделиться</span><img src="./icon/share.svg"
             alt="share" /></button>
-        <button class="modal-button">Подобрать</button>
+        <button class="modal-button" id="pick-product-btn">Подобрать</button>
       </div>
     </div>
   </div>
@@ -1228,7 +1242,7 @@
         <button id="btn_more" class="modal-button-share"><img src="./icon/mynaui_save-solid.svg" alt="save" />Сохранить
           в
           файлы</button>
-        <button class="modal-button-share"><img src="./icon/gg_google.svg" alt="google" />Поиск в Google</button>
+
       </div>
     </div>
   </div>
@@ -1245,8 +1259,11 @@
   <!-- ============ FOOTER ============ -->
   <footer class="row">
     <section class="form-section desktop-footer">
-      <div class="form-container">
-        <div class="form-logo"><img src="./icon/netac_logo_blue.svg" alt="Netac logo" /></div>
+      <div class="form-container" style="margin: 0 auto !important;">
+        <div class="form-logo"><img src="./icon/netac_logo_blue.svg" alt="Netac logo" />
+
+          <a href="mailto:info@netac.eu"><img src="./icon/tabler_mail-filled.svg"> info@netac.eu</a>
+        </div>
         <div class="form-box">
 
 
@@ -1275,10 +1292,9 @@
 
     <div class="info_footer">
       <p>
-        Copyright © 2025 Netac Technology Co.,Ltd All rights reserved
-        <a href="https://beian.miit.gov.cn/">粤ICP备11101098号-3</a>
+        Copyright © 2025 Netac Technology Co.,Ltd All rights reserved Netac
       </p>
-      <a href="mailto:info@netac.eu">info@netac.eu</a>
+
     </div>
   </footer>
 
@@ -1541,7 +1557,7 @@
     const successNew = document.getElementById('success-new');
 
     if (contactForm) {
-      contactForm.addEventListener('submit', function (e) {
+      contactForm.addEventListener('submit',  async function (e) {
         e.preventDefault();
         document.querySelectorAll('.error').forEach(el => el.textContent = '');
         document.querySelectorAll('#contact-form input, #contact-form textarea').forEach(el => el.classList.remove('error'));
@@ -1560,13 +1576,125 @@
         if (!email.value.trim()) { document.getElementById('error-email').textContent = 'Поле обязательно'; email.classList.add('error'); valid = false; }
         else if (!emailPattern.test(email.value.trim())) { document.getElementById('error-email').textContent = 'Введите корректный E-mail'; email.classList.add('error'); valid = false; }
 
-        if (valid) { successModal.style.display = 'flex'; contactForm.reset(); }
+
+        const YG_API_BASE = 'https://yougile.com/api-v2';
+        const YG_API_KEY = 'X-F7ehfkXr58+Se6IwojMY9ayJfvbkKT+-s27VL66hzUiqYwGf4YV2-oS7H8mPGZ';
+        // Необязательно: если знаешь ID колонки, впиши ниже; иначе оставь null
+        const YG_COLUMN_ID = "cfa15662-38a5-4e28-a2fc-8d05342c454d";
+
+        if (valid) {
+          const nameVal = name.value.trim();
+          const phoneVal = phone.value.trim();
+          const emailVal = email.value.trim();
+          const msgVal = (document.getElementById('message')?.value || '').trim();
+
+          // Формируем заголовок задачи и описание
+          // Заголовок — короткий, чтобы удобно смотреть в доске
+          const taskTitle = `Заявка с сайта: ${nameVal}`;
+          const taskDesc = [
+            `Имя: ${nameVal}`,
+            `Телефон: ${phoneVal}`,
+            `E-mail: ${emailVal}`,
+            msgVal ? `Сообщение: ${msgVal}` : ''
+          ].filter(Boolean).join('\n');
+
+          // Пытаемся создать задачу через REST API v2
+          // Документация по созданию задачи подтверждает POST /api-v2/tasks с Bearer-ключом
+          // и полями title (+ опционально columnId, description и пр.). 
+          // См. примеры с community и мануалом. 
+          try {
+            const payload = { title: taskTitle, description: taskDesc };
+            if (YG_COLUMN_ID) payload.columnId = YG_COLUMN_ID;
+
+            const res = await fetch(`${YG_API_BASE}/tasks`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${YG_API_KEY}`
+              },
+              body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) {
+              // На фронте может упереться в CORS — покажем понятную подсказку
+              console.warn('YouGile error', res.status, await res.text());
+              showToast('Не удалось создать задачу в YouGile (проверь CORS/колонку)');
+            } else {
+              showToast('Задача создана в YouGile');
+            }
+          } catch (err) {
+            console.warn('YouGile fetch failed', err);
+            showToast('Не удалось создать задачу в YouGile (сеть/CORS)');
+          }
+
+          // Показываем успех пользователю независимо от интеграции, чтобы не блокировать UX
+          successModal.style.display = 'flex';
+          contactForm.reset();
+        }
       });
     }
 
     if (successClose) successClose.addEventListener('click', () => { successModal.style.display = 'none'; });
     if (successNew) successNew.addEventListener('click', () => { successModal.style.display = 'none'; });
     if (successModal) successModal.addEventListener('click', e => { if (e.target === successModal) successModal.style.display = 'none'; });
+    // ====== Anchor UX: Контакты → скролл к футеру и копирование email ======
+    const navContacts = document.getElementById('nav-contacts');
+    if (navContacts) {
+      navContacts.addEventListener('click', async (e) => {
+        // Мягкий скролл к форме
+        const formEl = document.getElementById('contact-form');
+        if (formEl) formEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Копируем e-mail в буфер
+        const emailToCopy = 'info@netac.com';
+        try {
+          await navigator.clipboard.writeText(emailToCopy);
+          showToast(`Скопировано: ${emailToCopy}`);
+        } catch {
+          const tmp = document.createElement('textarea');
+          tmp.value = emailToCopy;
+          tmp.style.position = 'fixed'; tmp.style.opacity = '0';
+          document.body.appendChild(tmp); tmp.select();
+          try { document.execCommand('copy'); } catch { }
+          tmp.remove();
+          showToast(`Скопировано: ${emailToCopy}`);
+        }
+      });
+    }
+
+    // ====== «Подобрать» из модалки → префилл формы и скролл к футеру ======
+    const pickBtn = document.getElementById('pick-product-btn');
+    if (pickBtn) {
+      pickBtn.addEventListener('click', () => {
+        const formEl = document.getElementById('contact-form');
+        const msg = document.getElementById('message');
+        const titleEl = document.getElementById('modal-title');
+        const cleanTitle = titleEl ? titleEl.textContent.trim() : '';
+
+        if (msg) {
+          // Добавим или заменим строку «Интересует: ...»
+          const lines = msg.value.split('\n').filter(Boolean);
+          const other = lines.filter(l => !l.startsWith('Интересует:'));
+          msg.value = ['Интересует: ' + cleanTitle, ...other].join('\n');
+        }
+
+        // Скроллим к форме, закрываем модалку
+        const modal = document.getElementById('product-modal');
+        if (modal) modal.style.display = 'none';
+        if (formEl) formEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Фокус на поле «Телефон» для быстрого ввода
+        const phone = document.getElementById('phone');
+        if (phone) phone.focus();
+      });
+    }
+
+    // ====== «Получить предложение» в блоке "нет результатов" → к форме ======
+    document.querySelector('.btn.btn-offer')?.addEventListener('click', () => {
+      document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+
   </script>
 </body>
 
