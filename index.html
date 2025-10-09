@@ -867,6 +867,83 @@
 
     /* Mobile */
     @media (max-width:767.98px) {
+
+      .modal-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .modal-button {
+        width: 50% !important;
+        border-radius: 5px;
+        padding: 6px clamp(16px, 5vw, 64px) !important;
+        margin: 0 auto;
+        min-height: 10px;
+      }
+
+      .modal-button img {
+        width: 12px !important;
+        height: 12px !important;
+
+      }
+
+      :root {
+        /* Spacing */
+        --gutter: 20px;
+        --margin-x: 14px;
+        --header-height: 78px;
+
+        /* Radii & shadows */
+        --radius: 12px;
+
+        /* === Text guide tokens ===
+     Desktop / Tablet / Mobile:
+     H1:   44 / 40 / 30 (lh: 44 / 40 / 28) weight 600
+     H2:   30 / 26 / 24 (lh: 34 / 32 / 28) weight 500
+     Text: 20 / 18 / 16 (lh: 28 / 22 / 22) weight 400/700
+     Min:  14 / 12 / 10 (lh: 28 / 28 / 22) weight 400
+  */
+        --fs-h1: clamp(30px, 2.2vw + 0.8rem, 44px);
+        --fs-h2: clamp(10px, 0.70vw + 0.8rem, 30px);
+        --fs-body: clamp(10px, 0.2vw + 1rem, 25px);
+        --fs-min: clamp(12px, 0.35vw + 0.2rem, 28px);
+
+        --lh-h1: clamp(28px, 2vw + 0.6rem, 44px);
+        --lh-h2: clamp(16px, 1vw + 0.1rem, 30px);
+        --lh-body: clamp(19px, 0.3vw + 0.1rem, 34px);
+        --lh-min: clamp(6px, 0.9vw + 0.6rem, 28px);
+
+        --ls-tight: -0.2px;
+        /* по гайду */
+        --ls-none: 0px;
+
+        /* производные, чтобы не ломать текущие селекторы */
+        --fs-small: var(--fs-min);
+        --fs-btn: var(--fs-min);
+        --fs-lead: var(--fs-body);
+        --fs-nav: var(--fs-body);
+      }
+
+      .hero .promo p {
+
+        padding: clamp(10px, 12vw, 16px) clamp(16px, 50vw, 60px);
+      }
+
+      #products-list {
+        margin: 0 10px;
+      }
+
+      #product-modal .modal-content {
+        width: min(920px, calc(100vw - var(--margin-x)));
+        padding: clamp(25px, 2.4vw, 36px) clamp(20px, 6vw, 80px);
+      }
+
+
+      #modal-close {
+        display: none !important;
+      }
+
       .wrap-link {
         display: flex;
         flex-direction: column;
@@ -1127,7 +1204,7 @@
       <h2 id="modal-title" style="font-size:var(--fs-h2);"></h2>
       <div id="modal-desc" style="margin-top:12px; font-size:var(--fs-body);"></div>
       <div class="modal-buttons">
-        <a id="pdf-download" class="modal-button" href="#"  target="_blank" >Сохранить в PDF</a>
+        <a id="pdf-download" class="modal-button" href="#" target="_blank">Сохранить в PDF</a>
         <button class="modal-button transparent" id="share-btn"><span>Поделиться</span><img src="./icon/share.svg"
             alt="share" /></button>
         <button class="modal-button">Подобрать</button>
@@ -1148,7 +1225,8 @@
           <a data-network="vk"><img src="./icon/share_icon/in.png" alt="in"></a>
         </div>
         <button class="modal-button-share"><img src="./icon/bxs_copy.svg" alt="copy" />Скопировать</button>
-        <button id="btn_more" class="modal-button-share"><img src="./icon/mynaui_save-solid.svg" alt="save" />Сохранить в
+        <button id="btn_more" class="modal-button-share"><img src="./icon/mynaui_save-solid.svg" alt="save" />Сохранить
+          в
           файлы</button>
         <button class="modal-button-share"><img src="./icon/gg_google.svg" alt="google" />Поиск в Google</button>
       </div>
