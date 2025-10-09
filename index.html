@@ -959,10 +959,15 @@
       .wrap-link {
         display: flex;
         flex-direction: column;
+        gap: 10px;
       }
 
       .wrap-link a {
         color: #000 !important;
+      }
+
+      .row {
+        padding-bottom: 0px !important;
       }
 
       .header-inner {
@@ -998,7 +1003,6 @@
       }
 
       nav.nav .btn-nav {
-        margin-top: 8px;
         width: 100%;
         text-align: center;
       }
@@ -1039,6 +1043,7 @@
       }
 
       .form-logo {
+        margin-left: 2vw;
         grid-column: 1 / -1;
         justify-content: center;
       }
@@ -1089,7 +1094,8 @@
       }
 
       .form-group {
-        grid-column: 3 / span 12;
+        margin-left: 2vw;
+        grid-column: 1 / span 12;
       }
 
       .form-group textarea {
@@ -1112,7 +1118,7 @@
 
       .form-box .btn {
         white-space: nowrap;
-        grid-column: 5 / 11;
+        grid-column: 3 / 11;
         justify-self: center;
         padding-inline: 28px;
       }
@@ -1231,12 +1237,12 @@
       <button id="share-close" aria-label="Закрыть">×</button>
       <div style="display:flex; flex-direction:column; gap:10px; margin-top:8px;">
         <div class="sosial_network">
-          <a data-network="vk"><img src="./icon/share_icon/insta.png" alt="insta"></a>
-          <a data-network="tg"><img src="./icon/share_icon/vk.png" alt="vk"></a>
-          <a data-network="wa"><img src="./icon/share_icon/tg.png" alt="tg"></a>
-          <a data-network="insta"><img src="./icon/share_icon/wa.png" alt="wa"></a>
-          <a data-network="vk"><img src="./icon/share_icon/ds.png" alt="ds"></a>
-          <a data-network="vk"><img src="./icon/share_icon/in.png" alt="in"></a>
+          <a data-network="insta"><img src="./icon/socials/insta.svg" alt="insta"></a>
+          <a data-network="vk"><img src="./icon/socials/vk.svg" alt="vk"></a>
+          <a data-network="tg"><img src="./icon/socials/tg.svg" alt="tg"></a>
+          <a data-network="wa"><img src="./icon/socials/wa.svg" alt="wa"></a>
+          <a data-network="ds"><img src="./icon/socials/ds.svg" alt="ds"></a>
+          <a data-network="in"><img src="./icon/socials/in.svg" alt="in"></a>
         </div>
         <button class="modal-button-share"><img src="./icon/bxs_copy.svg" alt="copy" />Скопировать</button>
         <button id="btn_more" class="modal-button-share"><img src="./icon/mynaui_save-solid.svg" alt="save" />Сохранить
@@ -1321,7 +1327,7 @@
       list.innerHTML = items.map((p, idx) => `
         <div class="product-card" data-index="${idx}">
           <img src="${p.img}" alt="${p.title}" />
-          <img class="card-desc-img share-btn" src="./icon/majesticons_share.svg" data-index="${idx}" alt="share"/>
+          <img class="card-desc-img share-btn" src="./icon/majesticons_share.svg"  data-index="${idx}" alt="share"/>
           <p>${p.title}</p>
           <div class="card-desc">
             <p class="title">${p.full_title}</p>
@@ -1390,9 +1396,20 @@
     document.addEventListener('click', async (e) => {
       const target = e.target;
 
-      // Open product modal immediately on mobile/tablet by tapping the card
+      // 1) СНАЧАЛА — share-иконка на карточке
+      const shareIcon = target.closest('.share-btn');
+      if (shareIcon && shareIcon.dataset.index !== undefined) {
+        e.stopPropagation();                 // не даём клику дойти до карточки
+        e.preventDefault();
+        const idx = Number(shareIcon.dataset.index);
+        currentSharedProduct = currentProducts[idx];
+        shareModal.style.display = 'flex';
+        return;
+      }
+
+      // 2) Потом — открытие карточки (тач-устройства)
       const card = target.closest('.product-card');
-      if (card && isTouchLike) {
+      if (card && isTouchLike /* важно: share уже отработал выше */) {
         const idx = Number(card.dataset.index);
         const product = currentProducts[idx];
         if (product) {
@@ -1407,8 +1424,35 @@
           } else {
             pdfLink.style.display = 'none';
           }
-
         }
+        return;
+      }
+
+      // 3) «Подробнее» на десктопе — как было
+      if (target.classList.contains('btn_more')) {
+        const idx = Number(target.dataset.index);
+        const product = currentProducts[idx];
+        if (!product) return;
+        currentProductIndex = idx;
+        modalTitle.innerHTML = product.full_title;
+        modalDesc.innerHTML = product.full_desc;
+        modal.style.display = 'flex';
+        const pdfLink = document.getElementById('pdf-download');
+        if (product.pdf) {
+          pdfLink.href = product.pdf;
+          pdfLink.style.display = 'inline-flex';
+        } else {
+          pdfLink.style.display = 'none';
+        }
+        return;
+      }
+
+      // 4) Кнопка «Поделиться» внутри модалки товара — как было
+      if (target.id === 'share-btn' || target.closest('#share-btn')) {
+        if (currentProductIndex != null) {
+          currentSharedProduct = currentProducts[currentProductIndex];
+        }
+        shareModal.style.display = 'flex';
         return;
       }
 
@@ -1432,15 +1476,7 @@
         return;
       }
 
-      // Share from card icon
-      const shareIcon = target.closest('.share-btn');
-      if (shareIcon && shareIcon.dataset.index !== undefined) {
-        const idx = Number(shareIcon.dataset.index);
-        currentSharedProduct = currentProducts[idx];
-        shareModal.style.display = 'flex';
-        return;
-      }
-
+      
       // Share from product modal button
       if (target.id === 'share-btn' || target.closest('#share-btn')) {
         if (currentProductIndex != null) {
@@ -1549,6 +1585,17 @@
       document.getElementsByTagName('footer')[0].classList.add('fixed');
     });
     overlay.addEventListener('click', closeNav);
+    nav.addEventListener('click', (e) => {
+      // ловим клики по <a> и кнопкам внутри меню
+      const link = e.target.closest('a, .btn-nav, button');
+      if (!link) return;
+
+      // если меню открыто — закрываем его, но не мешаем переходу по якорю
+      if (nav.classList.contains('active')) {
+        // закрываем в microtask, чтобы скролл по якорю не дёргался
+        setTimeout(closeNav, 0);
+      }
+    });
 
     // Form validation
     const contactForm = document.getElementById('contact-form');
@@ -1557,7 +1604,7 @@
     const successNew = document.getElementById('success-new');
 
     if (contactForm) {
-      contactForm.addEventListener('submit',  async function (e) {
+      contactForm.addEventListener('submit', async function (e) {
         e.preventDefault();
         document.querySelectorAll('.error').forEach(el => el.textContent = '');
         document.querySelectorAll('#contact-form input, #contact-form textarea').forEach(el => el.classList.remove('error'));
