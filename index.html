@@ -1629,6 +1629,152 @@
         margin-inline: auto;
       }
     }
+
+    /* ========== MOBILE TYPO FIX + CARD & MODAL TWEAKS ========== */
+    @media (max-width: 767.98px) {
+
+      .desktop-footer:not(.form-focused) .form-container{
+    display: grid !important;
+    grid-template-columns: 80px 1fr;
+    column-gap: 12px;
+    row-gap: 12px;
+    margin-inline: 16px;
+  }
+  .desktop-footer:not(.form-focused) .form-logo{ grid-column: 1 / 2; }
+  .desktop-footer:not(.form-focused) .form-box { grid-column: 2 / -1; } /* ← твой фикс, но только вне form-focused */
+
+  /* Фокусный режим — как и было: форма под логотипом, на всю ширину */
+  .desktop-footer.form-focused .form-container{
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    margin-inline: 16px;
+  }
+  .desktop-footer.form-focused .form-logo{ order:-1; }
+  .desktop-footer.form-focused .form-box{ order:0; width:100%; }
+
+      /* Нормальные токены под телефон */
+      :root {
+        /* размеры шрифтов */
+        --fs-h1: clamp(22px, 8vw, 30px);
+        --fs-h2: clamp(18px, 4.6vw, 22px);
+        --fs-body: clamp(14px, 4vw, 16px);
+        --fs-min: clamp(12px, 3.6vw, 14px);
+
+        /* !! главная проблема: на мобилке был гигантский --fs-body-h2 */
+        --fs-body-h2: clamp(14px, 7vw, 30px);
+
+        /* межстрочные интервалы — компактнее и стабильнее */
+        --lh-h1: clamp(26px, 6.8vw, 34px);
+        --lh-h2: clamp(22px, 5.6vw, 28px);
+        --lh-body: clamp(20px, 9vw, 28px);
+        --lh-min: clamp(16px, 4.4vw, 18px);
+      }
+
+      /* Заголовок и текст в хиро */
+      .hero h1 {
+        line-height: var(--lh-h1);
+        letter-spacing: -0.2px;
+        font-weight: 400;
+      }
+
+      .overlay-inner p {
+        font-size: var(--fs-body-h2) !important;
+        line-height: var(--lh-body);
+        white-space: normal;
+        /* чтобы не распирало строки */
+      }
+
+      .hero .promo p {
+        white-space: normal;
+        /* на телефоне переносим строки */
+        text-align: left;
+        padding: 10px 20px;
+        /* компактнее плашки */
+      }
+
+      /* Карточки товара – “чуть больше” на телефоне */
+      #products-list {
+        column-count: 2;
+        column-gap: 12px;
+        margin: 0 10px;
+      }
+
+      /* на очень узких экранах ~320–380 делаем по одной в ряд */
+      @media (max-width: 380px) {
+        #products-list {
+          column-count: 2;
+        }
+      }
+
+      .product-card {
+        padding: 14px;
+        /* было clamp(9px, 3vw, 24px) — делаем ощутимее */
+      }
+
+      .product-card p {
+        /* заголовок карточки */
+        font-size: var(--fs-body);
+        line-height: var(--lh-body);
+      }
+
+      .product-card .img-skeleton {
+        height: 200px;
+      }
+
+      /* Модалка товара — почти на всю ширину + меньше боковых отступов */
+      #product-modal,
+      #share-modal,
+      #success-modal {
+        align-items: flex-start;
+        padding-top: 54px;
+        /* место под шапку */
+      }
+
+      #product-modal .modal-content,
+      #share-modal .modal-content,
+      #success-modal .modal-content {
+        width: min(94vw, 640px);
+        /* шире на телефоне */
+        padding: 18px 16px 20px;
+        /* меньше внутренних отступов */
+      }
+
+      #modal-title {
+        line-height: var(--lh-h2);
+      }
+
+      #modal-desc {
+        line-height: var(--lh-body);
+      }
+
+      /* Кнопки в модалке – 100% ширины, без “раздувания” */
+      .modal-buttons {
+        gap: 10px;
+      }
+
+      .modal-button {
+        width: 70% !important;
+        padding: 10px 14px !important;
+        min-height: 44px;
+      }
+
+      /* Навигация/шапка — немного компактнее */
+      header .nav a {
+        line-height: 1.25;
+      }
+
+      
+
+      
+    }
+
+    /* Дополнительно: чуть уменьшить межстрочный в списках/абзацах и везде убрать лишние переносы */
+    p,
+    li {
+      word-break: normal;
+      overflow-wrap: anywhere;
+    }
   </style>
 </head>
 
@@ -1777,8 +1923,8 @@
       </div>
     </section>
     <div class="info_footer">
-      <p style="white-space: nowrap;">Copyright © 2025 Netac Technology Co.,Ltd All rights reserved <a
-          style="margin-left: 10%;" href="https://www.netac.com/">Netac</a></p>
+      <p>Copyright © 2025 Netac Technology Co.,Ltd All rights reserved <a style="margin-left: 2vw;"
+          href="https://www.netac.com/">Netac</a></p>
     </div>
   </footer>
 
