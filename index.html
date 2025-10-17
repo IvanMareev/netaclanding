@@ -1606,11 +1606,11 @@
       #share-modal .modal-content,
       #success-modal .modal-content {
         box-sizing: border-box;
-        width: min(920px, 82vw);
+        /* width: min(920px, 82vw); */
         /* либо 640–840px — подберите под контент */
-        max-width: 880px;
+        max-width: 70vw;
         /* «потолок» на очень широких экранах */
-        padding: 34px 68px;
+        padding: 3% 4%;
         /* меньше внутренних отступов */
       }
 
@@ -1625,7 +1625,7 @@
       /* опционально: ограничить ширину текста, чтобы не «расплывался» */
       #modal-title,
       #modal-desc {
-        max-width: 70ch;
+        /* max-width: 70ch; */
         margin-inline: auto;
       }
     }
