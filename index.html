@@ -70,17 +70,17 @@
      Text: 20 / 18 / 16 (lh: 28 / 22 / 22) weight 400/700
      Min:  14 / 12 / 10 (lh: 28 / 28 / 22) weight 400
   */
-      --fs-h1: clamp(30px, 2.2vw + 1.4rem, 54px);
+      --fs-h1: clamp(30px, 2.2vw + 1.4rem, 35px);
       --fs-h2: clamp(24px, 0.85vw + 0.9rem, 30px);
       --fs-body: clamp(16px, 0.6vw + 1rem, 20px);
-      --fs-min: clamp(10px, 0.35vw + 0.9rem, 20px);
+      --fs-min: clamp(10px, 0.35vw + 0.9rem, 14px);
       --fs-tiny: clamp(10px, 0.35vw + 0.9rem, 14px);
-      --fs-body-h2: clamp(37px, 0.2vw + 2.5rem, 30px);
+      --fs-body-h2: clamp(3px, 0.2vw + 2.5rem, 28px);
 
-      --lh-h1: clamp(28px, 2vw + 1.7rem, 64px);
+      --lh-h1: clamp(44px, 2vw + 0.6rem, 64px);
       --lh-h2: clamp(32px, 1vw + 0.6rem, 34px);
       --lh-body: clamp(30px, 1vw + 2rem, 37px);
-      --lh-min: clamp(22px, 0.9vw + 1rem, 28px);
+      --lh-min: clamp(22px, 0.9vw + 1rem, 20px);
 
       --ls-tight: -0.2px;
       /* по гайду */
@@ -107,7 +107,7 @@
     /* Mobile */
     @media (max-width:767.98px) {
       :root {
-        --pad-overlay: clamp(24px, 7vw, 600px);
+        --pad-overlay: clamp(2px, 1vw, 600px);
         --gutter: 14px;
         --margin-x: 18px;
         --header-height: 68px;
@@ -171,7 +171,12 @@
       letter-spacing: var(--ls-none);
     }
 
-    @media (max-width:1199.98px) {
+    @media (max-width:1920.98px) {
+
+      /* :root {
+        --fs-min: clamp(10px, 0.35vw + 0.9rem, 23px);
+        --lh-min: clamp(22px, 0.9vw + 1rem, 22px);
+      } */
 
       h2,
       .h2,
@@ -193,7 +198,7 @@
     }
 
     .overlay-inner p {
-      font-size: 30px;
+      font-size: var(--fs-body-h2) !important;
       line-height: var(--lh-body);
       letter-spacing: var(--ls-tight);
       font-weight: 400;
@@ -280,7 +285,7 @@
       grid-template-columns: repeat(12, minmax(0, 1fr));
       column-gap: var(--gutter);
       width: 100%;
-      align-items: start;
+      align-items: center;
     }
 
     header .logo-wrapper {
@@ -299,7 +304,7 @@
     }
 
     header nav.nav {
-      grid-column: 3 / -1;
+      grid-column: 4 / -1;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -363,7 +368,7 @@
       color: #FFFFF1;
       border-radius: 10px;
       text-decoration: none;
-      font-size: var(--fs-btn);
+      font-size: var(--fs-nav);
       display: inline-flex;
       border: 0;
       align-items: center;
@@ -378,7 +383,7 @@
     }
 
     .btn {
-      padding: 8px clamp(18px, 5vw, 90px);
+      padding: 10px clamp(18px, 5vw, 90px);
     }
 
     .btn_more {
@@ -427,9 +432,10 @@
       row-gap: var(--gutter);
       align-items: start;
       padding-top: calc(var(--gutter) + 30px);
-      padding-bottom: calc(96px + var(--gutter));
+      padding-bottom: calc(100px + var(--gutter));
       margin-left: calc(var(--margin-x));
-      margin-right: margin-left: calc(var(--margin-x));
+      margin-right: calc(var(--margin-x));
+
     }
 
     .hero .overlay {
@@ -458,6 +464,7 @@
       display: flex;
       flex-direction: column;
       gap: clamp(12px, 3vw, 90px);
+      padding-right: 10%;
     }
 
     .align-with-overlay-left {
@@ -466,25 +473,26 @@
 
     /* по гайду */
     .hero .promo {
+      margin-top: 3%;
       grid-column: 8 / -1;
       display: flex;
       flex-direction: column;
       gap: 9rem;
-      margin-right: var(--margin-x);
     }
 
     .hero .promo p {
       backdrop-filter: blur(5px);
       background: rgba(37, 54, 112, 0.6);
-      padding: clamp(10px, 2vw, 40px) clamp(16px, 9vw, 400px);
+      padding: clamp(10px, 2vw, 40px) clamp(16px, 6vw, 400px);
       border-radius: 8px;
       border-width: 0 0 3px 3px;
       border-style: solid;
       border-color: #003CAA;
       width: fit-content;
-      max-width: 100%;
+      max-width: 90%;
       white-space: nowrap;
       font-weight: 300;
+      text-align: center;
     }
 
     .hero .promo p:nth-child(1) {
@@ -825,8 +833,8 @@
       display: none;
       position: fixed;
       inset: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       background: rgba(0, 0, 0, .45);
       z-index: 1000 !important;
       overflow-y: auto;
@@ -835,17 +843,17 @@
 
       align-items: flex-start;
       justify-content: center;
-      padding-top: 120px;
+      padding-top: 6vw;
     }
 
     #product-modal .modal-content,
     #share-modal .modal-content,
     #success-modal .modal-content {
       background: #ffffff;
-      width: min(920px, calc(100vw - 2*var(--margin-x)));
+      width: min(82vw, calc(190vw - 2*var(--margin-x)));
       max-height: none;
       /* ❌ убираем ограничение */
-      padding: clamp(16px, 2.4vw, 36px) clamp(20px, 6vw, 80px);
+      padding: clamp(16px, 4vw, 360px) clamp(20px, 9vw, 120px);
       position: relative;
 
       overflow: visible !important;
@@ -959,6 +967,42 @@
       gap: 40px;
     }
 
+    /* ====== Desktop ≥1440px: слегка крупнее ====== */
+    @media (min-width: 1440px) {
+      :root {
+        /* размеры */
+        --fs-h1: clamp(40px, 2.2vw + 1.2rem, 56px);
+        --fs-h2: clamp(28px, 1.1vw + 1.0rem, 36px);
+        --fs-body: clamp(18px, 0.55vw + 1rem, 22px);
+        --fs-min: clamp(14px, 0.35vw + 1rem, 18px);
+        --fs-tiny: clamp(12px, 0.3vw + 0.9rem, 16px);
+        --fs-body-h2: clamp(28px, 0.6vw + 1.6rem, 34px);
+
+        /* межстрочные (подстройка под рост шрифтов) */
+        --lh-h1: clamp(44px, 2.4vw + 1.8rem, 72px);
+        --lh-h2: clamp(34px, 1.2vw + 1.1rem, 44px);
+        --lh-body: clamp(26px, 0.8vw + 1.6rem, 34px);
+        --lh-min: clamp(22px, 0.6vw + 1.1rem, 28px);
+      }
+    }
+
+    /* ====== Desktop ≥1920px: ещё шаг вверх (2K/4K) ====== */
+    @media (min-width: 1920px) {
+      :root {
+        --fs-h1: clamp(48px, 2.1vw + 1.2rem, 64px);
+        --fs-h2: clamp(32px, 1.0vw + 1.0rem, 40px);
+        --fs-body: clamp(20px, 0.5vw + 1rem, 24px);
+        --fs-min: clamp(16px, 0.35vw + 1rem, 19px);
+        --fs-tiny: clamp(14px, 0.3vw + 0.9rem, 18px);
+        --fs-body-h2: clamp(30px, 0.6vw + 1.7rem, 38px);
+
+        --lh-h1: clamp(52px, 2.1vw + 1.8rem, 78px);
+        --lh-h2: clamp(38px, 1.2vw + 1.1rem, 48px);
+        --lh-body: clamp(28px, 0.8vw + 1.6rem, 36px);
+        --lh-min: clamp(24px, 0.6vw + 1.1rem, 30px);
+      }
+    }
+
     /* =========================================
    MEDIA
 ========================================= */
@@ -1060,20 +1104,20 @@
       :root {
         /* Spacing */
         --gutter: 20px;
-        --margin-x: 14px;
+        --margin-x: 6px;
         --header-height: 78px;
 
         /* Radii & shadows */
         --radius: 12px;
         --fs-h1: clamp(30px, 2.2vw + 2rem, 36px);
         --fs-h2: clamp(30px, 0.70vw + 0.8rem, 30px);
-        --fs-body-h2: clamp(15px, 0.2vw + 2.5rem, 27px);
+        --fs-body-h2: clamp(15px, 0.2vw + 7.5rem, 34px);
         --fs-body: clamp(15px, 0.2vw + 2.5rem, 20px);
         --fs-min: clamp(16px, 0.35vw + 1rem, 19px);
 
         --lh-h1: clamp(28px, 2vw + 1.8rem, 44px);
         --lh-h2: clamp(29px, 1vw + 0.1rem, 30px);
-        --lh-body: clamp(20px, 0.3vw + 1.9rem, 30px);
+        --lh-body: clamp(20px, 0.3vw + 2.7rem, 39px);
         --lh-min: clamp(6px, 0.9vw + 1.1rem, 28px);
 
         --ls-tight: -0.2px;
@@ -1106,7 +1150,7 @@
       #product-modal .modal-content {
         /* padding-top: 100px !important; */
         line-height: var(--lh-min) !important;
-        width: min(920px, calc(96vw - var(--margin-x)));
+        /* width: min(920px, calc(96vw - var(--margin-x))); */
         padding: clamp(55px, 2.4vw, 36px) clamp(50px, 6vw, 90px);
       }
 
@@ -1157,7 +1201,7 @@
         font-size: var(--fs-body-h2);
         line-height: var(--lh-body);
         letter-spacing: var(--ls-tight);
-        font-weight: 300;
+        font-weight: 400;
       }
 
       nav.nav.active {
@@ -1197,7 +1241,8 @@
       }
 
       header .burger {
-        /* grid-column: 4 / span 1; */
+        grid-column: 5 / span 1;
+        margin-right: var(--margin-x);
         display: block;
       }
 
@@ -1237,7 +1282,7 @@
       }
 
       .form-box {
-        grid-column: 2 / span 1 !important;
+        grid-column: 2 / span -1 !important;
         width: 100% !important;
       }
 
@@ -1379,14 +1424,14 @@
       gap: 10px;
     }
 
-    
+
     .form-box form {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
 
-    
+
 
     /* --- Фокусный режим --- */
     .desktop-footer.form-focused .form-container {
@@ -1554,6 +1599,36 @@
       }
 
     }
+
+    @media (min-width: 1200px) {
+
+      #product-modal .modal-content,
+      #share-modal .modal-content,
+      #success-modal .modal-content {
+        box-sizing: border-box;
+        width: min(920px, 82vw);
+        /* либо 640–840px — подберите под контент */
+        max-width: 880px;
+        /* «потолок» на очень широких экранах */
+        padding: 34px 68px;
+        /* меньше внутренних отступов */
+      }
+
+      /* опционально: центр по вертикали без «отступа сверху» */
+      #product-modal,
+      #share-modal,
+      #success-modal {
+        align-items: center;
+        padding-top: 0;
+      }
+
+      /* опционально: ограничить ширину текста, чтобы не «расплывался» */
+      #modal-title,
+      #modal-desc {
+        max-width: 70ch;
+        margin-inline: auto;
+      }
+    }
   </style>
 </head>
 
@@ -1580,7 +1655,7 @@
     <div class="content-row hero-inner">
       <div class="overlay">
         <div class="overlay-inner">
-          <h1>Netac: технологии&nbsp;для&nbsp;ритейла&nbsp;и&nbsp;ПВЗ— быстрее, удобнее, выгоднее</h1>
+          <h1>Netac: технологии&nbsp;для&nbsp;ритейла и&nbsp;ПВЗ — быстрее, удобнее, выгоднее</h1>
           <p>Самообслуживание, удобное управление<br> и консультирование</p>
           <a class="btn" href="#contact-form">Получить предложение</a>
         </div>
@@ -1628,12 +1703,8 @@
       <button id="share-close" aria-label="Закрыть">×</button>
       <div style="display:flex; flex-direction:column; gap:10px; margin-top:8px;">
         <div class="sosial_network">
-          <a data-network="insta"><img src="./icon/socials/insta.svg" alt="insta"></a>
-          <a data-network="vk"><img src="./icon/socials/vk.svg" alt="vk"></a>
           <a data-network="tg"><img src="./icon/socials/tg.svg" alt="tg"></a>
           <a data-network="wa"><img src="./icon/socials/wa.svg" alt="wa"></a>
-          <a data-network="ds"><img src="./icon/socials/ds.svg" alt="ds"></a>
-          <a data-network="in"><img src="./icon/socials/in.svg" alt="in"></a>
         </div>
         <button class="modal-button-share"><img src="./icon/bxs_copy.svg" alt="copy" />Скопировать</button>
         <button id="btn_more" class="modal-button-share"><img src="./icon/mynaui_save-solid.svg" alt="save" />Сохранить
@@ -1656,8 +1727,8 @@
     <section class="form-section desktop-footer">
       <div class="form-container">
         <div class="form-logo">
-          <img class="form-logo-netac" src="./icon/netac_logo_blue.svg" alt="Netac logo" />
-          <a href="mailto:info@netac.eu"><img src="./icon/mail.svg" />info@netac.eu</a>
+          <img style="margin-bottom: 10%;" class="form-logo-netac" src="./icon/netac_logo_blue.svg" alt="Netac logo" />
+          <a href="mailto:info@netac.eu"><img style="width: 20px;" src="./icon/mail.svg" />info@netac.eu</a>
         </div>
         <div class="form-box">
           <form id="contact-form">
@@ -1673,10 +1744,10 @@
             <div class="form-group phone-group">
               <select class="phone-code">
                 <option value="+7" selected>🇷🇺 +7</option>
-                <option value="+375">🇧🇾 +375</option>
-                <option value="+994">🇦🇿 +994</option>
-                <option value="+996">🇰🇬 +996</option>
-                <option value="+998">🇺🇿 +998</option>
+                <option value="+375">BY +375</option>
+                <option value="+994">AZ +994</option>
+                <option value="+996">RG +996</option>
+                <option value="+998">UZ +998</option>
               </select>
 
               <div class="phone-input-wrapper">
@@ -1700,13 +1771,14 @@
               <div id="error-message" class="error"></div>
             </div>
 
-            <button type="submit" class="btn">Подобрать решение</button>
+            <button type="submit" class="btn" style="margin: 0 auto;">Подобрать решение</button>
           </form>
         </div>
       </div>
     </section>
     <div class="info_footer">
-      <p>Copyright © 2025 Netac Technology Co.,Ltd All rights reserved Netac</p>
+      <p style="white-space: nowrap;">Copyright © 2025 Netac Technology Co.,Ltd All rights reserved <a
+          style="margin-left: 10%;" href="https://www.netac.com/">Netac</a></p>
     </div>
   </footer>
 
@@ -1777,7 +1849,7 @@
       }
 
       let foundIndex = currentProducts.findIndex(p =>
-        p.title.toLowerCase().includes(query) || (p.desc && p.desc.toLowerCase().includes(query))
+        p.title.toLowerCase().includes(query)
       );
 
       if (foundIndex > -1) {
@@ -2284,18 +2356,17 @@
     // === Добавляем кликабельную почту под формой на мобилке ===
     const formEl = document.querySelector('.form-box form');
     if (formEl && window.innerWidth < 768) {
-      let mailBlock = document.createElement('a');
+      const mailBlock = document.createElement('a');
       mailBlock.href = 'mailto:info@netac.eu';
       mailBlock.style.display = 'flex';
       mailBlock.style.alignItems = 'center';
       mailBlock.style.gap = '6px';
       mailBlock.style.marginTop = '8px';
-      mailBlock.style.fontSize = '14px';
+      mailBlock.style.fontSize = 'var(--fs-body)';
       mailBlock.style.color = '#003CAA';
+      mailBlock.style.width = '20px';
       mailBlock.style.textDecoration = 'underline';
-
       mailBlock.innerHTML = `<img src="./icon/tabler_mail-filled.svg" style="width:16px;height:16px;">info@netac.eu`;
-
       formEl.appendChild(mailBlock);
     }
 
