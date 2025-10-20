@@ -79,7 +79,7 @@
 
       --lh-h1: clamp(44px, 2vw + 0.6rem, 64px);
       --lh-h2: clamp(32px, 1vw + 0.6rem, 34px);
-      --lh-body: clamp(30px, 1vw + 2rem, 37px);
+      --lh-body: clamp(5px, 1vw + 1.6rem, 30px);
       --lh-min: clamp(22px, 0.9vw + 1rem, 20px);
 
       --ls-tight: -0.2px;
@@ -532,11 +532,11 @@
     }
 
     .search_container.fixed {
-      position: fixed;
-      top: calc(var(--header-height) + 8px);
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
+      position: fixed !important;
+      top: calc(var(--header-height) + 8px) !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      width: 100% !important;
       z-index: 500 !important;
     }
 
@@ -548,6 +548,7 @@
     }
 
     .search_input {
+      padding-left: 10px;
       flex: 0 0 60%;
       /* или 50%, если хочешь еще меньше */
       max-width: 500px;
@@ -564,11 +565,12 @@
     .search_input:hover,
     .search_input:focus {
       box-sizing: border-box;
-      border: 0.2px solid #838383;
-      border-radius: 8px;
+      /* border: 0.2px solid #838383; */
+      /* border-radius: 8px; */
     }
 
     .search_input::placeholder {
+
       color: #e2e8f0;
     }
 
@@ -580,45 +582,72 @@
       margin-top: clamp(12px, 2.6vw, 40px);
     }
 
+
+
     #products-list {
       column-count: 3;
       column-gap: var(--gutter);
       margin-left: calc(var(--margin-x) + var(--pad-overlay) + var(--overlay-left-border));
       margin-right: var(--margin-x);
+      margin-bottom: 40px;
       /* margin-left: 8%; */
     }
 
     .product-card {
       box-sizing: border-box;
-      display: inline-block;
       width: 100%;
-      margin-bottom: 20px;
+      height: min-content;
+      margin-bottom: 2.8vw;
       break-inside: avoid;
       background: #fff;
       border-style: solid;
       border-top: 0.2px solid rgba(207, 200, 200, 0.6) !important;
       border-right: 0.2px solid rgba(207, 200, 200, 0.6) !important;
-      border-bottom: 1.02px solid #000 !important;
-      border-left: 1.02px solid #000 !important;
+      border-bottom: 1.2px solid #000 !important;
+      border-left: 1.2px solid #000 !important;
       text-align: start;
-      padding: clamp(9px, 3vw, 24px);
       transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      overflow: hidden;
+      display: grid;
+      /* чтобы «наслоить» заголовок на картинку */
+      grid-template-areas: "stack";
+      padding: 0 !important;
       position: relative;
 
     }
 
     .product-card .img-wrapper {
-      position: relative;
+      grid-area: stack;
       width: 100%;
-      height: auto;
-      overflow: hidden;
+      aspect-ratio: auto !important;
     }
 
-    .product-card img {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
+    .product-card .img-wrapper img {
+      position: static !important;
+      /* отменяем absolute */
+      inset: auto !important;
+      width: 100% !important;
+      height: auto !important;
+      object-fit: contain !important;
+      /* без кропа */
       display: block;
+    }
+
+    .product-card>p {
+      grid-area: stack;
+      align-self: end;
+      justify-self: stretch;
+      margin: 0;
+      padding: 1.5vw 1.5vw;
+      z-index: 2;
+      pointer-events: none;
+      /* line-height: 30px !important */
+    }
+
+    .product-card p>b {
+      display: inline-block;
+      margin-top: 0.9vw;
+      /* подбери значение */
     }
 
 
@@ -655,6 +684,16 @@
       z-index: 5;
       cursor: pointer;
     }
+
+
+    .product-card .card-desc {
+      z-index: 3;
+    }
+
+    .product-card .card-desc-img {
+      z-index: 4;
+    }
+
 
     .product-card:hover .card-desc-img {
       opacity: 1;
@@ -1109,7 +1148,7 @@
 
         /* Radii & shadows */
         --radius: 12px;
-        --fs-h1: clamp(28px, 2.2vw + 2rem, 35px);
+
         --fs-h2: clamp(30px, 0.70vw + 0.8rem, 30px);
         --fs-body-h2: clamp(15px, 0.2vw + 7.5rem, 34px);
         --fs-body: clamp(15px, 0.2vw + 2.5rem, 20px);
@@ -1117,7 +1156,7 @@
 
         --lh-h1: clamp(28px, 2vw + 1.7rem, 44px);
         --lh-h2: clamp(29px, 1vw + 0.1rem, 30px);
-        --lh-body: clamp(10px, 0.1vw + 2.1rem, 39px);
+        --lh-body: clamp(10px, 2.1rem, 10px);
         --lh-min: clamp(6px, 0.9vw + 1.1rem, 28px);
 
         --ls-tight: -0.2px;
@@ -1314,6 +1353,21 @@
         gap: 1em;
       }
 
+
+      .search_container.fixed{
+    left: 0 !important;
+    transform: none !important;
+  }
+
+  /* Управляем sticky не через :focus-within, а отдельным классом */
+  .search_container.sticky-focus{
+    position: sticky;
+    top: calc(var(--header-height) + 8px);
+    left: 0;
+    width: 100%;
+    transform: none;
+    z-index: 600;
+  }
 
     }
 
@@ -1546,6 +1600,10 @@
       background-size: 400% 100%;
       animation: skeleton-loading 1.4s ease infinite;
       border-radius: 4px;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
     }
 
     @keyframes skeleton-loading {
@@ -1633,30 +1691,45 @@
     /* ========== MOBILE TYPO FIX + CARD & MODAL TWEAKS ========== */
     @media (max-width: 767.98px) {
 
-      .desktop-footer:not(.form-focused) .form-container{
-    display: grid !important;
-    grid-template-columns: 80px 1fr;
-    column-gap: 12px;
-    row-gap: 12px;
-    margin-inline: 16px;
-  }
-  .desktop-footer:not(.form-focused) .form-logo{ grid-column: 1 / 2; }
-  .desktop-footer:not(.form-focused) .form-box { grid-column: 2 / -1; } /* ← твой фикс, но только вне form-focused */
+      .desktop-footer:not(.form-focused) .form-container {
+        display: grid !important;
+        grid-template-columns: 80px 1fr;
+        column-gap: 12px;
+        row-gap: 12px;
+        margin-inline: 16px;
+      }
 
-  /* Фокусный режим — как и было: форма под логотипом, на всю ширину */
-  .desktop-footer.form-focused .form-container{
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 14px !important;
-    margin-inline: 16px;
-  }
-  .desktop-footer.form-focused .form-logo{ order:-1; }
-  .desktop-footer.form-focused .form-box{ order:0; width:100%; }
+      .desktop-footer:not(.form-focused) .form-logo {
+        grid-column: 1 / 2;
+      }
+
+      .desktop-footer:not(.form-focused) .form-box {
+        grid-column: 2 / -1;
+      }
+
+      /* ← твой фикс, но только вне form-focused */
+
+      /* Фокусный режим — как и было: форма под логотипом, на всю ширину */
+      .desktop-footer.form-focused .form-container {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 14px !important;
+        margin-inline: 16px;
+      }
+
+      .desktop-footer.form-focused .form-logo {
+        order: -1;
+      }
+
+      .desktop-footer.form-focused .form-box {
+        order: 0;
+        width: 100%;
+      }
 
       /* Нормальные токены под телефон */
       :root {
         /* размеры шрифтов */
-        --fs-h1: clamp(22px, 8vw, 30px);
+        --fs-h1: clamp(22px, 9vw, 56px);
         --fs-h2: clamp(18px, 4.6vw, 22px);
         --fs-body: clamp(14px, 4vw, 16px);
         --fs-min: clamp(12px, 3.6vw, 14px);
@@ -1665,9 +1738,9 @@
         --fs-body-h2: clamp(14px, 7vw, 30px);
 
         /* межстрочные интервалы — компактнее и стабильнее */
-        --lh-h1: clamp(26px, 6.8vw, 34px);
+        --lh-h1: clamp(26px, 8vw, 34px);
         --lh-h2: clamp(22px, 5.6vw, 28px);
-        --lh-body: clamp(20px, 9vw, 28px);
+        --lh-body: clamp(20px, 10vw, 32px);
         --lh-min: clamp(16px, 4.4vw, 18px);
       }
 
@@ -1696,8 +1769,9 @@
       /* Карточки товара – “чуть больше” на телефоне */
       #products-list {
         column-count: 2;
-        column-gap: 12px;
-        margin: 0 10px;
+        column-gap: 8px;
+        margin: 0 4px;
+        margin-bottom: 29px;
       }
 
       /* на очень узких экранах ~320–380 делаем по одной в ряд */
@@ -1708,14 +1782,15 @@
       }
 
       .product-card {
-        padding: 14px;
+        padding: 10px;
+        margin-bottom: 18px;
         /* было clamp(9px, 3vw, 24px) — делаем ощутимее */
       }
 
       .product-card p {
         /* заголовок карточки */
         font-size: var(--fs-body);
-        line-height: var(--lh-body);
+        line-height: 18px;
       }
 
       .product-card .img-skeleton {
@@ -1764,9 +1839,9 @@
         line-height: 1.25;
       }
 
-      
 
-      
+
+
     }
 
     /* Дополнительно: чуть уменьшить межстрочный в списках/абзацах и везде убрать лишние переносы */
@@ -1774,6 +1849,61 @@
     li {
       word-break: normal;
       overflow-wrap: anywhere;
+    }
+
+    #products-list {
+      scroll-margin-top: calc(var(--header-height) + 12px);
+    }
+
+
+    /* ===== LOADER (после отправки заявки) ===== */
+    #loader-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      background: rgba(0, 0, 0, .35);
+      backdrop-filter: blur(2px);
+      display: none;
+      /* по умолчанию скрыт */
+      align-items: center;
+      justify-content: center;
+    }
+
+    #loader-overlay.active {
+      display: flex;
+    }
+
+    .loader-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px 22px;
+      min-width: 240px;
+      box-shadow: 0 8px 26px rgba(0, 0, 0, .15);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      column-gap: 14px;
+    }
+
+    .loader-spinner {
+      width: 28px;
+      height: 28px;
+      border: 3px solid #e5e7eb;
+      border-top-color: #003CAA;
+      border-radius: 50%;
+      animation: loader-spin .8s linear infinite;
+    }
+
+    @keyframes loader-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loader-text {
+      font-size: var(--fs-body);
+      line-height: var(--lh-body);
+      color: #111;
     }
   </style>
 </head>
@@ -1928,8 +2058,16 @@
     </div>
   </footer>
 
+  <div id="loader-overlay" role="alert" aria-live="assertive" aria-busy="true">
+    <div class="loader-box">
+      <div class="loader-spinner" aria-hidden="true"></div>
+      <div class="loader-text">Отправляем заявку…</div>
+    </div>
+  </div>
+
+
   <script type="module">
-    import products from './products.js';
+    import products from './productss.js';
     // ============================
     let currentSharedProduct = null;
     let currentProductIndex = null;
@@ -2261,6 +2399,43 @@
       }
     });
 
+    // helper: плавный скролл к сетке
+    function goToGrid() {
+      const grid = document.getElementById('products-list');
+      if (!grid) return;
+      grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // клик по всей полосе поиска → фокус + переход к сетке (на десктопе)
+    searchContainer.addEventListener('click', (e) => {
+      // фокус как и раньше
+      if (e.target !== searchField) searchField.focus();
+
+      // на мобильных оставляем текущее поведение (центрируем поиск),
+      // а на планшет/десктоп — сразу к товарам
+      if (window.innerWidth >= 768) {
+        // лёгкая задержка, чтобы не конфликтовать с .fixed
+        setTimeout(goToGrid, 0);
+      }
+    });
+
+    // Enter в поле поиска → к сетке
+    searchField.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        goToGrid();
+      }
+    });
+
+    // по клику на иконку-лупу тоже скроллим
+    document.querySelector('.search_icon')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      searchField.focus();
+      if (window.innerWidth >= 768) setTimeout(goToGrid, 0);
+    });
+
+
+
     function closeNav() {
       document.getElementsByTagName('footer')[0].classList.remove('fixed');
       nav.classList.remove('active');
@@ -2398,7 +2573,7 @@
               console.warn('YouGile error', res.status, await res.text());
               showToast('Не удалось создать задачу в YouGile (проверь CORS/колонку)');
             } else {
-              showToast('Задача создана в YouGile');
+              showToast('Ваша заявка принята');
             }
           } catch (err) {
             console.warn('YouGile fetch failed', err);
@@ -2514,6 +2689,58 @@
       mailBlock.style.textDecoration = 'underline';
       mailBlock.innerHTML = `<img src="./icon/tabler_mail-filled.svg" style="width:16px;height:16px;">info@netac.eu`;
       formEl.appendChild(mailBlock);
+    }
+    // === helper: прокрутка к сетке с учётом fixed-хедера ===
+    function scrollToGrid() {
+      const grid = document.getElementById('products-list');
+      if (!grid) return;
+      const y = grid.getBoundingClientRect().top + window.pageYOffset - (headerHeight + 12);
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+
+    // клик по всей полосе поиска → фокус + ПЕРЕХОД к сетке (всегда)
+    searchContainer.addEventListener('click', (e) => {
+      if (e.target !== searchField) searchField.focus();
+      // небольшая задержка, чтобы не конфликтовать с .fixed/фокусом
+      setTimeout(scrollToGrid, 0);
+    });
+
+    // фокус в инпуте → тоже к сетке (полезно на мобилке после открытия клавы)
+    searchField.addEventListener('focus', () => {
+      setTimeout(scrollToGrid, 100);
+    });
+
+    // Enter в поле поиска → к сетке
+    searchField.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        scrollToGrid();
+      }
+    });
+
+    // клик по иконке-лупе → к сетке
+    document.querySelector('.search_icon')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      searchField.focus();
+      setTimeout(scrollToGrid, 0);
+    });
+
+    const loader = document.getElementById('loader-overlay');
+
+    function showLoader(text = 'Отправляем заявку…') {
+      if (!loader) return;
+      loader.querySelector('.loader-text').textContent = text;
+      loader.classList.add('active');
+      // блокируем скролл страницы
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function hideLoader() {
+      if (!loader) return;
+      loader.classList.remove('active');
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
     }
 
 
